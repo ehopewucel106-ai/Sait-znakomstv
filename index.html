@@ -171,7 +171,7 @@
             box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
         }
 
-        /* Header - Smart Hide/Show */
+        /* Header */
         .header {
             position: fixed;
             top: 0;
@@ -185,11 +185,7 @@
             backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .header.hidden {
-            transform: translateY(-100%);
+            transition: all 0.4s ease;
         }
 
         .header.scrolled {
@@ -248,6 +244,7 @@
             position: relative;
             padding: 8px 0;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .nav-links a:hover,
@@ -999,7 +996,7 @@
         <div class="nav-container">
             <nav class="nav-links">
                 <a href="#services" class="nav-link active" data-section="services">Услуги</a>
-                <a href="#models" class="nav-link" data-section="models">Модели</a>
+                <a href="#models" class="nav-link" data-section="models">Анкеты</a>
                 <a href="#" class="nav-link" id="cityNavLink">Города</a>
             </nav>
             
@@ -1028,12 +1025,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-badge">⚠️ 18+ Контент для взрослых</div>
-        <h1>Найди Свою <span>Идеальную Пару</span></h1>
-        <p>Эксклюзивное сообщество для тех, кто ценит качество, стиль и настоящие эмоции</p>
+        <div class="hero-badge">🔞 18+ Интимные услуги</div>
+        <h1>Элитные <span>Девушки</span> Для Вас</h1>
+        <p>Индивидуальные встречи с роскошными девушками. Полная конфиденциальность и высокий сервис гарантированы.</p>
         <div class="hero-buttons">
-            <a href="#models" class="btn btn-primary nav-link-btn" data-section="models">Смотреть Моделей</a>
-            <button class="btn btn-secondary" id="heroChatBtn">💬 Чат</button>
+            <a href="#models" class="btn btn-primary nav-link-btn" data-section="models">Выбрать Девушку</a>
+            <button class="btn btn-secondary" id="heroChatBtn">💬 Связаться</button>
         </div>
     </section>
 
@@ -1047,22 +1044,43 @@
             <div class="service-card">
                 <div class="service-icon">💎</div>
                 <h3>VIP Встреча</h3>
-                <p>Эксклюзивное сопровождение на мероприятиях и деловых встречах.</p>
+                <p>Эксклюзивное сопровождение на мероприятиях, ужинах и деловых встречах. Полная конфиденциальность.</p>
                 <div class="service-price">от 15 000 ₽</div>
                 <button class="btn btn-order" onclick="openChat()">Заказать</button>
             </div>
             <div class="service-card">
                 <div class="service-icon">🌹</div>
                 <h3>Романтический Вечер</h3>
-                <p>Незабываемый вечер в приятной компании.</p>
+                <p>Незабываемый вечер в приятной компании. Индивидуальная программа под ваши пожелания.</p>
                 <div class="service-price">от 20 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat()">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔥</div>
+                <h3>Интимная Встреча</h3>
+                <p>Частная встреча на территории клиента или в отеле. Полное удовлетворение ваших желаний.</p>
+                <div class="service-price">от 25 000 ₽</div>
                 <button class="btn btn-order" onclick="openChat()">Заказать</button>
             </div>
             <div class="service-card">
                 <div class="service-icon">✈️</div>
                 <h3>Выезд за Город</h3>
-                <p>Сопровождение в поездки по России и за рубеж.</p>
+                <p>Сопровождение в поездки по России и за рубеж. Все расходы оплачиваются отдельно.</p>
                 <div class="service-price">от 50 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat()">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎉</div>
+                <h3>Вечеринка</h3>
+                <p>Украшение вашего праздника яркой компанией. Групповые и индивидуальные заказы.</p>
+                <div class="service-price">от 30 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat()">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⭐</div>
+                <h3>Постоянная Подруга</h3>
+                <p>Долгосрочное сопровождение на регулярной основе. Специальные условия для постоянных клиентов.</p>
+                <div class="service-price">от 100 000 ₽</div>
                 <button class="btn btn-order" onclick="openChat()">Заказать</button>
             </div>
         </div>
@@ -1071,7 +1089,7 @@
     <!-- Models Section -->
     <section class="section" id="models">
         <div class="section-header">
-            <h2>Наши Модели</h2>
+            <h2>Наши Девушки</h2>
             <p>Выберите ту, которая понравится именно вам</p>
         </div>
         <div class="filters-bar">
@@ -1087,23 +1105,23 @@
     <section class="section" id="city">
         <div class="section-header">
             <h2>Выберите Город</h2>
-            <p>Наши модели доступны в следующих городах</p>
+            <p>Наши девушки доступны в следующих городах</p>
         </div>
         <div class="cities-grid">
             <div class="city-card" data-city="pervomaisk">
                 <div class="city-icon">🏙️</div>
                 <div class="city-name">Первомайск</div>
-                <div class="city-count" id="pervomaiskCountCard">0 моделей</div>
+                <div class="city-count" id="pervomaiskCountCard">0 девушек</div>
             </div>
             <div class="city-card" data-city="lugansk">
                 <div class="city-icon">🏛️</div>
                 <div class="city-name">Луганск</div>
-                <div class="city-count" id="luganskCountCard">0 моделей</div>
+                <div class="city-count" id="luganskCountCard">0 девушек</div>
             </div>
             <div class="city-card" data-city="stakhanov">
                 <div class="city-icon">⛏️</div>
                 <div class="city-name">Стаханов</div>
-                <div class="city-count" id="stakhanovCountCard">0 моделей</div>
+                <div class="city-count" id="stakhanovCountCard">0 девушек</div>
             </div>
         </div>
     </section>
@@ -1121,7 +1139,7 @@
                     <div class="modal-stats" id="modalStats"></div>
                     <p class="modal-description" id="modalDescription"></p>
                     <div class="modal-donation-box">
-                        <div class="modal-donation-label">💎 Стоимость услуги</div>
+                        <div class="modal-donation-label">💎 Стоимость встречи</div>
                         <div class="modal-donation-amount" id="modalPrice"></div>
                     </div>
                     <button class="btn btn-order" id="modalOrderBtn">📞 Заказать</button>
@@ -1136,7 +1154,7 @@
             <div class="chat-header-info">
                 <div class="operator-avatar" id="chatAvatar">A</div>
                 <div>
-                    <div style="font-weight: 600;" id="chatOperatorName">Оператор</div>
+                    <div style="font-weight: 600;" id="chatOperatorName">Менеджер</div>
                     <div style="font-size: 12px; color: var(--success);">● Онлайн</div>
                 </div>
             </div>
@@ -1155,8 +1173,9 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="age-warning">⚠️ 18+ Только для взрослых</div>
+        <div class="age-warning">🔞 18+ Только для взрослых</div>
         <p class="footer-text" style="margin-top: 25px;">© 2024 BABYGIRL_LNR. Все права защищены.</p>
+        <p class="footer-text">Услуги предоставляются только совершеннолетним лицам</p>
     </footer>
 
     <script>
@@ -1171,7 +1190,7 @@
                 bust: '3',
                 city: 'pervomaisk',
                 cityName: 'Первомайск',
-                description: 'Элегантная и утонченная девушка с прекрасным чувством стиля. Люблю искусство, путешествия и интересные беседы.',
+                description: 'Элегантная и утонченная девушка с прекрасным чувством стиля. Люблю искусство, путешествия и интересные беседы. Всегда открыта для новых знакомств.',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1d88927b5-c292-4930-b808-a30cf9253e2e.png']
             },
@@ -1184,7 +1203,7 @@
                 bust: '2',
                 city: 'lugansk',
                 cityName: 'Луганск',
-                description: 'Яркая и энергичная натура. Обожаю активный отдых, спорт и новые впечатления.',
+                description: 'Яркая и энергичная натура. Обожаю активный отдых, спорт и новые впечатления. Со мной никогда не будет скучно!',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1237c0312-00b1-42aa-bd87-1e12b7ae40bf.png']
             },
@@ -1197,7 +1216,7 @@
                 bust: '3',
                 city: 'stakhanov',
                 cityName: 'Стаханов',
-                description: 'Нежная и романтичная особа. Ценю искренность и честность в отношениях.',
+                description: 'Нежная и романтичная особа. Ценю искренность и честность в отношениях. Мечтаю встретить человека для ярких встреч.',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/19d64067c-fabc-4e3e-bd45-68f58319d4d1.png']
             },
@@ -1210,7 +1229,7 @@
                 bust: '2',
                 city: 'pervomaisk',
                 cityName: 'Первомайск',
-                description: 'Изысканная и воспитанная девушка с безупречными манерами.',
+                description: 'Изысканная и воспитанная девушка с безупречными манерами. Люблю театр, классическую музыку и долгие прогулки.',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1a6879a29-2fc5-413c-bcb0-60c61a2cc6c0.png']
             },
@@ -1223,7 +1242,7 @@
                 bust: '2',
                 city: 'lugansk',
                 cityName: 'Луганск',
-                description: 'Весёлая и игривая девушка с заразительной улыбкой.',
+                description: 'Весёлая и игривая девушка с заразительной улыбкой. Люблю танцы, музыку и весёлые компании.',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1fc3dc209-3d47-4b30-8cb5-a8149c8e1d70.png']
             },
@@ -1236,7 +1255,7 @@
                 bust: '3',
                 city: 'stakhanov',
                 cityName: 'Стаханов',
-                description: 'Уверенная в себе и независимая девушка.',
+                description: 'Уверенная в себе и независимая девушка. Ценю время и качество. Предпочитаю серьёзные встречи.',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1d83dba52-31df-49e9-91e4-f366efa97808.png']
             }
@@ -1265,11 +1284,11 @@
             updateCitiesCount();
             renderModels();
             setupEventListeners();
-            setupSmartHeader();
+            setupScrollHeader();
         });
 
         // Smart Header - Hide on scroll down, show on scroll up
-        function setupSmartHeader() {
+        function setupScrollHeader() {
             var header = document.getElementById('header');
             var lastScroll = 0;
             var scrollThreshold = 100;
@@ -1277,19 +1296,15 @@
             window.addEventListener('scroll', function() {
                 var currentScroll = window.pageYOffset;
 
-                // Don't hide header if at top of page
                 if (currentScroll <= 0) {
                     header.classList.remove('hidden');
                     header.classList.remove('scrolled');
                     return;
                 }
 
-                // Show/hide header based on scroll direction
                 if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
-                    // Scrolling down - hide header
                     header.classList.add('hidden');
                 } else {
-                    // Scrolling up - show header
                     header.classList.remove('hidden');
                     header.classList.add('scrolled');
                 }
@@ -1436,8 +1451,13 @@
                 var countEl = document.getElementById(city.id + 'Count');
                 var countCardEl = document.getElementById(city.id + 'CountCard');
                 if (countEl) countEl.textContent = city.count;
-                if (countCardEl) countCardEl.textContent = city.count + ' моделей';
+                if (countCardEl) countCardEl.textContent = city.count + ' девушек';
             });
+        }
+
+        function declension(number, titles) {
+            cases = [2, 0, 1, 1, 1, 2];
+            return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
         }
 
         function renderModels(filter) {
@@ -1446,12 +1466,14 @@
             var html = '';
             for (var i = 0; i < filtered.length; i++) {
                 var p = filtered[i];
+                var ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']);
+                
                 html += '<div class="model-card" data-id="' + p.id + '">' +
                     '<div class="model-image-container"><img src="' + p.images[0] + '" alt="' + p.name + '" class="model-image"></div>' +
                     '<div class="model-info">' +
                     '<div class="model-name">' + p.name + '</div>' +
                     '<div class="model-stats">' +
-                    '<div class="stat-item"><span class="stat-icon">🎂</span>' + p.age + ' лет</div>' +
+                    '<div class="stat-item"><span class="stat-icon">🎂</span>' + ageText + '</div>' +
                     '<div class="stat-item"><span class="stat-icon">📏</span>' + p.height + ' см</div>' +
                     '<div class="stat-item"><span class="stat-icon">⚖️</span>' + p.weight + ' кг</div>' +
                     '<div class="stat-item"><span class="stat-icon">👙</span>' + p.bust + ' размер</div>' +
@@ -1477,10 +1499,12 @@
 
         function openProfileModal(index) {
             currentModalProfile = profiles[index];
+            var ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год', 'года', 'лет']);
+            
             document.getElementById('modalImage').src = currentModalProfile.images[0];
             document.getElementById('modalName').textContent = currentModalProfile.name;
             document.getElementById('modalStats').innerHTML =
-                '<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color: var(--gray); font-size: 12px;">Возраст</div><div>' + currentModalProfile.age + ' лет</div></div></div>' +
+                '<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color: var(--gray); font-size: 12px;">Возраст</div><div>' + ageText + '</div></div></div>' +
                 '<div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color: var(--gray); font-size: 12px;">Рост</div><div>' + currentModalProfile.height + ' см</div></div></div>' +
                 '<div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color: var(--gray); font-size: 12px;">Вес</div><div>' + currentModalProfile.weight + ' кг</div></div></div>' +
                 '<div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color: var(--gray); font-size: 12px;">Грудь</div><div>' + currentModalProfile.bust + ' размер</div></div></div>' +
