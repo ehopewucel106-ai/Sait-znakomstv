@@ -21,10 +21,7 @@
             --darker: #0f0f1a;
             --light: #ffffff;
             --gray: #6b7280;
-            --gray-light: #f3f4f6;
             --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
             --gradient: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
         }
 
@@ -160,21 +157,25 @@
         .btn-order {
             background: var(--gradient);
             color: white;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 600;
+            padding: 18px 32px;
+            border-radius: 14px;
+            font-weight: 700;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
         }
 
         .btn-order:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.6);
         }
 
-        /* Header - Sticky */
+        /* Header */
         .header {
             position: fixed;
             top: 0;
@@ -188,7 +189,7 @@
             backdrop-filter: blur(20px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
         }
 
         .header.scrolled {
@@ -209,11 +210,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .header.scrolled .logo {
-            font-size: 22px;
         }
 
         .logo-icon {
@@ -227,13 +223,6 @@
             font-size: 14px;
             font-weight: 700;
             color: white;
-            transition: all 0.3s ease;
-        }
-
-        .header.scrolled .logo-icon {
-            width: 32px;
-            height: 32px;
-            font-size: 12px;
         }
 
         .nav-container {
@@ -243,21 +232,12 @@
             display: flex;
             align-items: center;
             gap: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .header.scrolled .nav-container {
-            gap: 30px;
         }
 
         .nav-links {
             display: flex;
             gap: 40px;
             position: relative;
-        }
-
-        .header.scrolled .nav-links {
-            gap: 30px;
         }
 
         .nav-links a {
@@ -318,8 +298,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .city-dropdown-list {
@@ -332,13 +310,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 16px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            color: var(--light);
         }
 
         .city-dropdown-item:hover {
@@ -347,7 +323,7 @@
         }
 
         .city-dropdown-icon {
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .city-dropdown-name {
@@ -361,25 +337,6 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 4px 10px;
             border-radius: 20px;
-        }
-
-        .admin-btn {
-            padding: 12px 24px;
-            background: rgba(233, 30, 99, 0.15);
-            border: 1px solid rgba(233, 30, 99, 0.4);
-            color: var(--primary);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .admin-btn:hover {
-            background: rgba(233, 30, 99, 0.25);
-            border-color: var(--primary);
         }
 
         /* Hero Section */
@@ -705,7 +662,7 @@
         .profile-modal-content {
             background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
             border-radius: 24px;
-            max-width: 1000px;
+            max-width: 900px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -857,52 +814,12 @@
             background-clip: text;
         }
 
-        .modal-operators {
-            margin-bottom: 28px;
-        }
-
-        .modal-operators h4 {
-            font-size: 15px;
-            margin-bottom: 18px;
-            color: var(--gray);
-        }
-
-        .operator-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .operator-btn {
-            flex: 1;
-            min-width: 150px;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: 500;
-            font-size: 15px;
-        }
-
-        .operator-btn:hover {
-            background: rgba(233, 30, 99, 0.2);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
         /* Chat Modal */
         .chat-modal {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            width: 420px;
+            width: 400px;
             background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
             border-radius: 20px;
             border: 1px solid rgba(233, 30, 99, 0.3);
@@ -910,7 +827,6 @@
             flex-direction: column;
             z-index: 3000;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
         }
 
         .chat-modal.active {
@@ -919,14 +835,8 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .chat-header {
@@ -936,6 +846,7 @@
             justify-content: space-between;
             align-items: center;
             background: linear-gradient(135deg, rgba(233, 30, 99, 0.15) 0%, rgba(156, 39, 176, 0.15) 100%);
+            border-radius: 20px 20px 0 0;
         }
 
         .chat-header-info {
@@ -945,144 +856,50 @@
         }
 
         .operator-avatar {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 20px;
+            font-size: 18px;
             position: relative;
-            flex-shrink: 0;
         }
 
         .operator-status {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: var(--success);
             border-radius: 50%;
             position: absolute;
             bottom: 2px;
             right: 2px;
             border: 3px solid #1a1a2e;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .operator-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .operator-name {
-            font-weight: 600;
-            font-size: 15px;
-        }
-
-        .operator-status-text {
-            font-size: 12px;
-            color: var(--success);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .chat-header-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-header-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .chat-header-btn:hover {
-            background: rgba(233, 30, 99, 0.5);
         }
 
         .chat-body {
             padding: 20px 24px;
-            height: 380px;
+            height: 320px;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
         }
 
         .chat-message {
+            margin-bottom: 16px;
             display: flex;
             gap: 12px;
-            max-width: 85%;
-            animation: messageSlide 0.3s ease;
         }
 
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .chat-message.operator {
-            align-self: flex-start;
-        }
-
-        .chat-message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .message-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .chat-message.user .message-avatar {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .message-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .chat-message.operator { flex-direction: row; }
+        .chat-message.user { flex-direction: row-reverse; }
 
         .chat-bubble {
+            max-width: 80%;
             padding: 14px 18px;
             border-radius: 18px;
             font-size: 14px;
             line-height: 1.5;
-            word-wrap: break-word;
         }
 
         .chat-message.operator .chat-bubble {
@@ -1095,22 +912,13 @@
             border-bottom-right-radius: 4px;
         }
 
-        .message-time {
-            font-size: 11px;
-            color: var(--gray);
-            padding: 0 4px;
-        }
-
-        .chat-message.user .message-time {
-            text-align: right;
-        }
-
         .chat-input-area {
-            padding: 16px 24px;
+            padding: 18px 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             gap: 12px;
             background: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 20px 20px;
         }
 
         .chat-input {
@@ -1118,26 +926,20 @@
             padding: 14px 18px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
+            border-radius: 14px;
             color: white;
             font-size: 14px;
-            transition: all 0.3s ease;
         }
 
         .chat-input:focus {
             outline: none;
             border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .chat-input::placeholder {
-            color: var(--gray);
         }
 
         .chat-send {
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            border-radius: 14px;
             background: var(--gradient);
             border: none;
             color: white;
@@ -1146,244 +948,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .chat-send:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.4);
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--darker);
-            display: none;
-            z-index: 4000;
-            overflow-y: auto;
-        }
-
-        .admin-panel.active {
-            display: block;
-        }
-
-        .admin-header {
-            padding: 24px 40px;
-            background: rgba(233, 30, 99, 0.1);
-            border-bottom: 1px solid rgba(233, 30, 99, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .admin-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-        }
-
-        .admin-content {
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-        }
-
-        .admin-tab {
-            padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--gray);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .admin-tab.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        .admin-card {
-            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
-            border-radius: 18px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .admin-card h3 {
-            margin-bottom: 25px;
             font-size: 18px;
         }
 
-        .form-group {
-            margin-bottom: 22px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--gray);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: white;
-            font-size: 15px;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .image-upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 14px;
-            padding: 40px 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .image-upload-area:hover {
-            border-color: var(--primary);
-            background: rgba(233, 30, 99, 0.05);
-        }
-
-        .uploaded-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 12px;
-            margin-top: 18px;
-        }
-
-        .uploaded-image {
-            position: relative;
-            aspect-ratio: 1;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .uploaded-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .uploaded-image-remove {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--danger);
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .profiles-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .profile-list-item {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 18px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 14px;
-        }
-
-        .profile-list-item img {
-            width: 65px;
-            height: 65px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        .profile-list-info {
-            flex: 1;
-        }
-
-        .profile-list-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .profile-list-details {
-            font-size: 13px;
-            color: var(--gray);
-        }
-
-        .profile-list-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn.edit {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-        }
-
-        .action-btn.delete {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--danger);
-        }
-
-        .action-btn:hover {
-            transform: scale(1.1);
+        .chat-send:hover {
+            transform: scale(1.05);
         }
 
         /* Footer */
@@ -1418,123 +987,32 @@
                 position: static;
                 transform: none;
             }
-
             .header {
                 flex-wrap: wrap;
                 gap: 15px;
                 padding: 15px 20px;
             }
-
-            .header.scrolled {
-                padding: 12px 20px;
-            }
-
-            .logo {
-                order: 1;
-            }
-
-            .nav-container {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-            }
-
-            .admin-btn {
-                order: 2;
-            }
+            .logo { order: 1; }
+            .nav-container { order: 2; width: 100%; justify-content: center; }
         }
 
         @media (max-width: 768px) {
-            .hero {
-                padding: 130px 20px 70px;
-            }
-
-            .hero h1 {
-                font-size: 38px;
-            }
-
-            .section {
-                padding: 60px 20px;
-            }
-
-            .models-grid,
-            .services-grid,
-            .cities-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-modal-body {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-images {
-                height: 350px;
-            }
-
-            .modal-details {
-                padding: 25px;
-            }
-
-            .chat-modal {
-                width: calc(100% - 20px);
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-            }
-
-            .admin-content {
-                padding: 20px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 25px;
-            }
-
-            .city-dropdown {
-                min-width: 240px;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .model-card {
-            animation: fadeIn 0.6s ease forwards;
+            .hero { padding: 130px 20px 70px; }
+            .hero h1 { font-size: 38px; }
+            .section { padding: 60px 20px; }
+            .models-grid, .services-grid, .cities-grid { grid-template-columns: 1fr; }
+            .profile-modal-body { grid-template-columns: 1fr; }
+            .modal-images { height: 350px; }
+            .modal-details { padding: 25px; }
+            .chat-modal { width: calc(100% - 20px); left: 10px; right: 10px; bottom: 10px; }
+            .nav-links { gap: 25px; }
+            .city-dropdown { min-width: 240px; }
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--darker);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
-
-        .chat-body::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-body::-webkit-scrollbar-thumb {
-            background: rgba(233, 30, 99, 0.5);
-            border-radius: 3px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -1568,7 +1046,6 @@
                 <a href="#" class="nav-link" id="cityNavLink">Города</a>
             </nav>
             
-            <!-- City Dropdown -->
             <div class="city-dropdown" id="cityDropdown">
                 <div class="city-dropdown-title">📍 Выберите город</div>
                 <div class="city-dropdown-list">
@@ -1590,8 +1067,6 @@
                 </div>
             </div>
         </div>
-        
-        <button class="admin-btn" id="adminBtn">🔐 Админ</button>
     </header>
 
     <!-- Hero Section -->
@@ -1601,7 +1076,7 @@
         <p>Эксклюзивное сообщество для тех, кто ценит качество, стиль и настоящие эмоции</p>
         <div class="hero-buttons">
             <a href="#models" class="btn btn-primary nav-link-btn" data-section="models">Смотреть Моделей</a>
-            <button class="btn btn-secondary" id="heroChatBtn">💬 Онлайн Чат</button>
+            <button class="btn btn-secondary" id="heroChatBtn">💬 Чат</button>
         </div>
     </section>
 
@@ -1615,44 +1090,23 @@
             <div class="service-card">
                 <div class="service-icon">💎</div>
                 <h3>VIP Встреча</h3>
-                <p>Эксклюзивное сопровождение на мероприятиях, ужинах и деловых встречах. Полная конфиденциальность гарантирована.</p>
+                <p>Эксклюзивное сопровождение на мероприятиях и деловых встречах.</p>
                 <div class="service-price">от 15 000 ₽</div>
-                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+                <button class="btn btn-order" onclick="openChat()">Заказать</button>
             </div>
             <div class="service-card">
                 <div class="service-icon">🌹</div>
                 <h3>Романтический Вечер</h3>
-                <p>Незабываемый вечер в приятной компании. Индивидуальная программа под ваши пожелания.</p>
+                <p>Незабываемый вечер в приятной компании.</p>
                 <div class="service-price">от 20 000 ₽</div>
-                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+                <button class="btn btn-order" onclick="openChat()">Заказать</button>
             </div>
             <div class="service-card">
                 <div class="service-icon">✈️</div>
                 <h3>Выезд за Город</h3>
-                <p>Сопровождение в поездки по России и за рубеж. Все расходы оплачиваются отдельно.</p>
+                <p>Сопровождение в поездки по России и за рубеж.</p>
                 <div class="service-price">от 50 000 ₽</div>
-                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🎉</div>
-                <h3>Праздничное Мероприятие</h3>
-                <p>Украшение вашего праздника яркой компанией. Групповые и индивидуальные заказы.</p>
-                <div class="service-price">от 25 000 ₽</div>
-                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">📸</div>
-                <h3>Фотосессия</h3>
-                <p>Профессиональное сопровождение на фотосъёмках. Опыт работы с фотографами.</p>
-                <div class="service-price">от 10 000 ₽</div>
-                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">⭐</div>
-                <h3>Персональный Компаньон</h3>
-                <p>Долгосрочное сопровождение на регулярной основе. Специальные условия для постоянных клиентов.</p>
-                <div class="service-price">от 100 000 ₽</div>
-                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+                <button class="btn btn-order" onclick="openChat()">Заказать</button>
             </div>
         </div>
     </section>
@@ -1715,14 +1169,7 @@
                         <div class="modal-donation-label">💎 Стоимость услуги</div>
                         <div class="modal-donation-amount" id="modalPrice"></div>
                     </div>
-                    <button class="btn btn-order" id="modalOrderBtn" style="margin-bottom: 25px;">Заказать</button>
-                    <div class="modal-operators">
-                        <h4>💬 Онлайн чат с оператором</h4>
-                        <div class="operator-buttons">
-                            <button class="operator-btn" id="operatorBtn1">👤 <span id="operatorName1">Оператор 1</span></button>
-                            <button class="operator-btn" id="operatorBtn2">👤 <span id="operatorName2">Оператор 2</span></button>
-                        </div>
-                    </div>
+                    <button class="btn btn-order" id="modalOrderBtn">📞 Заказать</button>
                 </div>
             </div>
         </div>
@@ -1733,130 +1180,21 @@
         <div class="chat-header">
             <div class="chat-header-info">
                 <div class="operator-avatar" id="chatAvatar">A</div>
-                <div class="operator-info">
-                    <div class="operator-name" id="chatOperatorName">Оператор 1</div>
-                    <div class="operator-status-text">
-                        <span>●</span> Онлайн
-                    </div>
+                <div>
+                    <div style="font-weight: 600;" id="chatOperatorName">Оператор</div>
+                    <div style="font-size: 12px; color: var(--success);">● Онлайн</div>
                 </div>
             </div>
-            <div class="chat-header-actions">
-                <button class="chat-header-btn" id="closeChat">×</button>
+            <button class="modal-close" id="closeChat" style="position: static; width: 36px; height: 36px; font-size: 18px;">×</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message operator">
+                <div class="chat-bubble">Здравствуйте! Чем я могу вам помочь? 😊</div>
             </div>
         </div>
-        <div class="chat-body" id="chatBody"></div>
         <div class="chat-input-area">
             <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
             <button class="chat-send" id="chatSend">➤</button>
-        </div>
-    </div>
-
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-header">
-            <h2 class="admin-title">🔐 Панель Администратора</h2>
-            <button class="btn btn-secondary" id="closeAdmin">Закрыть</button>
-        </div>
-        <div class="admin-content">
-            <div class="admin-tabs">
-                <div class="admin-tab active" data-tab="profiles">Модели</div>
-                <div class="admin-tab" data-tab="add">Добавить</div>
-                <div class="admin-tab" data-tab="settings">Настройки</div>
-            </div>
-
-            <div id="adminProfiles" class="admin-tab-content">
-                <div class="admin-card">
-                    <h3>Управление моделями</h3>
-                    <div class="profiles-list" id="adminProfilesList"></div>
-                </div>
-            </div>
-
-            <div id="adminAdd" class="admin-tab-content" style="display: none;">
-                <div class="admin-card">
-                    <h3 id="addFormTitle">Добавить новую модель</h3>
-                    <form id="profileForm">
-                        <input type="hidden" id="editProfileId">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Имя</label>
-                                <input type="text" class="form-input" id="profileName" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Возраст</label>
-                                <input type="number" class="form-input" id="profileAge" min="18" max="50" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Рост (см)</label>
-                                <input type="number" class="form-input" id="profileHeight" min="150" max="200" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Вес (кг)</label>
-                                <input type="number" class="form-input" id="profileWeight" min="40" max="100" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Размер груди</label>
-                                <input type="text" class="form-input" id="profileBust" placeholder="Например: 3" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Город</label>
-                                <select class="form-select" id="profileCity" required>
-                                    <option value="pervomaisk">Первомайск</option>
-                                    <option value="lugansk">Луганск</option>
-                                    <option value="stakhanov">Стаханов</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Описание</label>
-                            <textarea class="form-textarea" id="profileDescription" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Цена (₽)</label>
-                            <input type="number" class="form-input" id="profilePrice" min="1000" value="15000" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Фотографии</label>
-                            <div class="image-upload-area" id="imageUploadArea">
-                                <div style="font-size: 40px; margin-bottom: 10px;">📷</div>
-                                <div>Нажмите для загрузки фото</div>
-                            </div>
-                            <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
-                            <div class="uploaded-images" id="uploadedImages"></div>
-                        </div>
-                        <div style="display: flex; gap: 15px; margin-top: 25px;">
-                            <button type="submit" class="btn btn-primary" style="flex: 1;">Сохранить</button>
-                            <button type="button" class="btn btn-secondary" id="resetFormBtn">Отмена</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div id="adminSettings" class="admin-tab-content" style="display: none;">
-                <div class="admin-card">
-                    <h3>Настройки операторов</h3>
-                    <div class="form-group">
-                        <label class="form-label">Оператор 1 - Имя</label>
-                        <input type="text" class="form-input" id="operator1Name" value="Анна">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Оператор 1 - Telegram</label>
-                        <input type="text" class="form-input" id="operator1Telegram" value="@operator1">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Оператор 2 - Имя</label>
-                        <input type="text" class="form-input" id="operator2Name" value="Мария">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Оператор 2 - Telegram</label>
-                        <input type="text" class="form-input" id="operator2Telegram" value="@operator2">
-                    </div>
-                    <button class="btn btn-primary" id="saveSettingsBtn">Сохранить настройки</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1907,12 +1245,46 @@
                 description: 'Нежная и романтичная особа. Ценю искренность и честность в отношениях.',
                 price: 15000,
                 images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/19d64067c-fabc-4e3e-bd45-68f58319d4d1.png']
+            },
+            {
+                id: 4,
+                name: 'Анастасия',
+                age: 23,
+                height: 170,
+                weight: 53,
+                bust: '2',
+                city: 'pervomaisk',
+                cityName: 'Первомайск',
+                description: 'Изысканная и воспитанная девушка с безупречными манерами.',
+                price: 15000,
+                images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1a6879a29-2fc5-413c-bcb0-60c61a2cc6c0.png']
+            },
+            {
+                id: 5,
+                name: 'Дарья',
+                age: 20,
+                height: 165,
+                weight: 50,
+                bust: '2',
+                city: 'lugansk',
+                cityName: 'Луганск',
+                description: 'Весёлая и игривая девушка с заразительной улыбкой.',
+                price: 15000,
+                images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1fc3dc209-3d47-4b30-8cb5-a8149c8e1d70.png']
+            },
+            {
+                id: 6,
+                name: 'Ольга',
+                age: 25,
+                height: 174,
+                weight: 58,
+                bust: '3',
+                city: 'stakhanov',
+                cityName: 'Стаханов',
+                description: 'Уверенная в себе и независимая девушка.',
+                price: 15000,
+                images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1d83dba52-31df-49e9-91e4-f366efa97808.png']
             }
-        ];
-
-        let operators = [
-            { name: 'Анна', telegram: '@operator1' },
-            { name: 'Мария', telegram: '@operator2' }
         ];
 
         let cities = [
@@ -1922,11 +1294,8 @@
         ];
 
         let chatMessages = [];
-        let currentChatOperator = 0;
-        let chatUserId = 'user_' + Math.random().toString(36).substr(2, 9);
         let currentModalProfile = null;
         let currentModalImageIndex = 0;
-        let uploadedImages = [];
         let sliderInterval = null;
         let cityDropdownOpen = false;
 
@@ -1940,15 +1309,12 @@
         })();
 
         document.addEventListener('DOMContentLoaded', function() {
-            loadFromStorage();
             updateCitiesCount();
             renderModels();
             setupEventListeners();
             setupScrollHeader();
-            loadChatMessages();
         });
 
-        // Sticky Header
         function setupScrollHeader() {
             var header = document.getElementById('header');
             window.addEventListener('scroll', function() {
@@ -1991,7 +1357,7 @@
                 });
             });
 
-            // City dropdown items
+            // City dropdown
             document.querySelectorAll('.city-dropdown-item, .city-card').forEach(function(item) {
                 item.addEventListener('click', function() {
                     var city = this.dataset.city;
@@ -2004,16 +1370,11 @@
                 });
             });
 
-            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.nav-container')) {
                     closeCityDropdown();
                 }
             });
-
-            // Admin
-            document.getElementById('adminBtn').addEventListener('click', openAdmin);
-            document.getElementById('closeAdmin').addEventListener('click', closeAdmin);
 
             // Filters
             document.querySelectorAll('.filter-btn').forEach(function(btn) {
@@ -2028,38 +1389,15 @@
             document.getElementById('closeProfileModal').addEventListener('click', closeProfileModal);
             document.getElementById('prevImage').addEventListener('click', prevModalImage);
             document.getElementById('nextImage').addEventListener('click', nextModalImage);
-            document.getElementById('modalOrderBtn').addEventListener('click', function() { openChat(currentChatOperator); });
+            document.getElementById('modalOrderBtn').addEventListener('click', function() { openChat(); });
 
             // Chat
-            document.getElementById('heroChatBtn').addEventListener('click', function() { openChat(0); });
+            document.getElementById('heroChatBtn').addEventListener('click', function() { openChat(); });
             document.getElementById('closeChat').addEventListener('click', closeChat);
             document.getElementById('chatSend').addEventListener('click', sendChatMessage);
             document.getElementById('chatInput').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') sendChatMessage();
             });
-            document.getElementById('operatorBtn1').addEventListener('click', function() { openChat(0); });
-            document.getElementById('operatorBtn2').addEventListener('click', function() { openChat(1); });
-
-            // Admin tabs
-            document.querySelectorAll('.admin-tab').forEach(function(tab) {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
-                    this.classList.add('active');
-                    document.getElementById('admin' + this.dataset.tab.charAt(0).toUpperCase() + this.dataset.tab.slice(1)).style.display = 'block';
-                });
-            });
-
-            // Profile form
-            document.getElementById('profileForm').addEventListener('submit', saveProfile);
-            document.getElementById('resetFormBtn').addEventListener('click', resetForm);
-            document.getElementById('imageUploadArea').addEventListener('click', function() {
-                document.getElementById('imageInput').click();
-            });
-            document.getElementById('imageInput').addEventListener('change', handleImageUpload);
-
-            // Settings
-            document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
 
             // Close modals
             document.getElementById('profileModal').addEventListener('click', function(e) {
@@ -2068,216 +1406,32 @@
         }
 
         // Chat Functions
-        function loadChatMessages() {
-            var stored = localStorage.getItem('chatMessages_' + chatUserId);
-            if (stored) {
-                chatMessages = JSON.parse(stored);
-                renderChatMessages();
-            }
-        }
-
-        function saveChatMessages() {
-            localStorage.setItem('chatMessages_' + chatUserId, JSON.stringify(chatMessages));
-        }
-
-        function renderChatMessages() {
-            var chatBody = document.getElementById('chatBody');
-            chatBody.innerHTML = '';
-            if (chatMessages.length === 0) {
-                chatBody.innerHTML = '<div style="text-align: center; color: var(--gray); padding: 40px;"><div style="font-size: 40px; margin-bottom: 10px;">💬</div><div>Начните чат</div></div>';
-                return;
-            }
-            chatMessages.forEach(function(msg) {
-                var messageEl = document.createElement('div');
-                messageEl.className = 'chat-message ' + msg.sender;
-                messageEl.innerHTML = '<div class="message-avatar">' + (msg.sender === 'operator' ? msg.operatorName.charAt(0) : 'Я') + '</div><div class="message-content"><div class="chat-bubble">' + escapeHtml(msg.text) + '</div></div>';
-                chatBody.appendChild(messageEl);
-            });
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
-
-        function sendChatMessage() {
-            var input = document.getElementById('chatInput');
-            var message = input.value.trim();
-            if (!message) return;
-            var now = new Date();
-            var time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-            chatMessages.push({ id: Date.now(), sender: 'user', text: message, time: time });
-            saveChatMessages();
-            renderChatMessages();
-            input.value = '';
-            setTimeout(function() {
-                var operator = operators[currentChatOperator];
-                chatMessages.push({ id: Date.now() + 1, sender: 'operator', text: 'Спасибо за сообщение! Я свяжусь с вами soon. 😊', time: time, operatorName: operator.name });
-                saveChatMessages();
-                renderChatMessages();
-            }, 1500);
-        }
-
-        function openChat(operatorIndex) {
-            currentChatOperator = operatorIndex;
-            var operator = operators[operatorIndex];
-            document.getElementById('chatOperatorName').textContent = operator.name;
-            document.getElementById('chatAvatar').textContent = operator.name.charAt(0);
+        function openChat() {
             document.getElementById('chatModal').classList.add('active');
-            loadChatMessages();
+            if (chatMessages.length === 0) {
+                var chatBody = document.getElementById('chatBody');
+                chatBody.innerHTML = '<div class="chat-message operator"><div class="chat-bubble">Здравствуйте! Чем я могу вам помочь? 😊</div></div>';
+            }
         }
 
         function closeChat() {
             document.getElementById('chatModal').classList.remove('active');
         }
 
-        // Admin Functions
-        function openAdmin() {
-            var password = prompt('Введите пароль оператора:');
-            if (password === 'admin123') {
-                document.getElementById('adminPanel').classList.add('active');
-                renderAdminProfilesList();
-            } else if (password !== null) {
-                alert('Неверный пароль!');
-            }
-        }
+        function sendChatMessage() {
+            var input = document.getElementById('chatInput');
+            var message = input.value.trim();
+            if (!message) return;
 
-        function closeAdmin() {
-            document.getElementById('adminPanel').classList.remove('active');
-        }
+            var chatBody = document.getElementById('chatBody');
+            chatBody.innerHTML += '<div class="chat-message user"><div class="chat-bubble">' + escapeHtml(message) + '</div></div>';
+            input.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
 
-        function renderAdminProfilesList() {
-            var list = document.getElementById('adminProfilesList');
-            var html = '';
-            for (var i = 0; i < profiles.length; i++) {
-                var p = profiles[i];
-                html += '<div class="profile-list-item">' +
-                    '<img src="' + p.images[0] + '" alt="' + p.name + '">' +
-                    '<div class="profile-list-info">' +
-                    '<div class="profile-list-name">' + p.name + ', ' + p.age + ' лет</div>' +
-                    '<div class="profile-list-details">' + p.cityName + ' • ' + p.price.toLocaleString() + ' ₽</div>' +
-                    '</div>' +
-                    '<div class="profile-list-actions">' +
-                    '<button class="action-btn edit" onclick="editProfile(' + i + ')">✏️</button>' +
-                    '<button class="action-btn delete" onclick="deleteProfile(' + i + ')">🗑️</button>' +
-                    '</div></div>';
-            }
-            list.innerHTML = html;
-        }
-
-        function editProfile(index) {
-            var p = profiles[index];
-            document.getElementById('editProfileId').value = index;
-            document.getElementById('profileName').value = p.name;
-            document.getElementById('profileAge').value = p.age;
-            document.getElementById('profileHeight').value = p.height;
-            document.getElementById('profileWeight').value = p.weight;
-            document.getElementById('profileBust').value = p.bust;
-            document.getElementById('profileCity').value = p.city;
-            document.getElementById('profileDescription').value = p.description;
-            document.getElementById('profilePrice').value = p.price;
-            uploadedImages = p.images.slice();
-            renderUploadedImages();
-            document.getElementById('addFormTitle').textContent = 'Редактировать: ' + p.name;
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
-            document.querySelector('.admin-tab[data-tab="add"]').classList.add('active');
-            document.getElementById('adminAdd').style.display = 'block';
-        }
-
-        function deleteProfile(index) {
-            if (confirm('Удалить эту модель?')) {
-                profiles.splice(index, 1);
-                saveToStorage();
-                updateCitiesCount();
-                renderAdminProfilesList();
-                renderModels();
-            }
-        }
-
-        function saveProfile(e) {
-            e.preventDefault();
-            var editId = document.getElementById('editProfileId').value;
-            var citySelect = document.getElementById('profileCity');
-            var cityName = citySelect.options[citySelect.selectedIndex].text;
-            var profileData = {
-                id: editId ? profiles[editId].id : Date.now(),
-                name: document.getElementById('profileName').value,
-                age: parseInt(document.getElementById('profileAge').value),
-                height: parseInt(document.getElementById('profileHeight').value),
-                weight: parseInt(document.getElementById('profileWeight').value),
-                bust: document.getElementById('profileBust').value,
-                city: document.getElementById('profileCity').value,
-                cityName: cityName,
-                description: document.getElementById('profileDescription').value,
-                price: parseInt(document.getElementById('profilePrice').value),
-                images: uploadedImages.length > 0 ? uploadedImages : ['https://via.placeholder.com/400x500']
-            };
-            if (editId) {
-                profiles[editId] = profileData;
-            } else {
-                profiles.push(profileData);
-            }
-            saveToStorage();
-            updateCitiesCount();
-            renderAdminProfilesList();
-            renderModels();
-            resetForm();
-            alert('Модель сохранена!');
-        }
-
-        function resetForm() {
-            document.getElementById('profileForm').reset();
-            document.getElementById('editProfileId').value = '';
-            document.getElementById('addFormTitle').textContent = 'Добавить модель';
-            document.getElementById('profilePrice').value = '15000';
-            uploadedImages = [];
-            renderUploadedImages();
-        }
-
-        function handleImageUpload(e) {
-            var files = e.target.files;
-            for (var i = 0; i < files.length; i++) {
-                var reader = new FileReader();
-                reader.onload = (function(idx) {
-                    return function(evt) {
-                        uploadedImages.push(evt.target.result);
-                        renderUploadedImages();
-                    };
-                })(i);
-                reader.readAsDataURL(files[i]);
-            }
-        }
-
-        function renderUploadedImages() {
-            var container = document.getElementById('uploadedImages');
-            var html = '';
-            for (var i = 0; i < uploadedImages.length; i++) {
-                html += '<div class="uploaded-image"><img src="' + uploadedImages[i] + '" alt="Photo"><button type="button" class="uploaded-image-remove" onclick="removeUploadedImage(' + i + ')">×</button></div>';
-            }
-            container.innerHTML = html;
-        }
-
-        function removeUploadedImage(index) {
-            uploadedImages.splice(index, 1);
-            renderUploadedImages();
-        }
-
-        function saveSettings() {
-            operators[0].name = document.getElementById('operator1Name').value;
-            operators[0].telegram = document.getElementById('operator1Telegram').value;
-            operators[1].name = document.getElementById('operator2Name').value;
-            operators[1].telegram = document.getElementById('operator2Telegram').value;
-            saveToStorage();
-            alert('Настройки сохранены!');
-        }
-
-        function saveToStorage() {
-            localStorage.setItem('profiles', JSON.stringify(profiles));
-            localStorage.setItem('operators', JSON.stringify(operators));
-        }
-
-        function loadFromStorage() {
-            var storedProfiles = localStorage.getItem('profiles');
-            var storedOperators = localStorage.getItem('operators');
-            if (storedProfiles) profiles = JSON.parse(storedProfiles);
-            if (storedOperators) operators = JSON.parse(storedOperators);
+            setTimeout(function() {
+                chatBody.innerHTML += '<div class="chat-message operator"><div class="chat-bubble">Спасибо за сообщение! Я свяжусь с вами в ближайшее время. 😊</div></div>';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1500);
         }
 
         function toggleCityDropdown() {
@@ -2334,7 +1488,7 @@
                     '</div>' +
                     '<p class="model-description">' + p.description.substring(0, 80) + '...</p>' +
                     '<div class="model-price"><span class="price-label">Стоимость:</span><span class="price-value">' + p.price.toLocaleString() + ' ₽</span></div>' +
-                    '<button class="btn btn-order" onclick="event.stopPropagation(); openChat(0)">Заказать</button>' +
+                    '<button class="btn btn-order" onclick="event.stopPropagation(); openChat()">Заказать</button>' +
                     '</div></div>';
             }
             grid.innerHTML = html;
@@ -2364,8 +1518,6 @@
                 '<div class="modal-stat"><div class="modal-stat-icon">📍</div><div><div style="color: var(--gray); font-size: 12px;">Город</div><div>' + currentModalProfile.cityName + '</div></div></div>';
             document.getElementById('modalDescription').textContent = currentModalProfile.description;
             document.getElementById('modalPrice').textContent = currentModalProfile.price.toLocaleString() + ' ₽';
-            document.getElementById('operatorName1').textContent = operators[0].name;
-            document.getElementById('operatorName2').textContent = operators[1].name;
             document.getElementById('profileModal').classList.add('active');
             startImageSlider();
         }
