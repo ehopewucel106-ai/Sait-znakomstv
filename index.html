@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BABYGIRL_LNR - 18+</title>
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.0/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e91e63;
+            --primary-dark: #c2185b;
+            --secondary: #9c27b0;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --light: #ffffff;
+            --gray: #6b7280;
+            --gray-light: #f3f4f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gradient: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Age Verification Modal */
+        .age-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .age-modal.hidden {
+            display: none !important;
+        }
+
+        .age-content {
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            padding: 50px 40px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            box-shadow: 0 25px 50px rgba(233, 30, 99, 0.2);
+        }
+
+        .age-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(233, 30, 99, 0.4);
+            position: relative;
+        }
+
+        .age-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .age-plus {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            position: absolute;
+            top: 25px;
+            right: 22px;
+        }
+
+        .age-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .age-text {
+            color: var(--gray);
+            margin-bottom: 35px;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .age-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--gray);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--light);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-order {
+            background: var(--gradient);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        /* Header - Sticky */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.scrolled {
+            padding: 15px 40px;
+            background: rgba(15, 15, 26, 0.98);
+            border-bottom: 1px solid rgba(233, 30, 99, 0.3);
+            box-shadow: 0 4px 30px rgba(233, 30, 99, 0.15);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled .logo {
+            font-size: 22px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled .logo-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        .nav-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled .nav-container {
+            gap: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            position: relative;
+        }
+
+        .header.scrolled .nav-links {
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--light);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* City Dropdown */
+        .city-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+
+        .city-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(15px);
+        }
+
+        .city-dropdown-title {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .city-dropdown-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .city-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--light);
+        }
+
+        .city-dropdown-item:hover {
+            background: rgba(233, 30, 99, 0.15);
+            transform: translateX(5px);
+        }
+
+        .city-dropdown-icon {
+            font-size: 22px;
+        }
+
+        .city-dropdown-name {
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .city-dropdown-count {
+            font-size: 12px;
+            color: var(--gray);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .admin-btn {
+            padding: 12px 24px;
+            background: rgba(233, 30, 99, 0.15);
+            border: 1px solid rgba(233, 30, 99, 0.4);
+            color: var(--primary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-btn:hover {
+            background: rgba(233, 30, 99, 0.25);
+            border-color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 40px 100px;
+            text-align: center;
+            background: radial-gradient(ellipse at top, rgba(233, 30, 99, 0.12) 0%, transparent 50%);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(233, 30, 99, 0.1);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 45px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover {
+            border-color: rgba(233, 30, 99, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(233, 30, 99, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .service-price {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        /* Models Section */
+        .filters-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .model-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+        }
+
+        .model-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(233, 30, 99, 0.3);
+            box-shadow: 0 20px 40px rgba(233, 30, 99, 0.15);
+        }
+
+        .model-image-container {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+        }
+
+        .model-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .model-card:hover .model-image {
+            transform: scale(1.05);
+        }
+
+        .model-info {
+            padding: 25px;
+        }
+
+        .model-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .model-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .stat-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(233, 30, 99, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .model-description {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .model-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .price-label {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .price-value {
+            font-size: 22px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* City Section */
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .city-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 18px;
+            padding: 35px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .city-card:hover {
+            border-color: rgba(233, 30, 99, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.15);
+        }
+
+        .city-icon {
+            font-size: 52px;
+            margin-bottom: 18px;
+        }
+
+        .city-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .city-count {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Profile Modal */
+        .profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .profile-modal.active {
+            display: flex;
+        }
+
+        .profile-modal-content {
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 24px;
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(233, 30, 99, 0.5);
+            border-color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .profile-modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .modal-images {
+            position: relative;
+            height: 550px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-image-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .modal-image-nav:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .modal-image-nav.prev {
+            left: 15px;
+        }
+
+        .modal-image-nav.next {
+            right: 15px;
+        }
+
+        .modal-details {
+            padding: 40px;
+        }
+
+        .modal-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .modal-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .modal-stat-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(233, 30, 99, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .modal-description {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .modal-donation-box {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .modal-donation-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .modal-donation-amount {
+            font-size: 38px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-operators {
+            margin-bottom: 28px;
+        }
+
+        .modal-operators h4 {
+            font-size: 15px;
+            margin-bottom: 18px;
+            color: var(--gray);
+        }
+
+        .operator-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .operator-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .operator-btn:hover {
+            background: rgba(233, 30, 99, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Chat Modal */
+        .chat-modal {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 420px;
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            display: none;
+            flex-direction: column;
+            z-index: 3000;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .chat-modal.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15) 0%, rgba(156, 39, 176, 0.15) 100%);
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .operator-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 20px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .operator-status {
+            width: 14px;
+            height: 14px;
+            background: var(--success);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            border: 3px solid #1a1a2e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .operator-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .operator-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .operator-status-text {
+            font-size: 12px;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .chat-header-btn:hover {
+            background: rgba(233, 30, 99, 0.5);
+        }
+
+        .chat-body {
+            padding: 20px 24px;
+            height: 380px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 12px;
+            max-width: 85%;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.operator {
+            align-self: flex-start;
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .chat-message.user .message-avatar {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .message-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .chat-bubble {
+            padding: 14px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .chat-message.operator .chat-bubble {
+            background: rgba(255, 255, 255, 0.08);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: var(--gradient);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--gray);
+            padding: 0 4px;
+        }
+
+        .chat-message.user .message-time {
+            text-align: right;
+        }
+
+        .chat-input-area {
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .chat-input::placeholder {
+            color: var(--gray);
+        }
+
+        .chat-send {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .chat-send:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: none;
+            z-index: 4000;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-header {
+            padding: 24px 40px;
+            background: rgba(233, 30, 99, 0.1);
+            border-bottom: 1px solid rgba(233, 30, 99, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .admin-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+        }
+
+        .admin-content {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .admin-tab {
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .admin-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .admin-card {
+            background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .admin-card h3 {
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .image-upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(233, 30, 99, 0.05);
+        }
+
+        .uploaded-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .uploaded-image {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .uploaded-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .uploaded-image-remove {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--danger);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .profiles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .profile-list-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+        }
+
+        .profile-list-item img {
+            width: 65px;
+            height: 65px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .profile-list-info {
+            flex: 1;
+        }
+
+        .profile-list-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .profile-list-details {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .profile-list-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.edit {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .action-btn.delete {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 50px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 80px;
+        }
+
+        .footer-text {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .age-warning {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--danger);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-container {
+                position: static;
+                transform: none;
+            }
+
+            .header {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .header.scrolled {
+                padding: 12px 20px;
+            }
+
+            .logo {
+                order: 1;
+            }
+
+            .nav-container {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .admin-btn {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 130px 20px 70px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .models-grid,
+            .services-grid,
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-modal-body {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-images {
+                height: 350px;
+            }
+
+            .modal-details {
+                padding: 25px;
+            }
+
+            .chat-modal {
+                width: calc(100% - 20px);
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+
+            .admin-content {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 25px;
+            }
+
+            .city-dropdown {
+                min-width: 240px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .model-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: rgba(233, 30, 99, 0.5);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div class="age-modal" id="ageModal">
+        <div class="age-content">
+            <div class="age-icon">
+                <span class="age-number">18</span>
+                <span class="age-plus">+</span>
+            </div>
+            <h2 class="age-title">18+ Только для взрослых</h2>
+            <p class="age-text">Этот сайт содержит контент, предназначенный только для лиц старше 18 лет. Пожалуйста, подтвердите ваш возраст для продолжения.</p>
+            <div class="age-buttons">
+                <button class="btn btn-secondary" id="exitBtn">Мне нет 18</button>
+                <button class="btn btn-primary" id="confirmBtn">Мне есть 18</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="logo">
+            <div class="logo-icon">18+</div>
+            BABYGIRL_LNR
+        </div>
+        
+        <div class="nav-container">
+            <nav class="nav-links">
+                <a href="#services" class="nav-link active" data-section="services">Услуги</a>
+                <a href="#models" class="nav-link" data-section="models">Модели</a>
+                <a href="#" class="nav-link" id="cityNavLink">Города</a>
+            </nav>
+            
+            <!-- City Dropdown -->
+            <div class="city-dropdown" id="cityDropdown">
+                <div class="city-dropdown-title">📍 Выберите город</div>
+                <div class="city-dropdown-list">
+                    <div class="city-dropdown-item" data-city="pervomaisk">
+                        <span class="city-dropdown-icon">🏙️</span>
+                        <span class="city-dropdown-name">Первомайск</span>
+                        <span class="city-dropdown-count" id="pervomaiskCount">0</span>
+                    </div>
+                    <div class="city-dropdown-item" data-city="lugansk">
+                        <span class="city-dropdown-icon">🏛️</span>
+                        <span class="city-dropdown-name">Луганск</span>
+                        <span class="city-dropdown-count" id="luganskCount">0</span>
+                    </div>
+                    <div class="city-dropdown-item" data-city="stakhanov">
+                        <span class="city-dropdown-icon">⛏️</span>
+                        <span class="city-dropdown-name">Стаханов</span>
+                        <span class="city-dropdown-count" id="stakhanovCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="admin-btn" id="adminBtn">🔐 Админ</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-badge">⚠️ 18+ Контент для взрослых</div>
+        <h1>Найди Свою <span>Идеальную Пару</span></h1>
+        <p>Эксклюзивное сообщество для тех, кто ценит качество, стиль и настоящие эмоции</p>
+        <div class="hero-buttons">
+            <a href="#models" class="btn btn-primary nav-link-btn" data-section="models">Смотреть Моделей</a>
+            <button class="btn btn-secondary" id="heroChatBtn">💬 Онлайн Чат</button>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section active" id="services">
+        <div class="section-header">
+            <h2>Наши Услуги</h2>
+            <p>Индивидуальный подход к каждому клиенту</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💎</div>
+                <h3>VIP Встреча</h3>
+                <p>Эксклюзивное сопровождение на мероприятиях, ужинах и деловых встречах. Полная конфиденциальность гарантирована.</p>
+                <div class="service-price">от 15 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌹</div>
+                <h3>Романтический Вечер</h3>
+                <p>Незабываемый вечер в приятной компании. Индивидуальная программа под ваши пожелания.</p>
+                <div class="service-price">от 20 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✈️</div>
+                <h3>Выезд за Город</h3>
+                <p>Сопровождение в поездки по России и за рубеж. Все расходы оплачиваются отдельно.</p>
+                <div class="service-price">от 50 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎉</div>
+                <h3>Праздничное Мероприятие</h3>
+                <p>Украшение вашего праздника яркой компанией. Групповые и индивидуальные заказы.</p>
+                <div class="service-price">от 25 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📸</div>
+                <h3>Фотосессия</h3>
+                <p>Профессиональное сопровождение на фотосъёмках. Опыт работы с фотографами.</p>
+                <div class="service-price">от 10 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⭐</div>
+                <h3>Персональный Компаньон</h3>
+                <p>Долгосрочное сопровождение на регулярной основе. Специальные условия для постоянных клиентов.</p>
+                <div class="service-price">от 100 000 ₽</div>
+                <button class="btn btn-order" onclick="openChat(0)">Заказать</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section class="section" id="models">
+        <div class="section-header">
+            <h2>Наши Модели</h2>
+            <p>Выберите ту, которая понравится именно вам</p>
+        </div>
+        <div class="filters-bar">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="pervomaisk">Первомайск</button>
+            <button class="filter-btn" data-filter="lugansk">Луганск</button>
+            <button class="filter-btn" data-filter="stakhanov">Стаханов</button>
+        </div>
+        <div class="models-grid" id="modelsGrid"></div>
+    </section>
+
+    <!-- City Section -->
+    <section class="section" id="city">
+        <div class="section-header">
+            <h2>Выберите Город</h2>
+            <p>Наши модели доступны в следующих городах</p>
+        </div>
+        <div class="cities-grid">
+            <div class="city-card" data-city="pervomaisk">
+                <div class="city-icon">🏙️</div>
+                <div class="city-name">Первомайск</div>
+                <div class="city-count" id="pervomaiskCountCard">0 моделей</div>
+            </div>
+            <div class="city-card" data-city="lugansk">
+                <div class="city-icon">🏛️</div>
+                <div class="city-name">Луганск</div>
+                <div class="city-count" id="luganskCountCard">0 моделей</div>
+            </div>
+            <div class="city-card" data-city="stakhanov">
+                <div class="city-icon">⛏️</div>
+                <div class="city-name">Стаханов</div>
+                <div class="city-count" id="stakhanovCountCard">0 моделей</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-modal-content">
+            <button class="modal-close" id="closeProfileModal">×</button>
+            <div class="profile-modal-body">
+                <div class="modal-images">
+                    <img src="" alt="" class="modal-image" id="modalImage">
+                    <button class="modal-image-nav prev" id="prevImage">❮</button>
+                    <button class="modal-image-nav next" id="nextImage">❯</button>
+                </div>
+                <div class="modal-details">
+                    <h2 class="modal-name" id="modalName"></h2>
+                    <div class="modal-stats" id="modalStats"></div>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <div class="modal-donation-box">
+                        <div class="modal-donation-label">💎 Стоимость услуги</div>
+                        <div class="modal-donation-amount" id="modalPrice"></div>
+                    </div>
+                    <button class="btn btn-order" id="modalOrderBtn" style="margin-bottom: 25px;">Заказать</button>
+                    <div class="modal-operators">
+                        <h4>💬 Онлайн чат с оператором</h4>
+                        <div class="operator-buttons">
+                            <button class="operator-btn" id="operatorBtn1">👤 <span id="operatorName1">Оператор 1</span></button>
+                            <button class="operator-btn" id="operatorBtn2">👤 <span id="operatorName2">Оператор 2</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="operator-avatar" id="chatAvatar">A</div>
+                <div class="operator-info">
+                    <div class="operator-name" id="chatOperatorName">Оператор 1</div>
+                    <div class="operator-status-text">
+                        <span>●</span> Онлайн
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button class="chat-header-btn" id="closeChat">×</button>
+            </div>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
+            <button class="chat-send" id="chatSend">➤</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2 class="admin-title">🔐 Панель Администратора</h2>
+            <button class="btn btn-secondary" id="closeAdmin">Закрыть</button>
+        </div>
+        <div class="admin-content">
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="profiles">Модели</div>
+                <div class="admin-tab" data-tab="add">Добавить</div>
+                <div class="admin-tab" data-tab="settings">Настройки</div>
+            </div>
+
+            <div id="adminProfiles" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3>Управление моделями</h3>
+                    <div class="profiles-list" id="adminProfilesList"></div>
+                </div>
+            </div>
+
+            <div id="adminAdd" class="admin-tab-content" style="display: none;">
+                <div class="admin-card">
+                    <h3 id="addFormTitle">Добавить новую модель</h3>
+                    <form id="profileForm">
+                        <input type="hidden" id="editProfileId">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Имя</label>
+                                <input type="text" class="form-input" id="profileName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Возраст</label>
+                                <input type="number" class="form-input" id="profileAge" min="18" max="50" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Рост (см)</label>
+                                <input type="number" class="form-input" id="profileHeight" min="150" max="200" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Вес (кг)</label>
+                                <input type="number" class="form-input" id="profileWeight" min="40" max="100" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Размер груди</label>
+                                <input type="text" class="form-input" id="profileBust" placeholder="Например: 3" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Город</label>
+                                <select class="form-select" id="profileCity" required>
+                                    <option value="pervomaisk">Первомайск</option>
+                                    <option value="lugansk">Луганск</option>
+                                    <option value="stakhanov">Стаханов</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Описание</label>
+                            <textarea class="form-textarea" id="profileDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Цена (₽)</label>
+                            <input type="number" class="form-input" id="profilePrice" min="1000" value="15000" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Фотографии</label>
+                            <div class="image-upload-area" id="imageUploadArea">
+                                <div style="font-size: 40px; margin-bottom: 10px;">📷</div>
+                                <div>Нажмите для загрузки фото</div>
+                            </div>
+                            <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                            <div class="uploaded-images" id="uploadedImages"></div>
+                        </div>
+                        <div style="display: flex; gap: 15px; margin-top: 25px;">
+                            <button type="submit" class="btn btn-primary" style="flex: 1;">Сохранить</button>
+                            <button type="button" class="btn btn-secondary" id="resetFormBtn">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="adminSettings" class="admin-tab-content" style="display: none;">
+                <div class="admin-card">
+                    <h3>Настройки операторов</h3>
+                    <div class="form-group">
+                        <label class="form-label">Оператор 1 - Имя</label>
+                        <input type="text" class="form-input" id="operator1Name" value="Анна">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Оператор 1 - Telegram</label>
+                        <input type="text" class="form-input" id="operator1Telegram" value="@operator1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Оператор 2 - Имя</label>
+                        <input type="text" class="form-input" id="operator2Name" value="Мария">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Оператор 2 - Telegram</label>
+                        <input type="text" class="form-input" id="operator2Telegram" value="@operator2">
+                    </div>
+                    <button class="btn btn-primary" id="saveSettingsBtn">Сохранить настройки</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="age-warning">⚠️ 18+ Только для взрослых</div>
+        <p class="footer-text" style="margin-top: 25px;">© 2024 BABYGIRL_LNR. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Data - Ready-made profiles
+        let profiles = [
+            {
+                id: 1,
+                name: 'Алина',
+                age: 22,
+                height: 172,
+                weight: 54,
+                bust: '3',
+                city: 'pervomaisk',
+                cityName: 'Первомайск',
+                description: 'Элегантная и утонченная девушка с прекрасным чувством стиля. Люблю искусство, путешествия и интересные беседы.',
+                price: 15000,
+                images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1d88927b5-c292-4930-b808-a30cf9253e2e.png']
+            },
+            {
+                id: 2,
+                name: 'Виктория',
+                age: 24,
+                height: 168,
+                weight: 52,
+                bust: '2',
+                city: 'lugansk',
+                cityName: 'Луганск',
+                description: 'Яркая и энергичная натура. Обожаю активный отдых, спорт и новые впечатления.',
+                price: 15000,
+                images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/1237c0312-00b1-42aa-bd87-1e12b7ae40bf.png']
+            },
+            {
+                id: 3,
+                name: 'Екатерина',
+                age: 21,
+                height: 175,
+                weight: 56,
+                bust: '3',
+                city: 'stakhanov',
+                cityName: 'Стаханов',
+                description: 'Нежная и романтичная особа. Ценю искренность и честность в отношениях.',
+                price: 15000,
+                images: ['https://image.qwenlm.ai/public_source/96e22b03-8a3e-4df2-a65d-4ab17fe4da06/19d64067c-fabc-4e3e-bd45-68f58319d4d1.png']
+            }
+        ];
+
+        let operators = [
+            { name: 'Анна', telegram: '@operator1' },
+            { name: 'Мария', telegram: '@operator2' }
+        ];
+
+        let cities = [
+            { id: 'pervomaisk', name: 'Первомайск', icon: '🏙️', count: 0 },
+            { id: 'lugansk', name: 'Луганск', icon: '🏛️', count: 0 },
+            { id: 'stakhanov', name: 'Стаханов', icon: '⛏️', count: 0 }
+        ];
+
+        let chatMessages = [];
+        let currentChatOperator = 0;
+        let chatUserId = 'user_' + Math.random().toString(36).substr(2, 9);
+        let currentModalProfile = null;
+        let currentModalImageIndex = 0;
+        let uploadedImages = [];
+        let sliderInterval = null;
+        let cityDropdownOpen = false;
+
+        // Initialize - Check age FIRST
+        (function initAgeVerification() {
+            var verified = localStorage.getItem('ageVerified');
+            var modal = document.getElementById('ageModal');
+            if (verified === 'true' && modal) {
+                modal.classList.add('hidden');
+            }
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFromStorage();
+            updateCitiesCount();
+            renderModels();
+            setupEventListeners();
+            setupScrollHeader();
+            loadChatMessages();
+        });
+
+        // Sticky Header
+        function setupScrollHeader() {
+            var header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        function setupEventListeners() {
+            // Age verification
+            var confirmBtn = document.getElementById('confirmBtn');
+            var exitBtn = document.getElementById('exitBtn');
+            if (confirmBtn) {
+                confirmBtn.onclick = function() {
+                    localStorage.setItem('ageVerified', 'true');
+                    var modal = document.getElementById('ageModal');
+                    if (modal) modal.classList.add('hidden');
+                };
+            }
+            if (exitBtn) {
+                exitBtn.onclick = function() {
+                    window.location.href = 'https://www.google.com';
+                };
+            }
+
+            // Navigation
+            document.querySelectorAll('.nav-link, .nav-link-btn').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    if (this.id === 'cityNavLink') {
+                        e.preventDefault();
+                        toggleCityDropdown();
+                    } else {
+                        e.preventDefault();
+                        var section = this.dataset.section;
+                        switchSection(section);
+                    }
+                });
+            });
+
+            // City dropdown items
+            document.querySelectorAll('.city-dropdown-item, .city-card').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    var city = this.dataset.city;
+                    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                    var filterBtn = document.querySelector('.filter-btn[data-filter="' + city + '"]');
+                    if (filterBtn) filterBtn.classList.add('active');
+                    switchSection('models');
+                    filterModels(city);
+                    closeCityDropdown();
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.nav-container')) {
+                    closeCityDropdown();
+                }
+            });
+
+            // Admin
+            document.getElementById('adminBtn').addEventListener('click', openAdmin);
+            document.getElementById('closeAdmin').addEventListener('click', closeAdmin);
+
+            // Filters
+            document.querySelectorAll('.filter-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    filterModels(this.dataset.filter);
+                });
+            });
+
+            // Profile modal
+            document.getElementById('closeProfileModal').addEventListener('click', closeProfileModal);
+            document.getElementById('prevImage').addEventListener('click', prevModalImage);
+            document.getElementById('nextImage').addEventListener('click', nextModalImage);
+            document.getElementById('modalOrderBtn').addEventListener('click', function() { openChat(currentChatOperator); });
+
+            // Chat
+            document.getElementById('heroChatBtn').addEventListener('click', function() { openChat(0); });
+            document.getElementById('closeChat').addEventListener('click', closeChat);
+            document.getElementById('chatSend').addEventListener('click', sendChatMessage);
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+            document.getElementById('operatorBtn1').addEventListener('click', function() { openChat(0); });
+            document.getElementById('operatorBtn2').addEventListener('click', function() { openChat(1); });
+
+            // Admin tabs
+            document.querySelectorAll('.admin-tab').forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
+                    this.classList.add('active');
+                    document.getElementById('admin' + this.dataset.tab.charAt(0).toUpperCase() + this.dataset.tab.slice(1)).style.display = 'block';
+                });
+            });
+
+            // Profile form
+            document.getElementById('profileForm').addEventListener('submit', saveProfile);
+            document.getElementById('resetFormBtn').addEventListener('click', resetForm);
+            document.getElementById('imageUploadArea').addEventListener('click', function() {
+                document.getElementById('imageInput').click();
+            });
+            document.getElementById('imageInput').addEventListener('change', handleImageUpload);
+
+            // Settings
+            document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+
+            // Close modals
+            document.getElementById('profileModal').addEventListener('click', function(e) {
+                if (e.target === this) closeProfileModal();
+            });
+        }
+
+        // Chat Functions
+        function loadChatMessages() {
+            var stored = localStorage.getItem('chatMessages_' + chatUserId);
+            if (stored) {
+                chatMessages = JSON.parse(stored);
+                renderChatMessages();
+            }
+        }
+
+        function saveChatMessages() {
+            localStorage.setItem('chatMessages_' + chatUserId, JSON.stringify(chatMessages));
+        }
+
+        function renderChatMessages() {
+            var chatBody = document.getElementById('chatBody');
+            chatBody.innerHTML = '';
+            if (chatMessages.length === 0) {
+                chatBody.innerHTML = '<div style="text-align: center; color: var(--gray); padding: 40px;"><div style="font-size: 40px; margin-bottom: 10px;">💬</div><div>Начните чат</div></div>';
+                return;
+            }
+            chatMessages.forEach(function(msg) {
+                var messageEl = document.createElement('div');
+                messageEl.className = 'chat-message ' + msg.sender;
+                messageEl.innerHTML = '<div class="message-avatar">' + (msg.sender === 'operator' ? msg.operatorName.charAt(0) : 'Я') + '</div><div class="message-content"><div class="chat-bubble">' + escapeHtml(msg.text) + '</div></div>';
+                chatBody.appendChild(messageEl);
+            });
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function sendChatMessage() {
+            var input = document.getElementById('chatInput');
+            var message = input.value.trim();
+            if (!message) return;
+            var now = new Date();
+            var time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            chatMessages.push({ id: Date.now(), sender: 'user', text: message, time: time });
+            saveChatMessages();
+            renderChatMessages();
+            input.value = '';
+            setTimeout(function() {
+                var operator = operators[currentChatOperator];
+                chatMessages.push({ id: Date.now() + 1, sender: 'operator', text: 'Спасибо за сообщение! Я свяжусь с вами soon. 😊', time: time, operatorName: operator.name });
+                saveChatMessages();
+                renderChatMessages();
+            }, 1500);
+        }
+
+        function openChat(operatorIndex) {
+            currentChatOperator = operatorIndex;
+            var operator = operators[operatorIndex];
+            document.getElementById('chatOperatorName').textContent = operator.name;
+            document.getElementById('chatAvatar').textContent = operator.name.charAt(0);
+            document.getElementById('chatModal').classList.add('active');
+            loadChatMessages();
+        }
+
+        function closeChat() {
+            document.getElementById('chatModal').classList.remove('active');
+        }
+
+        // Admin Functions
+        function openAdmin() {
+            var password = prompt('Введите пароль оператора:');
+            if (password === 'admin123') {
+                document.getElementById('adminPanel').classList.add('active');
+                renderAdminProfilesList();
+            } else if (password !== null) {
+                alert('Неверный пароль!');
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').classList.remove('active');
+        }
+
+        function renderAdminProfilesList() {
+            var list = document.getElementById('adminProfilesList');
+            var html = '';
+            for (var i = 0; i < profiles.length; i++) {
+                var p = profiles[i];
+                html += '<div class="profile-list-item">' +
+                    '<img src="' + p.images[0] + '" alt="' + p.name + '">' +
+                    '<div class="profile-list-info">' +
+                    '<div class="profile-list-name">' + p.name + ', ' + p.age + ' лет</div>' +
+                    '<div class="profile-list-details">' + p.cityName + ' • ' + p.price.toLocaleString() + ' ₽</div>' +
+                    '</div>' +
+                    '<div class="profile-list-actions">' +
+                    '<button class="action-btn edit" onclick="editProfile(' + i + ')">✏️</button>' +
+                    '<button class="action-btn delete" onclick="deleteProfile(' + i + ')">🗑️</button>' +
+                    '</div></div>';
+            }
+            list.innerHTML = html;
+        }
+
+        function editProfile(index) {
+            var p = profiles[index];
+            document.getElementById('editProfileId').value = index;
+            document.getElementById('profileName').value = p.name;
+            document.getElementById('profileAge').value = p.age;
+            document.getElementById('profileHeight').value = p.height;
+            document.getElementById('profileWeight').value = p.weight;
+            document.getElementById('profileBust').value = p.bust;
+            document.getElementById('profileCity').value = p.city;
+            document.getElementById('profileDescription').value = p.description;
+            document.getElementById('profilePrice').value = p.price;
+            uploadedImages = p.images.slice();
+            renderUploadedImages();
+            document.getElementById('addFormTitle').textContent = 'Редактировать: ' + p.name;
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.style.display = 'none');
+            document.querySelector('.admin-tab[data-tab="add"]').classList.add('active');
+            document.getElementById('adminAdd').style.display = 'block';
+        }
+
+        function deleteProfile(index) {
+            if (confirm('Удалить эту модель?')) {
+                profiles.splice(index, 1);
+                saveToStorage();
+                updateCitiesCount();
+                renderAdminProfilesList();
+                renderModels();
+            }
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            var editId = document.getElementById('editProfileId').value;
+            var citySelect = document.getElementById('profileCity');
+            var cityName = citySelect.options[citySelect.selectedIndex].text;
+            var profileData = {
+                id: editId ? profiles[editId].id : Date.now(),
+                name: document.getElementById('profileName').value,
+                age: parseInt(document.getElementById('profileAge').value),
+                height: parseInt(document.getElementById('profileHeight').value),
+                weight: parseInt(document.getElementById('profileWeight').value),
+                bust: document.getElementById('profileBust').value,
+                city: document.getElementById('profileCity').value,
+                cityName: cityName,
+                description: document.getElementById('profileDescription').value,
+                price: parseInt(document.getElementById('profilePrice').value),
+                images: uploadedImages.length > 0 ? uploadedImages : ['https://via.placeholder.com/400x500']
+            };
+            if (editId) {
+                profiles[editId] = profileData;
+            } else {
+                profiles.push(profileData);
+            }
+            saveToStorage();
+            updateCitiesCount();
+            renderAdminProfilesList();
+            renderModels();
+            resetForm();
+            alert('Модель сохранена!');
+        }
+
+        function resetForm() {
+            document.getElementById('profileForm').reset();
+            document.getElementById('editProfileId').value = '';
+            document.getElementById('addFormTitle').textContent = 'Добавить модель';
+            document.getElementById('profilePrice').value = '15000';
+            uploadedImages = [];
+            renderUploadedImages();
+        }
+
+        function handleImageUpload(e) {
+            var files = e.target.files;
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = (function(idx) {
+                    return function(evt) {
+                        uploadedImages.push(evt.target.result);
+                        renderUploadedImages();
+                    };
+                })(i);
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        function renderUploadedImages() {
+            var container = document.getElementById('uploadedImages');
+            var html = '';
+            for (var i = 0; i < uploadedImages.length; i++) {
+                html += '<div class="uploaded-image"><img src="' + uploadedImages[i] + '" alt="Photo"><button type="button" class="uploaded-image-remove" onclick="removeUploadedImage(' + i + ')">×</button></div>';
+            }
+            container.innerHTML = html;
+        }
+
+        function removeUploadedImage(index) {
+            uploadedImages.splice(index, 1);
+            renderUploadedImages();
+        }
+
+        function saveSettings() {
+            operators[0].name = document.getElementById('operator1Name').value;
+            operators[0].telegram = document.getElementById('operator1Telegram').value;
+            operators[1].name = document.getElementById('operator2Name').value;
+            operators[1].telegram = document.getElementById('operator2Telegram').value;
+            saveToStorage();
+            alert('Настройки сохранены!');
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('profiles', JSON.stringify(profiles));
+            localStorage.setItem('operators', JSON.stringify(operators));
+        }
+
+        function loadFromStorage() {
+            var storedProfiles = localStorage.getItem('profiles');
+            var storedOperators = localStorage.getItem('operators');
+            if (storedProfiles) profiles = JSON.parse(storedProfiles);
+            if (storedOperators) operators = JSON.parse(storedOperators);
+        }
+
+        function toggleCityDropdown() {
+            cityDropdownOpen = !cityDropdownOpen;
+            var dropdown = document.getElementById('cityDropdown');
+            if (cityDropdownOpen) {
+                dropdown.classList.add('active');
+            } else {
+                closeCityDropdown();
+            }
+        }
+
+        function closeCityDropdown() {
+            cityDropdownOpen = false;
+            document.getElementById('cityDropdown').classList.remove('active');
+        }
+
+        function switchSection(section) {
+            document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+            document.getElementById(section).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.classList.remove('active');
+                if (link.dataset.section === section) link.classList.add('active');
+            });
+            closeCityDropdown();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateCitiesCount() {
+            cities.forEach(function(city) {
+                city.count = profiles.filter(function(p) { return p.city === city.id; }).length;
+                var countEl = document.getElementById(city.id + 'Count');
+                var countCardEl = document.getElementById(city.id + 'CountCard');
+                if (countEl) countEl.textContent = city.count;
+                if (countCardEl) countCardEl.textContent = city.count + ' моделей';
+            });
+        }
+
+        function renderModels(filter) {
+            var grid = document.getElementById('modelsGrid');
+            var filtered = filter === 'all' ? profiles : profiles.filter(function(p) { return p.city === filter; });
+            var html = '';
+            for (var i = 0; i < filtered.length; i++) {
+                var p = filtered[i];
+                html += '<div class="model-card" data-id="' + p.id + '">' +
+                    '<div class="model-image-container"><img src="' + p.images[0] + '" alt="' + p.name + '" class="model-image"></div>' +
+                    '<div class="model-info">' +
+                    '<div class="model-name">' + p.name + '</div>' +
+                    '<div class="model-stats">' +
+                    '<div class="stat-item"><span class="stat-icon">🎂</span>' + p.age + ' лет</div>' +
+                    '<div class="stat-item"><span class="stat-icon">📏</span>' + p.height + ' см</div>' +
+                    '<div class="stat-item"><span class="stat-icon">⚖️</span>' + p.weight + ' кг</div>' +
+                    '<div class="stat-item"><span class="stat-icon">👙</span>' + p.bust + ' размер</div>' +
+                    '</div>' +
+                    '<p class="model-description">' + p.description.substring(0, 80) + '...</p>' +
+                    '<div class="model-price"><span class="price-label">Стоимость:</span><span class="price-value">' + p.price.toLocaleString() + ' ₽</span></div>' +
+                    '<button class="btn btn-order" onclick="event.stopPropagation(); openChat(0)">Заказать</button>' +
+                    '</div></div>';
+            }
+            grid.innerHTML = html;
+            document.querySelectorAll('.model-card').forEach(function(card) {
+                card.addEventListener('click', function() {
+                    var id = parseInt(this.dataset.id);
+                    var index = profiles.findIndex(function(p) { return p.id === id; });
+                    openProfileModal(index);
+                });
+            });
+        }
+
+        function filterModels(filter) {
+            renderModels(filter);
+        }
+
+        function openProfileModal(index) {
+            currentModalProfile = profiles[index];
+            currentModalImageIndex = 0;
+            document.getElementById('modalImage').src = currentModalProfile.images[0];
+            document.getElementById('modalName').textContent = currentModalProfile.name;
+            document.getElementById('modalStats').innerHTML =
+                '<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color: var(--gray); font-size: 12px;">Возраст</div><div>' + currentModalProfile.age + ' лет</div></div></div>' +
+                '<div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color: var(--gray); font-size: 12px;">Рост</div><div>' + currentModalProfile.height + ' см</div></div></div>' +
+                '<div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color: var(--gray); font-size: 12px;">Вес</div><div>' + currentModalProfile.weight + ' кг</div></div></div>' +
+                '<div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color: var(--gray); font-size: 12px;">Грудь</div><div>' + currentModalProfile.bust + ' размер</div></div></div>' +
+                '<div class="modal-stat"><div class="modal-stat-icon">📍</div><div><div style="color: var(--gray); font-size: 12px;">Город</div><div>' + currentModalProfile.cityName + '</div></div></div>';
+            document.getElementById('modalDescription').textContent = currentModalProfile.description;
+            document.getElementById('modalPrice').textContent = currentModalProfile.price.toLocaleString() + ' ₽';
+            document.getElementById('operatorName1').textContent = operators[0].name;
+            document.getElementById('operatorName2').textContent = operators[1].name;
+            document.getElementById('profileModal').classList.add('active');
+            startImageSlider();
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+            stopImageSlider();
+        }
+
+        function startImageSlider() {
+            stopImageSlider();
+            sliderInterval = setInterval(nextModalImage, 4000);
+        }
+
+        function stopImageSlider() {
+            if (sliderInterval) { clearInterval(sliderInterval); sliderInterval = null; }
+        }
+
+        function prevModalImage() {
+            if (!currentModalProfile) return;
+            currentModalImageIndex = (currentModalImageIndex - 1 + currentModalProfile.images.length) % currentModalProfile.images.length;
+            updateModalImage();
+        }
+
+        function nextModalImage() {
+            if (!currentModalProfile) return;
+            currentModalImageIndex = (currentModalImageIndex + 1) % currentModalProfile.images.length;
+            updateModalImage();
+        }
+
+        function updateModalImage() {
+            if (!currentModalProfile) return;
+            document.getElementById('modalImage').src = currentModalProfile.images[currentModalImageIndex];
+        }
+
+        function escapeHtml(text) {
+            var div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
