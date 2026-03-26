@@ -351,6 +351,40 @@ gap: 15px;
 justify-content: center;
 flex-wrap: wrap;
 }
+/* Payment Notice */
+.payment-notice {
+margin-top: 25px;
+padding: 18px 30px;
+background: linear-gradient(145deg, rgba(233, 30, 99, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
+border: 1px solid rgba(233, 30, 99, 0.3);
+border-radius: 16px;
+display: inline-block;
+animation: glowPulse 2s infinite;
+}
+@keyframes glowPulse {
+0%, 100% { box-shadow: 0 0 20px rgba(233, 30, 99, 0.2); }
+50% { box-shadow: 0 0 35px rgba(233, 30, 99, 0.4); }
+}
+.payment-notice-text {
+font-size: 15px;
+color: var(--gray);
+margin-bottom: 8px;
+}
+.payment-notice-highlight {
+font-size: 20px;
+font-weight: 700;
+background: var(--gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+}
+.payment-icon {
+font-size: 24px;
+}
 /* Section Styles */
 .section {
 padding: 80px 40px;
@@ -1042,6 +1076,28 @@ opacity: 0.5;
 cursor: not-allowed;
 transform: none;
 }
+/* Transfer Button */
+.transfer-btn {
+background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+color: white;
+padding: 12px 24px;
+border-radius: 12px;
+border: none;
+cursor: pointer;
+font-weight: 600;
+margin: 10px 0;
+width: 100%;
+transition: all 0.3s ease;
+display: none;
+}
+.transfer-btn.visible {
+display: block;
+animation: pulse 2s infinite;
+}
+.transfer-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+}
 /* Chat Notifications */
 .chat-notification {
 position: fixed;
@@ -1167,6 +1223,13 @@ padding: 6px 0;
 .nav-container {
 padding: 0 10px;
 }
+.payment-notice {
+margin-top: 20px;
+padding: 15px 20px;
+}
+.payment-notice-highlight {
+font-size: 18px;
+}
 }
 /* Animations */
 @keyframes fadeIn {
@@ -1244,6 +1307,15 @@ BABYGIRL_LNR
 <div class="hero-buttons">
 <a href="#models" class="btn btn-primary" id="viewProfilesBtn">🔥 Смотреть Анкеты</a>
 <button class="btn btn-secondary" id="heroChatBtn">💬 Консультация</button>
+</div>
+<!-- Payment Notice -->
+<div class="payment-notice">
+<div class="payment-notice-text">💳 Удобная форма оплаты</div>
+<div class="payment-notice-highlight">
+<span class="payment-icon">💰</span>
+Оплата наличными в руки
+<span class="payment-icon">💰</span>
+</div>
 </div>
 </section>
 <!-- Models Section (Active by default) -->
@@ -1346,19 +1418,25 @@ BABYGIRL_LNR
 <div class="chat-modal" id="chatModal">
 <div class="chat-header">
 <div class="chat-header-info">
-<div class="operator-avatar" id="chatAvatar">A</div>
+<div class="operator-avatar" id="chatAvatar">🤖</div>
 <div>
-<div style="font-weight: 600;" id="chatOperatorName">Администратор</div>
-<div style="font-size: 12px; color: var(--success);">● Онлайн</div>
+<div style="font-weight: 600;" id="chatOperatorName">Ассистент</div>
+<div style="font-size: 12px; color: var(--success);" id="chatStatusText">● Онлайн</div>
 </div>
 </div>
 <button class="modal-close" id="closeChat" style="position: static; width: 36px; height: 36px; font-size: 18px;">×</button>
 </div>
 <div class="chat-body" id="chatBody">
 <div class="chat-message operator">
-<div class="chat-bubble">Здравствуйте! Я помогу вам выбрать девушку и организовать встречу. Чем могу помочь? 😊</div>
+<div class="chat-bubble">Здравствуйте! Я виртуальный ассистент BABYGIRL_LNR. Помогу вам выбрать девушку и оформить заказ. Чем могу помочь? 😊</div>
 </div>
 </div>
+<div class="typing-indicator" id="typingIndicator">
+<div class="typing-dot"></div>
+<div class="typing-dot"></div>
+<div class="typing-dot"></div>
+</div>
+<button class="transfer-btn" id="transferBtn" onclick="transferToOperator()">👤 Соединить с оператором</button>
 <div class="chat-input-area">
 <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
 <button class="chat-send" id="chatSend">➤</button>
@@ -1499,6 +1577,54 @@ let cities = [
 { id: 'lugansk', name: 'Луганск', icon: '🏛️', count: 0 },
 { id: 'stakhanov', name: 'Стаханов', icon: '⛏️', count: 0 }
 ];
+// Chat Bot State
+let chatBotState = {
+messageCount: 0,
+isOperator: false,
+selectedModel: null,
+selectedService: null,
+city: null,
+budget: null,
+step: 0
+};
+// Bot conversation flow
+const botResponses = {
+greeting: [
+"Здравствуйте! Я помогу вам подобрать идеальную девушку для встречи. 😊",
+"Приветствую! Хотите заказать встречу с одной из наших моделей?",
+"Добро пожаловать! Чем могу помочь вам сегодня?"
+],
+askCity: [
+"В каком городе вы находитесь? (Первомайск, Луганск, Стаханов)",
+"Укажите ваш город для подбора моделей",
+"Где бы вы хотели встретиться?"
+],
+askBudget: [
+"Какой у вас бюджет на встречу? (от 15 000 до 100 000 ₽)",
+"На какую сумму вы рассчитываете?",
+"Какой диапазон цен вас интересует?"
+],
+askPreferences: [
+"Какие параметры для вас важны? (возраст, внешность, характер)",
+"Есть ли у вас предпочтения по типу девушки?",
+"Какую девушку вы ищете?"
+],
+recommendModels: [
+"Отлично! Вот несколько моделей, которые вам подойдут:",
+"Я подобрал для вас лучшие варианты:",
+"Рекомендую обратить внимание на этих девушек:"
+],
+askService: [
+"Какую услугу вы хотите заказать?",
+"Выберите формат встречи:",
+"Какой тариф вас интересует?"
+],
+transferNotice: [
+"Для оформления заказа я соединю вас с оператором. 👤",
+"Сейчас я переключу вас на живого оператора для деталей.",
+"Оператор поможет завершить оформление встречи."
+]
+};
 let chatMessages = [];
 let currentModalProfile = null;
 let cityDropdownOpen = false;
@@ -1507,7 +1633,6 @@ updateCitiesCount();
 renderModels();
 setupEventListeners();
 setupScrollHeader();
-// Scroll to models section after age verification
 var viewProfilesBtn = document.getElementById('viewProfilesBtn');
 if (viewProfilesBtn) {
 viewProfilesBtn.addEventListener('click', function(e) {
@@ -1517,7 +1642,6 @@ document.getElementById('models').scrollIntoView({ behavior: 'smooth' });
 });
 }
 });
-// Smart Header
 function setupScrollHeader() {
 var header = document.getElementById('header');
 var lastScroll = 0;
@@ -1539,14 +1663,12 @@ lastScroll = currentScroll;
 });
 }
 function setupEventListeners() {
-// Age verification - show every time (no localStorage)
 var confirmBtn = document.getElementById('confirmBtn');
 var exitBtn = document.getElementById('exitBtn');
 if (confirmBtn) {
 confirmBtn.onclick = function() {
 var modal = document.getElementById('ageModal');
 if (modal) modal.classList.add('hidden');
-// Scroll to models section after confirmation
 setTimeout(function() {
 switchSection('models');
 }, 300);
@@ -1557,7 +1679,6 @@ exitBtn.onclick = function() {
 window.location.href = 'https://www.google.com';
 };
 }
-// Navigation
 document.querySelectorAll('.nav-link').forEach(function(link) {
 link.addEventListener('click', function(e) {
 if (this.id === 'cityNavLink') {
@@ -1570,7 +1691,6 @@ switchSection(section);
 }
 });
 });
-// City dropdown
 document.querySelectorAll('.city-dropdown-item, .city-card').forEach(function(item) {
 item.addEventListener('click', function() {
 var city = this.dataset.city;
@@ -1587,7 +1707,6 @@ if (!e.target.closest('.nav-container')) {
 closeCityDropdown();
 }
 });
-// Filters
 document.querySelectorAll('.filter-btn').forEach(function(btn) {
 btn.addEventListener('click', function() {
 document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -1595,44 +1714,162 @@ this.classList.add('active');
 filterModels(this.dataset.filter);
 });
 });
-// Profile modal
 document.getElementById('closeProfileModal').addEventListener('click', closeProfileModal);
-document.getElementById('modalOrderBtn').addEventListener('click', function() { openChat(); });
-// Chat
+document.getElementById('modalOrderBtn').addEventListener('click', function() { 
+chatBotState.selectedModel = currentModalProfile;
+openChat();
+setTimeout(function() {
+addBotMessage("Отличный выбор! " + currentModalProfile.name + " доступна для встречи. Какую услугу хотите заказать?");
+}, 1000);
+});
 document.getElementById('heroChatBtn').addEventListener('click', function() { openChat(); });
 document.getElementById('closeChat').addEventListener('click', closeChat);
 document.getElementById('chatSend').addEventListener('click', sendChatMessage);
 document.getElementById('chatInput').addEventListener('keypress', function(e) {
 if (e.key === 'Enter') sendChatMessage();
 });
-// Close modals
 document.getElementById('profileModal').addEventListener('click', function(e) {
 if (e.target === this) closeProfileModal();
 });
 }
-// Chat Functions
+// Bot Functions
 function openChat() {
 document.getElementById('chatModal').classList.add('active');
 if (chatMessages.length === 0) {
 var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML = '<div class="chat-message operator"><div class="chat-bubble">Здравствуйте! Я помогу вам выбрать девушку и организовать встречу. Чем могу помочь? 😊</div></div>';
+chatBody.innerHTML = '<div class="chat-message operator"><div class="chat-bubble">Здравствуйте! Я виртуальный ассистент BABYGIRL_LNR. Помогу вам выбрать девушку и оформить заказ. Чем могу помочь? 😊</div></div>';
+chatBotState.messageCount = 0;
+chatBotState.step = 0;
+chatBotState.isOperator = false;
+updateChatHeader();
 }
 }
 function closeChat() {
 document.getElementById('chatModal').classList.remove('active');
 }
+function updateChatHeader() {
+var avatar = document.getElementById('chatAvatar');
+var name = document.getElementById('chatOperatorName');
+var status = document.getElementById('chatStatusText');
+var transferBtn = document.getElementById('transferBtn');
+if (chatBotState.isOperator) {
+avatar.textContent = '👤';
+name.textContent = 'Оператор';
+status.textContent = '● Подключение...';
+status.style.color = '#f59e0b';
+transferBtn.style.display = 'none';
+} else {
+avatar.textContent = '🤖';
+name.textContent = 'Ассистент';
+status.textContent = '● Онлайн';
+status.style.color = 'var(--success)';
+if (chatBotState.messageCount >= 3 && !chatBotState.isOperator) {
+transferBtn.classList.add('visible');
+}
+}
+}
+function showTyping() {
+document.getElementById('typingIndicator').classList.add('active');
+}
+function hideTyping() {
+document.getElementById('typingIndicator').classList.remove('active');
+}
+function addBotMessage(text) {
+showTyping();
+setTimeout(function() {
+hideTyping();
+var chatBody = document.getElementById('chatBody');
+chatBody.innerHTML += '<div class="chat-message operator"><div class="message-avatar">🤖</div><div class="chat-bubble">' + text + '</div></div>';
+chatBody.scrollTop = chatBody.scrollHeight;
+}, 800 + Math.random() * 700);
+}
+function addUserMessage(text) {
+var chatBody = document.getElementById('chatBody');
+chatBody.innerHTML += '<div class="chat-message user"><div class="chat-bubble">' + escapeHtml(text) + '</div></div>';
+chatBody.scrollTop = chatBody.scrollHeight;
+}
+function processBotResponse(userMessage) {
+chatBotState.messageCount++;
+var msg = userMessage.toLowerCase();
+if (msg.includes('оператор') || msg.includes('человек') || msg.includes('живой') || msg.includes('менеджер')) {
+transferToOperator();
+return;
+}
+if (chatBotState.step === 0) {
+addBotMessage(getRandomResponse('askCity'));
+chatBotState.step = 1;
+} else if (chatBotState.step === 1) {
+if (msg.includes('первомайск')) chatBotState.city = 'Первомайск';
+else if (msg.includes('луганск')) chatBotState.city = 'Луганск';
+else if (msg.includes('стаханов')) chatBotState.city = 'Стаханов';
+addBotMessage("Отлично! " + (chatBotState.city || "Понял") + ". " + getRandomResponse('askBudget'));
+chatBotState.step = 2;
+} else if (chatBotState.step === 2) {
+if (msg.includes('15') || msg.includes('20') || msg.includes('30') || msg.includes('50') || msg.includes('100')) {
+chatBotState.budget = userMessage;
+}
+addBotMessage("Понял! " + getRandomResponse('askPreferences'));
+chatBotState.step = 3;
+} else if (chatBotState.step === 3) {
+addBotMessage(getRandomResponse('recommendModels') + " Посмотрите анкеты в разделе 'Анкеты' или выберите конкретную девушку.");
+chatBotState.step = 4;
+if (chatBotState.messageCount >= 3) {
+document.getElementById('transferBtn').classList.add('visible');
+}
+} else if (chatBotState.step >= 4) {
+if (chatBotState.messageCount >= 5) {
+addBotMessage(getRandomResponse('transferNotice'));
+setTimeout(transferToOperator, 2000);
+} else {
+addBotMessage("Есть вопросы по анкетам или услугам? Могу соединить с оператором для деталей. 👤");
+}
+}
+updateChatHeader();
+}
+function getRandomResponse(category) {
+var responses = botResponses[category];
+return responses[Math.floor(Math.random() * responses.length)];
+}
+function transferToOperator() {
+if (chatBotState.isOperator) return;
+chatBotState.isOperator = true;
+var transferBtn = document.getElementById('transferBtn');
+transferBtn.classList.remove('visible');
+transferBtn.style.display = 'none';
+addBotMessage("⏳ Соединяю с оператором...");
+setTimeout(function() {
+updateChatHeader();
+var chatBody = document.getElementById('chatBody');
+chatBody.innerHTML += '<div class="chat-message operator"><div class="message-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">👤</div><div class="chat-bubble">Здравствуйте! Я оператор BABYGIRL_LNR. Вижу вашу заявку. Помогу оформить встречу прямо сейчас! Какие у вас предпочтения? 💎</div></div>';
+chatBody.scrollTop = chatBody.scrollHeight;
+showTransferNotification();
+}, 2000);
+}
+function showTransferNotification() {
+var notification = document.createElement('div');
+notification.className = 'chat-notification active';
+notification.innerHTML = '<div class="notification-icon">👤</div><div class="notification-content"><div class="notification-title">Оператор подключён</div><div class="notification-message">Теперь вы общаетесь с живым сотрудником</div></div><button class="notification-close" onclick="this.parentElement.remove()">×</button>';
+document.body.appendChild(notification);
+setTimeout(function() {
+notification.classList.remove('active');
+setTimeout(function() { notification.remove(); }, 300);
+}, 5000);
+}
 function sendChatMessage() {
 var input = document.getElementById('chatInput');
 var message = input.value.trim();
 if (!message) return;
-var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML += '<div class="chat-message user"><div class="chat-bubble">' + escapeHtml(message) + '</div></div>';
+addUserMessage(message);
 input.value = '';
-chatBody.scrollTop = chatBody.scrollHeight;
+if (chatBotState.isOperator) {
 setTimeout(function() {
-chatBody.innerHTML += '<div class="chat-message operator"><div class="chat-bubble">Спасибо за сообщение! Я свяжусь с вами в ближайшее время для организации встречи. 😊</div></div>';
+var chatBody = document.getElementById('chatBody');
+chatBody.innerHTML += '<div class="chat-message operator"><div class="message-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">👤</div><div class="chat-bubble">Спасибо за информацию! Сейчас проверю доступность и свяжусь с вами для подтверждения деталей. ⏱️</div></div>';
 chatBody.scrollTop = chatBody.scrollHeight;
 }, 1500);
+} else {
+processBotResponse(message);
+}
 }
 function toggleCityDropdown() {
 cityDropdownOpen = !cityDropdownOpen;
@@ -1665,7 +1902,6 @@ if (countEl) countEl.textContent = city.count;
 if (countCardEl) countCardEl.textContent = city.count + ' девушек';
 });
 }
-// Helper function for Russian pluralization
 function declension(number, titles) {
 var cases = [2, 0, 1, 1, 1, 2];
 return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
@@ -1717,7 +1953,6 @@ document.getElementById('modalStats').innerHTML =
 '<div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color: var(--gray); font-size: 12px;">Грудь</div><div>' + currentModalProfile.bust + ' размер</div></div></div>' +
 '<div class="modal-stat"><div class="modal-stat-icon">📍</div><div><div style="color: var(--gray); font-size: 12px;">Город</div><div>' + currentModalProfile.cityName + '</div></div></div>';
 document.getElementById('modalDescription').textContent = currentModalProfile.description;
-// Render services list
 var servicesHtml = '';
 for (var i = 0; i < currentModalProfile.services.length; i++) {
 var s = currentModalProfile.services[i];
@@ -1733,11 +1968,12 @@ document.getElementById('servicesList').innerHTML = servicesHtml;
 document.getElementById('profileModal').classList.add('active');
 }
 function selectService(serviceName) {
+chatBotState.selectedService = serviceName;
 openChat();
 setTimeout(function() {
 var input = document.getElementById('chatInput');
 if (input) {
-input.value = 'Здравствуйте! Хочу заказать услугу: ' + serviceName;
+input.value = 'Хочу заказать: ' + serviceName;
 }
 }, 500);
 }
@@ -1752,4 +1988,3 @@ return div.innerHTML;
 </script>
 </body>
 </html>
-
