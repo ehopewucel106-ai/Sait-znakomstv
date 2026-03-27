@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BABYGIRL_LNR - Элитные Услуги 18+</title>
-<link href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.0/index.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/fontsource-caveat@5.0.0/index.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/fontsource-montserrat@5.0.0/index.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
 <style>
 * {
@@ -22,14 +23,121 @@ box-sizing: border-box;
 --gray: #6b7280;
 --success: #10b981;
 --gradient: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+--day-bg: rgba(255, 193, 7, 0.15);
+--day-border: rgba(255, 193, 7, 0.3);
+--night-bg: rgba(33, 150, 243, 0.15);
+--night-border: rgba(33, 150, 243, 0.3);
 }
 body {
-font-family: 'Inter', sans-serif;
+font-family: 'Montserrat', sans-serif;
 background: var(--darker);
 color: var(--light);
 min-height: 100vh;
 overflow-x: hidden;
+font-size: 18px;
 }
+
+/* ===== HANDWRITTEN FONT & ANIMATIONS ===== */
+.font-handwritten {
+font-family: 'Caveat', cursive;
+font-weight: 700;
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes pulseGlow {
+0%, 100% {
+text-shadow: 0 0 10px rgba(233, 30, 99, 0.3);
+}
+50% {
+text-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+}
+}
+
+@keyframes slideInLeft {
+from {
+opacity: 0;
+transform: translateX(-30px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+
+@keyframes handwriting {
+0% {
+stroke-dashoffset: 1000;
+}
+100% {
+stroke-dashoffset: 0;
+}
+}
+
+@keyframes float {
+0%, 100% {
+transform: translateY(0);
+}
+50% {
+transform: translateY(-5px);
+}
+}
+
+@keyframes shimmer {
+0% {
+background-position: -200% center;
+}
+100% {
+background-position: 200% center;
+}
+}
+
+.animate-fadeInUp {
+animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-pulse {
+animation: pulseGlow 3s ease infinite;
+}
+
+.animate-slideInLeft {
+animation: slideInLeft 0.6s ease forwards;
+}
+
+.animate-float {
+animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+background: linear-gradient(
+90deg,
+var(--light) 0%,
+var(--primary) 50%,
+var(--light) 100%
+);
+background-size: 200% auto;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+animation: shimmer 3s linear infinite;
+}
+
+/* Stagger animation for multiple elements */
+.animate-stagger-1 { animation-delay: 0.1s; }
+.animate-stagger-2 { animation-delay: 0.2s; }
+.animate-stagger-3 { animation-delay: 0.3s; }
+.animate-stagger-4 { animation-delay: 0.4s; }
+.animate-stagger-5 { animation-delay: 0.5s; }
+
 /* Age Verification Modal */
 .age-modal {
 position: fixed;
@@ -70,8 +178,8 @@ box-shadow: 0 10px 40px rgba(233, 30, 99, 0.4);
 position: relative;
 }
 .age-number {
-font-family: 'Playfair Display', serif;
-font-size: 42px;
+font-family: 'Caveat', cursive;
+font-size: 48px;
 font-weight: 700;
 color: white;
 }
@@ -84,8 +192,8 @@ top: 25px;
 right: 22px;
 }
 .age-title {
-font-family: 'Playfair Display', serif;
-font-size: 28px;
+font-family: 'Caveat', cursive;
+font-size: 36px;
 margin-bottom: 15px;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -96,7 +204,7 @@ background-clip: text;
 color: var(--gray);
 margin-bottom: 35px;
 line-height: 1.7;
-font-size: 15px;
+font-size: 17px;
 }
 .age-warning-text {
 background: rgba(239, 68, 68, 0.1);
@@ -104,7 +212,7 @@ border: 1px solid rgba(239, 68, 68, 0.3);
 border-radius: 12px;
 padding: 15px;
 margin-bottom: 25px;
-font-size: 13px;
+font-size: 15px;
 color: #ef4444;
 }
 .age-buttons {
@@ -114,9 +222,9 @@ justify-content: center;
 flex-wrap: wrap;
 }
 .btn {
-padding: 16px 36px;
+padding: 18px 40px;
 border-radius: 14px;
-font-size: 16px;
+font-size: 18px;
 font-weight: 600;
 cursor: pointer;
 transition: all 0.3s ease;
@@ -149,17 +257,34 @@ border-color: rgba(255, 255, 255, 0.25);
 .btn-order {
 background: var(--gradient);
 color: white;
-padding: 14px 28px;
+padding: 16px 32px;
 border-radius: 12px;
 font-weight: 600;
 border: none;
 cursor: pointer;
 transition: all 0.3s ease;
 width: 100%;
+font-size: 18px;
 }
 .btn-order:hover {
 transform: translateY(-2px);
 box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+}
+.btn-details {
+background: rgba(233, 30, 99, 0.2);
+color: var(--primary);
+border: 1px solid rgba(233, 30, 99, 0.3);
+padding: 12px 28px;
+border-radius: 10px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+display: inline-block;
+margin-top: 15px;
+}
+.btn-details:hover {
+background: rgba(233, 30, 99, 0.3);
+transform: translateY(-2px);
 }
 /* Header */
 .header {
@@ -175,7 +300,11 @@ background: rgba(15, 15, 26, 0.95);
 backdrop-filter: blur(20px);
 z-index: 1000;
 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-transition: all 0.4s ease;
+transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+transform: translateY(0);
+}
+.header.hidden {
+transform: translateY(-100%);
 }
 .header.scrolled {
 padding: 15px 40px;
@@ -190,7 +319,7 @@ gap: 12px;
 text-decoration: none;
 }
 .logo-img {
-height: 50px;
+height: 55px;
 width: auto;
 border-radius: 50%;
 object-fit: cover;
@@ -201,8 +330,8 @@ transform: scale(1.05);
 filter: brightness(1.1);
 }
 .logo-text {
-font-family: 'Playfair Display', serif;
-font-size: 20px;
+font-family: 'Caveat', cursive;
+font-size: 32px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -225,12 +354,13 @@ position: relative;
 .nav-links a {
 color: var(--gray);
 text-decoration: none;
-font-weight: 500;
+font-weight: 600;
 transition: all 0.3s ease;
 position: relative;
 padding: 8px 0;
 cursor: pointer;
 white-space: nowrap;
+font-size: 18px;
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -269,7 +399,7 @@ visibility: visible;
 transform: translateX(-50%) translateY(15px);
 }
 .city-dropdown-title {
-font-size: 13px;
+font-size: 15px;
 color: var(--gray);
 margin-bottom: 12px;
 padding-bottom: 12px;
@@ -286,7 +416,7 @@ gap: 8px;
 display: flex;
 align-items: center;
 gap: 12px;
-padding: 12px 16px;
+padding: 14px 16px;
 background: rgba(255, 255, 255, 0.03);
 border-radius: 10px;
 cursor: pointer;
@@ -297,14 +427,15 @@ background: rgba(233, 30, 99, 0.15);
 transform: translateX(5px);
 }
 .city-dropdown-icon {
-font-size: 20px;
+font-size: 22px;
 }
 .city-dropdown-name {
-font-weight: 500;
+font-weight: 600;
 flex: 1;
+font-size: 17px;
 }
 .city-dropdown-count {
-font-size: 12px;
+font-size: 14px;
 color: var(--gray);
 background: rgba(255, 255, 255, 0.1);
 padding: 4px 10px;
@@ -320,17 +451,18 @@ background: radial-gradient(ellipse at top, rgba(233, 30, 99, 0.12) 0%, transpar
 display: inline-flex;
 align-items: center;
 gap: 10px;
-padding: 10px 20px;
+padding: 12px 24px;
 background: rgba(233, 30, 99, 0.1);
 border: 1px solid rgba(233, 30, 99, 0.3);
 border-radius: 50px;
-font-size: 14px;
+font-size: 17px;
 color: var(--primary);
 margin-bottom: 30px;
+font-weight: 600;
 }
 .hero h1 {
-font-family: 'Playfair Display', serif;
-font-size: 56px;
+font-family: 'Caveat', cursive;
+font-size: 72px;
 margin-bottom: 20px;
 line-height: 1.2;
 }
@@ -342,7 +474,7 @@ background-clip: text;
 }
 .hero p {
 color: var(--gray);
-font-size: 18px;
+font-size: 20px;
 max-width: 600px;
 margin: 0 auto 45px;
 line-height: 1.7;
@@ -356,7 +488,7 @@ flex-wrap: wrap;
 /* Payment Notice */
 .payment-notice {
 margin-top: 25px;
-padding: 18px 30px;
+padding: 20px 35px;
 background: linear-gradient(145deg, rgba(233, 30, 99, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
 border: 1px solid rgba(233, 30, 99, 0.3);
 border-radius: 16px;
@@ -368,12 +500,13 @@ animation: glowPulse 2s infinite;
 50% { box-shadow: 0 0 35px rgba(233, 30, 99, 0.4); }
 }
 .payment-notice-text {
-font-size: 15px;
+font-size: 17px;
 color: var(--gray);
 margin-bottom: 8px;
 }
 .payment-notice-highlight {
-font-size: 20px;
+font-family: 'Caveat', cursive;
+font-size: 28px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -385,7 +518,7 @@ justify-content: center;
 gap: 10px;
 }
 .payment-icon {
-font-size: 24px;
+font-size: 26px;
 }
 /* Section Styles */
 .section {
@@ -402,59 +535,155 @@ text-align: center;
 margin-bottom: 60px;
 }
 .section-header h2 {
-font-family: 'Playfair Display', serif;
-font-size: 42px;
+font-family: 'Caveat', cursive;
+font-size: 56px;
 margin-bottom: 15px;
 }
 .section-header p {
 color: var(--gray);
-font-size: 16px;
+font-size: 18px;
 }
-/* Services Section */
-.services-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-gap: 30px;
+/* Services Section - Preferences Style */
+.services-intro {
+text-align: center;
+margin-bottom: 50px;
 }
-.service-card {
-background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
-border-radius: 20px;
-padding: 35px;
-border: 1px solid rgba(255, 255, 255, 0.05);
-transition: all 0.4s ease;
-}
-.service-card:hover {
-border-color: rgba(233, 30, 99, 0.3);
-transform: translateY(-5px);
-}
-.service-icon {
-width: 60px;
-height: 60px;
-background: rgba(233, 30, 99, 0.15);
-border-radius: 16px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 28px;
-margin-bottom: 20px;
-}
-.service-card h3 {
-font-size: 22px;
-margin-bottom: 12px;
-}
-.service-card p {
+.services-intro-text {
+font-size: 18px;
 color: var(--gray);
 line-height: 1.7;
 margin-bottom: 20px;
 }
-.service-price {
+.preferences-section {
+background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+border-radius: 20px;
+padding: 40px;
+border: 1px solid rgba(255, 255, 255, 0.05);
+margin-bottom: 40px;
+}
+.preferences-title {
+font-family: 'Caveat', cursive;
+font-size: 40px;
+margin-bottom: 35px;
+font-weight: 700;
+}
+.preferences-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 40px;
+}
+.preference-column {
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+.preference-column-title {
+font-family: 'Caveat', cursive;
+font-size: 28px;
+font-weight: 700;
+margin-bottom: 10px;
+color: var(--light);
+}
+.preference-item {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 12px 0;
+border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+transition: all 0.3s ease;
+}
+.preference-item:hover {
+border-bottom-color: var(--primary);
+}
+.preference-check {
+color: var(--primary);
+font-size: 20px;
+font-weight: 700;
+flex-shrink: 0;
+}
+.preference-text {
+font-size: 16px;
+color: var(--light);
+}
+/* Pricing Cards Style */
+.pricing-section {
+margin-bottom: 28px;
+}
+.pricing-section h4 {
+font-family: 'Caveat', cursive;
+font-size: 28px;
+margin-bottom: 20px;
+color: var(--light);
+font-weight: 700;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.pricing-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 15px;
+margin-bottom: 20px;
+}
+.pricing-card {
+padding: 20px;
+border-radius: 16px;
+transition: all 0.3s ease;
+}
+.pricing-card:hover {
+transform: translateY(-3px);
+}
+.pricing-card-day {
+background: var(--day-bg);
+border: 1px solid var(--day-border);
+}
+.pricing-card-night {
+background: var(--night-bg);
+border: 1px solid var(--night-border);
+}
+.pricing-card-header {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 15px;
+}
+.pricing-icon {
+font-size: 32px;
+}
+.pricing-duration {
+font-family: 'Caveat', cursive;
+font-size: 26px;
+font-weight: 700;
+}
+.pricing-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px 0;
+border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.pricing-row:last-child {
+border-bottom: none;
+}
+.pricing-label {
+font-size: 14px;
+color: var(--gray);
+}
+.pricing-amount {
+font-family: 'Caveat', cursive;
 font-size: 24px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
-margin-bottom: 15px;
+}
+.pricing-note {
+font-size: 13px;
+color: var(--gray);
+text-align: center;
+margin-top: 15px;
+font-style: italic;
 }
 /* Models Section */
 .filters-bar {
@@ -465,14 +694,15 @@ flex-wrap: wrap;
 justify-content: center;
 }
 .filter-btn {
-padding: 12px 24px;
+padding: 14px 28px;
 background: rgba(255, 255, 255, 0.05);
 border: 1px solid rgba(255, 255, 255, 0.1);
 border-radius: 50px;
 color: var(--gray);
 cursor: pointer;
 transition: all 0.3s ease;
-font-weight: 500;
+font-weight: 600;
+font-size: 17px;
 }
 .filter-btn:hover,
 .filter-btn.active {
@@ -516,8 +746,9 @@ transform: scale(1.05);
 padding: 25px;
 }
 .model-name {
-font-size: 24px;
-font-weight: 600;
+font-family: 'Caveat', cursive;
+font-size: 32px;
+font-weight: 700;
 margin-bottom: 15px;
 }
 .model-stats {
@@ -530,22 +761,22 @@ margin-bottom: 15px;
 display: flex;
 align-items: center;
 gap: 8px;
-font-size: 14px;
+font-size: 16px;
 color: var(--gray);
 }
 .stat-icon {
-width: 20px;
-height: 20px;
+width: 22px;
+height: 22px;
 background: rgba(233, 30, 99, 0.15);
 border-radius: 6px;
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 12px;
+font-size: 14px;
 }
 .model-description {
 color: var(--gray);
-font-size: 14px;
+font-size: 16px;
 line-height: 1.6;
 margin-bottom: 20px;
 }
@@ -556,11 +787,12 @@ justify-content: space-between;
 margin-bottom: 15px;
 }
 .price-label {
-font-size: 13px;
+font-size: 15px;
 color: var(--gray);
 }
 .price-value {
-font-size: 22px;
+font-family: 'Caveat', cursive;
+font-size: 28px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -590,17 +822,18 @@ transform: translateY(-5px);
 box-shadow: 0 15px 35px rgba(233, 30, 99, 0.15);
 }
 .city-icon {
-font-size: 52px;
+font-size: 56px;
 margin-bottom: 18px;
 }
 .city-name {
-font-size: 22px;
-font-weight: 600;
+font-family: 'Caveat', cursive;
+font-size: 32px;
+font-weight: 700;
 margin-bottom: 8px;
 }
 .city-count {
 color: var(--gray);
-font-size: 14px;
+font-size: 16px;
 }
 /* Profile Modal */
 .profile-modal {
@@ -700,8 +933,8 @@ right: 15px;
 padding: 40px;
 }
 .modal-name {
-font-family: 'Playfair Display', serif;
-font-size: 36px;
+font-family: 'Caveat', cursive;
+font-size: 48px;
 margin-bottom: 15px;
 }
 .modal-stats {
@@ -717,7 +950,7 @@ gap: 10px;
 padding: 12px 16px;
 background: rgba(255, 255, 255, 0.03);
 border-radius: 10px;
-font-size: 14px;
+font-size: 16px;
 }
 .modal-stat-icon {
 width: 32px;
@@ -727,13 +960,13 @@ border-radius: 8px;
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 16px;
+font-size: 18px;
 }
 .modal-description {
 color: var(--gray);
 line-height: 1.8;
 margin-bottom: 30px;
-font-size: 15px;
+font-size: 17px;
 }
 .modal-donation-box {
 background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
@@ -744,63 +977,53 @@ margin-bottom: 28px;
 text-align: center;
 }
 .modal-donation-label {
-font-size: 14px;
+font-size: 16px;
 color: var(--gray);
 margin-bottom: 10px;
 }
 .modal-donation-amount {
-font-size: 38px;
+font-family: 'Caveat', cursive;
+font-size: 48px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
 }
-/* Services List in Modal */
-.services-list {
+.modal-operators {
 margin-bottom: 28px;
 }
-.services-list h4 {
+.modal-operators h4 {
 font-size: 16px;
-margin-bottom: 15px;
-color: var(--light);
-}
-.service-item {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 14px 18px;
-background: rgba(255, 255, 255, 0.03);
-border-radius: 12px;
-margin-bottom: 10px;
-border: 1px solid rgba(255, 255, 255, 0.05);
-transition: all 0.3s ease;
-cursor: pointer;
-}
-.service-item:hover {
-background: rgba(233, 30, 99, 0.1);
-border-color: rgba(233, 30, 99, 0.3);
-}
-.service-item-info {
-display: flex;
-flex-direction: column;
-gap: 4px;
-}
-.service-item-name {
-font-weight: 600;
-font-size: 15px;
-}
-.service-item-time {
-font-size: 13px;
+margin-bottom: 18px;
 color: var(--gray);
 }
-.service-item-price {
-font-weight: 700;
-background: var(--gradient);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
+.operator-buttons {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+}
+.operator-btn {
+flex: 1;
+min-width: 150px;
+padding: 16px 20px;
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 14px;
+color: white;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+font-weight: 500;
 font-size: 16px;
+}
+.operator-btn:hover {
+background: rgba(233, 30, 99, 0.2);
+border-color: var(--primary);
+transform: translateY(-2px);
 }
 /* Chat Modal */
 .chat-modal {
@@ -874,10 +1097,10 @@ gap: 2px;
 }
 .operator-name {
 font-weight: 600;
-font-size: 15px;
+font-size: 16px;
 }
 .operator-status-text {
-font-size: 12px;
+font-size: 13px;
 color: var(--success);
 display: flex;
 align-items: center;
@@ -947,7 +1170,7 @@ gap: 4px;
 .chat-bubble {
 padding: 14px 18px;
 border-radius: 18px;
-font-size: 14px;
+font-size: 16px;
 line-height: 1.5;
 word-wrap: break-word;
 }
@@ -960,7 +1183,7 @@ background: var(--gradient);
 border-bottom-right-radius: 4px;
 }
 .message-time {
-font-size: 11px;
+font-size: 12px;
 color: var(--gray);
 padding: 0 4px;
 }
@@ -1008,7 +1231,7 @@ background: rgba(255, 255, 255, 0.05);
 border: 1px solid rgba(255, 255, 255, 0.1);
 border-radius: 25px;
 color: white;
-font-size: 14px;
+font-size: 16px;
 transition: all 0.3s ease;
 }
 .chat-input:focus {
@@ -1078,7 +1301,7 @@ display: flex;
 justify-content: space-between;
 padding: 8px 0;
 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-font-size: 14px;
+font-size: 16px;
 }
 .price-list-item:last-child {
 border-bottom: none;
@@ -1087,6 +1310,8 @@ border-bottom: none;
 color: var(--gray);
 }
 .price-list-value {
+font-family: 'Caveat', cursive;
+font-size: 22px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -1114,12 +1339,13 @@ object-fit: cover;
 flex: 1;
 }
 .model-card-chat-name {
+font-family: 'Caveat', cursive;
+font-size: 24px;
 font-weight: 700;
-font-size: 16px;
 margin-bottom: 5px;
 }
 .model-card-chat-details {
-font-size: 13px;
+font-size: 14px;
 color: var(--gray);
 margin-bottom: 8px;
 }
@@ -1162,11 +1388,11 @@ flex: 1;
 }
 .notification-title {
 font-weight: 600;
-font-size: 14px;
+font-size: 16px;
 margin-bottom: 4px;
 }
 .notification-message {
-font-size: 13px;
+font-size: 14px;
 color: var(--gray);
 }
 .notification-close {
@@ -1194,19 +1420,20 @@ margin-top: 80px;
 }
 .footer-text {
 color: var(--gray);
-font-size: 14px;
+font-size: 16px;
 margin-bottom: 15px;
 }
 .age-warning {
 display: inline-flex;
 align-items: center;
 gap: 10px;
-padding: 10px 20px;
+padding: 12px 24px;
 background: rgba(239, 68, 68, 0.1);
 border: 1px solid rgba(239, 68, 68, 0.3);
 border-radius: 10px;
-font-size: 13px;
+font-size: 15px;
 color: #ef4444;
+font-weight: 600;
 }
 /* Responsive */
 @media (max-width: 1024px) {
@@ -1224,7 +1451,7 @@ padding: 15px 20px;
 }
 @media (max-width: 768px) {
 .hero { padding: 130px 20px 70px; }
-.hero h1 { font-size: 38px; }
+.hero h1 { font-size: 48px; }
 .section { padding: 60px 20px; }
 .models-grid, .services-grid, .cities-grid { grid-template-columns: 1fr; }
 .profile-modal-body { grid-template-columns: 1fr; }
@@ -1242,7 +1469,7 @@ justify-content: center;
 width: 100%;
 }
 .nav-links a {
-font-size: 15px;
+font-size: 16px;
 padding: 6px 0;
 }
 .nav-container {
@@ -1253,13 +1480,27 @@ margin-top: 20px;
 padding: 15px 20px;
 }
 .payment-notice-highlight {
-font-size: 18px;
+font-size: 22px;
 }
 .logo-img {
-height: 40px;
+height: 45px;
 }
 .logo-text {
-font-size: 16px;
+font-size: 24px;
+}
+.pricing-grid {
+grid-template-columns: 1fr;
+}
+.preferences-grid {
+grid-template-columns: 1fr;
+gap: 30px;
+}
+/* Mobile Header - Hide on scroll */
+.header {
+transform: translateY(0);
+}
+.header.hidden {
+transform: translateY(-100%);
 }
 }
 /* Animations */
@@ -1287,7 +1528,7 @@ animation: fadeIn 0.6s ease forwards;
 <span class="age-number">18</span>
 <span class="age-plus">+</span>
 </div>
-<h2 class="age-title">18+ Только для взрослых</h2>
+<h2 class="age-title animate-pulse">18+ Только для взрослых</h2>
 <p class="age-text">Этот сайт содержит контент интимного характера, предназначенный исключительно для лиц старше 18 лет. Подтверждая возраст, вы соглашаетесь с правилами сервиса.</p>
 <div class="age-warning-text">⚠️ Все услуги предоставляются только совершеннолетним клиентам. Требуется подтверждение возраста.</div>
 <div class="age-buttons">
@@ -1298,7 +1539,7 @@ animation: fadeIn 0.6s ease forwards;
 </div>
 <!-- Header -->
 <header class="header" id="header">
-<a href="#home" class="logo">
+<a href="#home" class="logo animate-slideInLeft">
 <img src="logo.png" alt="BABYGIRL_LNR" class="logo-img">
 <span class="logo-text">BABYGIRL_LNR</span>
 </a>
@@ -1332,10 +1573,10 @@ animation: fadeIn 0.6s ease forwards;
 </header>
 <!-- Hero Section -->
 <section class="hero" id="home">
-<div class="hero-badge">🔞 18+ Интимные услуги для взрослых</div>
-<h1>Элитные <span>Девушки</span> Вашего Города</h1>
-<p>Индивидуальные встречи с роскошными моделями. Полная конфиденциальность и высокий сервис. Только проверенные анкеты.</p>
-<div class="hero-buttons">
+<div class="hero-badge animate-fadeInUp">🔞 18+ Интимные услуги для взрослых</div>
+<h1 class="animate-fadeInUp">Элитные <span class="animate-pulse">Девушки</span> Вашего Города</h1>
+<p class="animate-fadeInUp">Индивидуальные встречи с роскошными моделями. Полная конфиденциальность и высокий сервис. Только проверенные анкеты.</p>
+<div class="hero-buttons animate-fadeInUp">
 <a href="#models" class="btn btn-primary" id="viewProfilesBtn">🔥 Смотреть Анкеты</a>
 <button class="btn btn-secondary" id="heroChatBtn">💬 Консультация</button>
 </div>
@@ -1352,8 +1593,8 @@ animation: fadeIn 0.6s ease forwards;
 <!-- Models Section (Active by default) -->
 <section class="section active" id="models">
 <div class="section-header">
-<h2>Анкеты Девушек</h2>
-<p>Выберите идеальную спутницу для незабываемой встречи</p>
+<h2 class="animate-fadeInUp">Анкеты Девушек</h2>
+<p class="animate-fadeInUp">Выберите идеальную спутницу для незабываемой встречи</p>
 </div>
 <div class="filters-bar">
 <button class="filter-btn active" data-filter="all">Все Города</button>
@@ -1363,61 +1604,175 @@ animation: fadeIn 0.6s ease forwards;
 </div>
 <div class="models-grid" id="modelsGrid"></div>
 </section>
-<!-- Services Section -->
+<!-- Services Section - Preferences Style -->
 <section class="section" id="services">
 <div class="section-header">
-<h2>Наши Услуги</h2>
-<p>Индивидуальный подход к каждому клиенту. Полная конфиденциальность.</p>
+<h2 class="animate-fadeInUp">Условия Встречи</h2>
+<p class="animate-fadeInUp">Ниже можно лучше ознакомиться с условиями встречи со мной</p>
 </div>
-<div class="services-grid">
-<div class="service-card">
-<div class="service-icon">💎</div>
-<h3>VIP Сопровождение</h3>
-<p>Эксклюзивная встреча с девушкой премиум-класса. Ресторан, отель или ваша локация.</p>
-<div class="service-price">от 25 000 ₽</div>
-<button class="btn btn-order" onclick="openChat()">Заказать</button>
+<div class="services-intro">
+<p class="services-intro-text">Ознакомьтесь с моими предпочтениями и услугами. Все детали можно обсудить индивидуально.</p>
+<button class="btn btn-details" onclick="openChat()">Подробнее</button>
 </div>
-<div class="service-card">
-<div class="service-icon">🌹</div>
-<h3>Романтический Вечер</h3>
-<p>Незабываемые эмоции в приятной компании. Ужин, прогулка, интимная встреча.</p>
-<div class="service-price">от 35 000 ₽</div>
-<button class="btn btn-order" onclick="openChat()">Заказать</button>
+<div class="preferences-section">
+<h3 class="preferences-title">Предпочтения</h3>
+<div class="preferences-grid">
+<div class="preference-column">
+<div class="preference-column-title">Секс</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Секс классический</span>
 </div>
-<div class="service-card">
-<div class="service-icon">✈️</div>
-<h3>Выезд в Другой Город</h3>
-<p>Сопровождение в поездки по России и СНГ. Полная организация встречи.</p>
-<div class="service-price">от 75 000 ₽</div>
-<button class="btn btn-order" onclick="openChat()">Заказать</button>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Минет в резинке</span>
 </div>
-<div class="service-card">
-<div class="service-icon">👑</div>
-<h3>Премиум Пакет</h3>
-<p>Максимальный сервис: трансфер, ужин, номер люкс, персональная программа.</p>
-<div class="service-price">от 100 000 ₽</div>
-<button class="btn btn-order" onclick="openChat()">Заказать</button>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Минет без резинки</span>
 </div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Минет глубокий</span>
+</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Минет в машине</span>
+</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Окончание на грудь</span>
+</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Окончание в рот $</span>
+</div>
+</div>
+<div class="preference-column">
+<div class="preference-column-title">Разное</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">GFE</span>
+</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Сопровождение</span>
+</div>
+<div class="preference-item">
+<span class="preference-check">✓</span>
+<span class="preference-text">Готова к поездкам в другой город</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pricing Section -->
+<div class="pricing-section">
+<h4>☀️ Днём</h4>
+<div class="pricing-grid">
+<div class="pricing-card pricing-card-day">
+<div class="pricing-card-header">
+<span class="pricing-icon">☀️</span>
+<span class="pricing-duration">1 час</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">15 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">15 000 ₽</span>
+</div>
+</div>
+<div class="pricing-card pricing-card-day">
+<div class="pricing-card-header">
+<span class="pricing-icon">☀️</span>
+<span class="pricing-duration">2 часа</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">30 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">30 000 ₽</span>
+</div>
+</div>
+</div>
+<h4 style="margin-top: 25px;">🌙 Ночью</h4>
+<div class="pricing-grid">
+<div class="pricing-card pricing-card-night">
+<div class="pricing-card-header">
+<span class="pricing-icon">🌙</span>
+<span class="pricing-duration">1 час</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">40 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">40 000 ₽</span>
+</div>
+</div>
+<div class="pricing-card pricing-card-night">
+<div class="pricing-card-header">
+<span class="pricing-icon">🌕</span>
+<span class="pricing-duration">Ночь</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">80 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">80 000 ₽</span>
+</div>
+</div>
+</div>
+<h4 style="margin-top: 25px;">🚗 Выезд</h4>
+<div class="pricing-grid">
+<div class="pricing-card pricing-card-day">
+<div class="pricing-card-header">
+<span class="pricing-icon">☀️</span>
+<span class="pricing-duration">2 часа</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">Выезд</span>
+<span class="pricing-amount">40 000 ₽</span>
+</div>
+</div>
+<div class="pricing-card pricing-card-night">
+<div class="pricing-card-header">
+<span class="pricing-icon">🌕</span>
+<span class="pricing-duration">Ночь</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">Выезд</span>
+<span class="pricing-amount">100 000 ₽</span>
+</div>
+</div>
+</div>
+<p class="pricing-note">* Дорога на выезде включена в стоимость</p>
 </div>
 </section>
 <!-- City Section -->
 <section class="section" id="city">
 <div class="section-header">
-<h2>Города Присутствия</h2>
-<p>Наши девушки доступны в следующих городах</p>
+<h2 class="animate-fadeInUp">Города Присутствия</h2>
+<p class="animate-fadeInUp">Наши девушки доступны в следующих городах</p>
 </div>
 <div class="cities-grid">
-<div class="city-card" data-city="pervomaisk">
+<div class="city-card animate-fadeInUp" data-city="pervomaisk">
 <div class="city-icon">🏙️</div>
 <div class="city-name">Первомайск</div>
 <div class="city-count" id="pervomaiskCountCard">0 девушек</div>
 </div>
-<div class="city-card" data-city="lugansk">
+<div class="city-card animate-fadeInUp" data-city="lugansk">
 <div class="city-icon">🏛️</div>
 <div class="city-name">Луганск</div>
 <div class="city-count" id="luganskCountCard">0 девушек</div>
 </div>
-<div class="city-card" data-city="stakhanov">
+<div class="city-card animate-fadeInUp" data-city="stakhanov">
 <div class="city-icon">⛏️</div>
 <div class="city-name">Стаханов</div>
 <div class="city-count" id="stakhanovCountCard">0 девушек</div>
@@ -1436,9 +1791,94 @@ animation: fadeIn 0.6s ease forwards;
 <h2 class="modal-name" id="modalName"></h2>
 <div class="modal-stats" id="modalStats"></div>
 <p class="modal-description" id="modalDescription"></p>
-<div class="services-list">
-<h4>💎 Доступные Услуги</h4>
-<div id="servicesList"></div>
+<!-- Pricing Section in Modal -->
+<div class="pricing-section">
+<h4>☀️ Днём</h4>
+<div class="pricing-grid">
+<div class="pricing-card pricing-card-day">
+<div class="pricing-card-header">
+<span class="pricing-icon">☀️</span>
+<span class="pricing-duration">1 час</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">15 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">15 000 ₽</span>
+</div>
+</div>
+<div class="pricing-card pricing-card-day">
+<div class="pricing-card-header">
+<span class="pricing-icon">☀️</span>
+<span class="pricing-duration">2 часа</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">30 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">30 000 ₽</span>
+</div>
+</div>
+</div>
+<h4 style="margin-top: 25px;">🌙 Ночью</h4>
+<div class="pricing-grid">
+<div class="pricing-card pricing-card-night">
+<div class="pricing-card-header">
+<span class="pricing-icon">🌙</span>
+<span class="pricing-duration">1 час</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">40 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">40 000 ₽</span>
+</div>
+</div>
+<div class="pricing-card pricing-card-night">
+<div class="pricing-card-header">
+<span class="pricing-icon">🌕</span>
+<span class="pricing-duration">Ночь</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У меня</span>
+<span class="pricing-amount">80 000 ₽</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">У тебя</span>
+<span class="pricing-amount">80 000 ₽</span>
+</div>
+</div>
+</div>
+<h4 style="margin-top: 25px;">🚗 Выезд</h4>
+<div class="pricing-grid">
+<div class="pricing-card pricing-card-day">
+<div class="pricing-card-header">
+<span class="pricing-icon">☀️</span>
+<span class="pricing-duration">2 часа</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">Выезд</span>
+<span class="pricing-amount">40 000 ₽</span>
+</div>
+</div>
+<div class="pricing-card pricing-card-night">
+<div class="pricing-card-header">
+<span class="pricing-icon">🌕</span>
+<span class="pricing-duration">Ночь</span>
+</div>
+<div class="pricing-row">
+<span class="pricing-label">Выезд</span>
+<span class="pricing-amount">100 000 ₽</span>
+</div>
+</div>
+</div>
+<p class="pricing-note">* Дорога на выезде включена в стоимость</p>
 </div>
 <button class="btn btn-order" id="modalOrderBtn">📞 Заказать Встречу</button>
 </div>
@@ -1452,7 +1892,7 @@ animation: fadeIn 0.6s ease forwards;
 <div class="operator-avatar" id="chatAvatar">👤</div>
 <div>
 <div style="font-weight: 600;" id="chatOperatorName">Менеджер</div>
-<div style="font-size: 12px; color: var(--success);" id="chatStatusText">● Онлайн</div>
+<div style="font-size: 13px; color: var(--success);" id="chatStatusText">● Онлайн</div>
 </div>
 </div>
 <button class="modal-close" id="closeChat" style="position: static; width: 36px; height: 36px; font-size: 18px;">×</button>
@@ -1661,22 +2101,35 @@ document.getElementById('models').scrollIntoView({ behavior: 'smooth' });
 function setupScrollHeader() {
 var header = document.getElementById('header');
 var lastScroll = 0;
-var scrollThreshold = 100;
+var scrollThreshold = 50;
+var ticking = false;
+
 window.addEventListener('scroll', function() {
+if (!ticking) {
+window.requestAnimationFrame(function() {
 var currentScroll = window.pageYOffset;
-if (currentScroll <= 0) {
-header.classList.remove('hidden');
-header.classList.remove('scrolled');
-return;
-}
+
+// Hide header when scrolling down, show when scrolling up
 if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+// Scrolling down
 header.classList.add('hidden');
-} else {
+header.classList.remove('scrolled');
+} else if (currentScroll < lastScroll || currentScroll <= scrollThreshold) {
+// Scrolling up or at top
 header.classList.remove('hidden');
+if (currentScroll > 0) {
 header.classList.add('scrolled');
+} else {
+header.classList.remove('scrolled');
 }
+}
+
 lastScroll = currentScroll;
+ticking = false;
 });
+ticking = true;
+}
+}, { passive: true });
 }
 function setupEventListeners() {
 var confirmBtn = document.getElementById('confirmBtn');
@@ -2071,18 +2524,6 @@ document.getElementById('modalStats').innerHTML =
 '<div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color: var(--gray); font-size: 12px;">Грудь</div><div>' + currentModalProfile.bust + ' размер</div></div></div>' +
 '<div class="modal-stat"><div class="modal-stat-icon">📍</div><div><div style="color: var(--gray); font-size: 12px;">Город</div><div>' + currentModalProfile.cityName + '</div></div></div>';
 document.getElementById('modalDescription').textContent = currentModalProfile.description;
-var servicesHtml = '';
-for (var i = 0; i < currentModalProfile.services.length; i++) {
-var s = currentModalProfile.services[i];
-servicesHtml += '<div class="service-item" onclick="selectService(\'' + s.name + '\')">' +
-'<div class="service-item-info">' +
-'<div class="service-item-name">' + s.name + '</div>' +
-'<div class="service-item-time">⏱️ ' + s.time + '</div>' +
-'</div>' +
-'<div class="service-item-price">' + s.price.toLocaleString() + ' ₽</div>' +
-'</div>';
-}
-document.getElementById('servicesList').innerHTML = servicesHtml;
 document.getElementById('profileModal').classList.add('active');
 }
 function selectService(serviceName) {
