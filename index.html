@@ -605,7 +605,7 @@ flex-shrink: 0;
 font-size: 16px;
 color: var(--light);
 }
-/* Pricing Cards Style */
+/* Pricing Cards Style - FIXED */
 .pricing-section {
 margin-bottom: 28px;
 }
@@ -626,9 +626,11 @@ gap: 15px;
 margin-bottom: 20px;
 }
 .pricing-card {
-padding: 20px;
+padding: 18px 15px;
 border-radius: 16px;
 transition: all 0.3s ease;
+min-width: 0;
+overflow: hidden;
 }
 .pricing-card:hover {
 transform: translateY(-3px);
@@ -644,39 +646,53 @@ border: 1px solid var(--night-border);
 .pricing-card-header {
 display: flex;
 align-items: center;
-gap: 12px;
-margin-bottom: 15px;
+gap: 10px;
+margin-bottom: 12px;
+flex-wrap: nowrap;
 }
 .pricing-icon {
-font-size: 32px;
+font-size: 28px;
+flex-shrink: 0;
 }
 .pricing-duration {
 font-family: 'Caveat', cursive;
-font-size: 26px;
+font-size: 20px;
 font-weight: 700;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 .pricing-row {
 display: flex;
 justify-content: space-between;
 align-items: center;
-padding: 8px 0;
+padding: 6px 0;
 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+gap: 8px;
 }
 .pricing-row:last-child {
 border-bottom: none;
 }
 .pricing-label {
-font-size: 14px;
+font-size: 13px;
 color: var(--gray);
+white-space: nowrap;
+flex-shrink: 0;
 }
 .pricing-amount {
 font-family: 'Caveat', cursive;
-font-size: 24px;
+font-size: 17px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 background-clip: text;
+white-space: nowrap;
+flex-shrink: 0;
+text-align: right;
+max-width: 95px;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 .pricing-note {
 font-size: 13px;
@@ -930,11 +946,11 @@ left: 15px;
 right: 15px;
 }
 .modal-details {
-padding: 40px;
+padding: 30px 25px;
 }
 .modal-name {
 font-family: 'Caveat', cursive;
-font-size: 48px;
+font-size: 42px;
 margin-bottom: 15px;
 }
 .modal-stats {
@@ -950,7 +966,7 @@ gap: 10px;
 padding: 12px 16px;
 background: rgba(255, 255, 255, 0.03);
 border-radius: 10px;
-font-size: 16px;
+font-size: 15px;
 }
 .modal-stat-icon {
 width: 32px;
@@ -966,24 +982,24 @@ font-size: 18px;
 color: var(--gray);
 line-height: 1.8;
 margin-bottom: 30px;
-font-size: 17px;
+font-size: 16px;
 }
 .modal-donation-box {
 background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
 border: 1px solid rgba(233, 30, 99, 0.3);
 border-radius: 18px;
-padding: 28px;
-margin-bottom: 28px;
+padding: 25px;
+margin-bottom: 25px;
 text-align: center;
 }
 .modal-donation-label {
-font-size: 16px;
+font-size: 15px;
 color: var(--gray);
-margin-bottom: 10px;
+margin-bottom: 8px;
 }
 .modal-donation-amount {
 font-family: 'Caveat', cursive;
-font-size: 48px;
+font-size: 42px;
 font-weight: 700;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -1502,6 +1518,17 @@ transform: translateY(0);
 .header.hidden {
 transform: translateY(-100%);
 }
+/* Fixed pricing for mobile */
+.pricing-duration {
+font-size: 18px;
+}
+.pricing-amount {
+font-size: 16px;
+max-width: 90px;
+}
+.modal-donation-amount {
+font-size: 36px;
+}
 }
 /* Animations */
 @keyframes fadeIn {
@@ -1675,12 +1702,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">1 час</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">15 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">15 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">15.000 ₽</span>
 </div>
 </div>
 <div class="pricing-card pricing-card-day">
@@ -1689,12 +1712,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">2 часа</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">30 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">30 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">30.000 ₽</span>
 </div>
 </div>
 </div>
@@ -1706,12 +1725,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">1 час</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">40 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">40 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">40.000 ₽</span>
 </div>
 </div>
 <div class="pricing-card pricing-card-night">
@@ -1720,12 +1735,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">Ночь</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">80 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">80 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">80.000 ₽</span>
 </div>
 </div>
 </div>
@@ -1733,12 +1744,12 @@ animation: fadeIn 0.6s ease forwards;
 <div class="pricing-grid">
 <div class="pricing-card pricing-card-day">
 <div class="pricing-card-header">
-<span class="pricing-icon">☀️</span>
-<span class="pricing-duration">2 часа</span>
+<span class="pricing-icon">🚗</span>
+<span class="pricing-duration">от 2 часов</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">Выезд</span>
-<span class="pricing-amount">40 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">40.000 ₽</span>
 </div>
 </div>
 <div class="pricing-card pricing-card-night">
@@ -1747,8 +1758,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">Ночь</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">Выезд</span>
-<span class="pricing-amount">100 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">100.000 ₽</span>
 </div>
 </div>
 </div>
@@ -1801,12 +1812,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">1 час</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">15 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">15 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">15.000 ₽</span>
 </div>
 </div>
 <div class="pricing-card pricing-card-day">
@@ -1815,12 +1822,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">2 часа</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">30 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">30 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">30.000 ₽</span>
 </div>
 </div>
 </div>
@@ -1832,12 +1835,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">1 час</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">40 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">40 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">40.000 ₽</span>
 </div>
 </div>
 <div class="pricing-card pricing-card-night">
@@ -1846,12 +1845,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">Ночь</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">У меня</span>
-<span class="pricing-amount">80 000 ₽</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">У тебя</span>
-<span class="pricing-amount">80 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">80.000 ₽</span>
 </div>
 </div>
 </div>
@@ -1859,12 +1854,12 @@ animation: fadeIn 0.6s ease forwards;
 <div class="pricing-grid">
 <div class="pricing-card pricing-card-day">
 <div class="pricing-card-header">
-<span class="pricing-icon">☀️</span>
-<span class="pricing-duration">2 часа</span>
+<span class="pricing-icon">🚗</span>
+<span class="pricing-duration">от 2 часов</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">Выезд</span>
-<span class="pricing-amount">40 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">40.000 ₽</span>
 </div>
 </div>
 <div class="pricing-card pricing-card-night">
@@ -1873,8 +1868,8 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-duration">Ночь</span>
 </div>
 <div class="pricing-row">
-<span class="pricing-label">Выезд</span>
-<span class="pricing-amount">100 000 ₽</span>
+<span class="pricing-label">Стоимость</span>
+<span class="pricing-amount">100.000 ₽</span>
 </div>
 </div>
 </div>
@@ -2065,19 +2060,19 @@ const standardPriceList = `
 <div class="price-list-box">
 <div class="price-list-item">
 <span class="price-list-label">⏱️ 1 час</span>
-<span class="price-list-value">15 000 ₽</span>
+<span class="price-list-value">15.000 ₽</span>
 </div>
 <div class="price-list-item">
 <span class="price-list-label">⏱️ 2 часа</span>
-<span class="price-list-value">30 000 ₽</span>
+<span class="price-list-value">30.000 ₽</span>
 </div>
 <div class="price-list-item">
-<span class="price-list-label">🚗 Выезд (от 2 часов)</span>
-<span class="price-list-value">40 000 ₽</span>
+<span class="price-list-label">🚗 Выезд от 2 часов</span>
+<span class="price-list-value">40.000 ₽</span>
 </div>
 <div class="price-list-item">
 <span class="price-list-label">🌙 Ночь</span>
-<span class="price-list-value">100 000 ₽</span>
+<span class="price-list-value">100.000 ₽</span>
 </div>
 </div>
 `;
@@ -2352,7 +2347,7 @@ chatBotState.orderData.service = 'Ночь';
 chatBotState.orderData.time = '12 часов';
 proceedToPhone();
 } else {
-addBotMessage("Выберите формат: ⏱️ 1 час (15 000₽), ⏱️ 2 часа (30 000₽), 🚗 Выезд (40 000₽), 🌙 Ночь (100 000₽)");
+addBotMessage("Выберите формат: ⏱️ 1 час (15.000₽), ⏱️ 2 часа (30.000₽), 🚗 Выезд от 2 часов (40.000₽), 🌙 Ночь (100.000₽)");
 }
 return;
 }
@@ -2484,7 +2479,7 @@ var html = '';
 for (var i = 0; i < filtered.length; i++) {
 var p = filtered[i];
 var ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']);
-var minPrice = p.services[0].price.toLocaleString();
+var minPrice = p.services[0].price.toLocaleString().replace(' ', '.');
 html += '<div class="model-card" data-id="' + p.id + '">' +
 '<div class="model-image-container"><img src="' + p.images[0] + '" alt="' + p.name + '" class="model-image"></div>' +
 '<div class="model-info">' +
