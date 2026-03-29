@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BABYGIRL_LNR - Элитные Услуги 18+</title>
-<link href="https://cdn.jsdelivr.net/npm/fontsource-caveat@5.0.0/index.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/fontsource-great-vibes@5.0.0/index.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/fontsource-montserrat@5.0.0/index.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
 <style>
@@ -23,10 +23,12 @@ box-sizing: border-box;
 --gray: #6b7280;
 --success: #10b981;
 --gradient: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
---day-bg: rgba(255, 193, 7, 0.15);
---day-border: rgba(255, 193, 7, 0.3);
---night-bg: rgba(33, 150, 243, 0.15);
---night-border: rgba(33, 150, 243, 0.3);
+--day-bg: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.1) 100%);
+--day-border: rgba(255, 193, 7, 0.4);
+--night-bg: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(25, 118, 210, 0.1) 100%);
+--night-border: rgba(33, 150, 243, 0.4);
+--trip-bg: linear-gradient(135deg, rgba(244, 67, 54, 0.15) 0%, rgba(229, 57, 53, 0.1) 100%);
+--trip-border: rgba(244, 67, 54, 0.4);
 }
 body {
 font-family: 'Montserrat', sans-serif;
@@ -37,12 +39,13 @@ overflow-x: hidden;
 font-size: 18px;
 }
 
-/* ===== HANDWRITTEN FONT & ANIMATIONS ===== */
-.font-handwritten {
-font-family: 'Caveat', cursive;
-font-weight: 700;
+/* ===== FONTS ===== */
+.font-cursive {
+font-family: 'Great Vibes', cursive;
+font-weight: 400;
 }
 
+/* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
 from {
 opacity: 0;
@@ -74,15 +77,6 @@ transform: translateX(0);
 }
 }
 
-@keyframes handwriting {
-0% {
-stroke-dashoffset: 1000;
-}
-100% {
-stroke-dashoffset: 0;
-}
-}
-
 @keyframes float {
 0%, 100% {
 transform: translateY(0);
@@ -98,6 +92,17 @@ background-position: -200% center;
 }
 100% {
 background-position: 200% center;
+}
+}
+
+@keyframes messageStaircase {
+0% {
+opacity: 0;
+transform: translateY(20px) translateX(-10px);
+}
+100% {
+opacity: 1;
+transform: translateY(0) translateX(0);
 }
 }
 
@@ -178,7 +183,7 @@ box-shadow: 0 10px 40px rgba(233, 30, 99, 0.4);
 position: relative;
 }
 .age-number {
-font-family: 'Caveat', cursive;
+font-family: 'Playfair Display', serif;
 font-size: 48px;
 font-weight: 700;
 color: white;
@@ -192,8 +197,8 @@ top: 25px;
 right: 22px;
 }
 .age-title {
-font-family: 'Caveat', cursive;
-font-size: 36px;
+font-family: 'Great Vibes', cursive;
+font-size: 42px;
 margin-bottom: 15px;
 background: var(--gradient);
 -webkit-background-clip: text;
@@ -223,7 +228,7 @@ flex-wrap: wrap;
 }
 .btn {
 padding: 18px 40px;
-border-radius: 14px;
+border-radius: 50px;
 font-size: 18px;
 font-weight: 600;
 cursor: pointer;
@@ -258,7 +263,7 @@ border-color: rgba(255, 255, 255, 0.25);
 background: var(--gradient);
 color: white;
 padding: 16px 32px;
-border-radius: 12px;
+border-radius: 50px;
 font-weight: 600;
 border: none;
 cursor: pointer;
@@ -275,7 +280,7 @@ background: rgba(233, 30, 99, 0.2);
 color: var(--primary);
 border: 1px solid rgba(233, 30, 99, 0.3);
 padding: 12px 28px;
-border-radius: 10px;
+border-radius: 50px;
 font-weight: 600;
 cursor: pointer;
 transition: all 0.3s ease;
@@ -330,9 +335,9 @@ transform: scale(1.05);
 filter: brightness(1.1);
 }
 .logo-text {
-font-family: 'Caveat', cursive;
-font-size: 32px;
-font-weight: 700;
+font-family: 'Great Vibes', cursive;
+font-size: 36px;
+font-weight: 400;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -461,8 +466,8 @@ margin-bottom: 30px;
 font-weight: 600;
 }
 .hero h1 {
-font-family: 'Caveat', cursive;
-font-size: 72px;
+font-family: 'Great Vibes', cursive;
+font-size: 80px;
 margin-bottom: 20px;
 line-height: 1.2;
 }
@@ -488,10 +493,10 @@ flex-wrap: wrap;
 /* Payment Notice */
 .payment-notice {
 margin-top: 25px;
-padding: 20px 35px;
+padding: 25px 35px;
 background: linear-gradient(145deg, rgba(233, 30, 99, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
 border: 1px solid rgba(233, 30, 99, 0.3);
-border-radius: 16px;
+border-radius: 20px;
 display: inline-block;
 animation: glowPulse 2s infinite;
 }
@@ -502,12 +507,16 @@ animation: glowPulse 2s infinite;
 .payment-notice-text {
 font-size: 17px;
 color: var(--gray);
-margin-bottom: 8px;
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
 }
 .payment-notice-highlight {
-font-family: 'Caveat', cursive;
-font-size: 28px;
-font-weight: 700;
+font-family: 'Great Vibes', cursive;
+font-size: 32px;
+font-weight: 400;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -515,7 +524,7 @@ background-clip: text;
 display: flex;
 align-items: center;
 justify-content: center;
-gap: 10px;
+gap: 15px;
 }
 .payment-icon {
 font-size: 26px;
@@ -535,171 +544,208 @@ text-align: center;
 margin-bottom: 60px;
 }
 .section-header h2 {
-font-family: 'Caveat', cursive;
-font-size: 56px;
+font-family: 'Great Vibes', cursive;
+font-size: 64px;
 margin-bottom: 15px;
 }
 .section-header p {
 color: var(--gray);
 font-size: 18px;
 }
-/* Services Section - Preferences Style */
-.services-intro {
-text-align: center;
-margin-bottom: 50px;
+/* Chat Section */
+.chat-section {
+max-width: 900px;
+margin: 0 auto;
 }
-.services-intro-text {
-font-size: 18px;
-color: var(--gray);
-line-height: 1.7;
-margin-bottom: 20px;
-}
-.preferences-section {
+.chat-container {
 background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
-border-radius: 20px;
-padding: 40px;
+border-radius: 24px;
 border: 1px solid rgba(255, 255, 255, 0.05);
-margin-bottom: 40px;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+height: 70vh;
+min-height: 600px;
 }
-.preferences-title {
-font-family: 'Caveat', cursive;
-font-size: 40px;
-margin-bottom: 35px;
-font-weight: 700;
+.chat-header-custom {
+padding: 25px 30px;
+background: linear-gradient(135deg, rgba(233, 30, 99, 0.15) 0%, rgba(156, 39, 176, 0.15) 100%);
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
-.preferences-grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 40px;
+.chat-header-info {
+display: flex;
+align-items: center;
+gap: 15px;
 }
-.preference-column {
+.chat-avatar {
+width: 50px;
+height: 50px;
+border-radius: 50%;
+background: var(--gradient);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24px;
+}
+.chat-status {
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 14px;
+color: var(--success);
+}
+.status-dot {
+width: 10px;
+height: 10px;
+background: var(--success);
+border-radius: 50%;
+animation: pulse 2s infinite;
+}
+.chat-messages {
+flex: 1;
+padding: 30px;
+overflow-y: auto;
 display: flex;
 flex-direction: column;
 gap: 15px;
 }
-.preference-column-title {
-font-family: 'Caveat', cursive;
-font-size: 28px;
-font-weight: 700;
-margin-bottom: 10px;
-color: var(--light);
-}
-.preference-item {
+.chat-message-item {
 display: flex;
-align-items: center;
-gap: 12px;
-padding: 12px 0;
-border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
-transition: all 0.3s ease;
-}
-.preference-item:hover {
-border-bottom-color: var(--primary);
-}
-.preference-check {
-color: var(--primary);
-font-size: 20px;
-font-weight: 700;
-flex-shrink: 0;
-}
-.preference-text {
-font-size: 16px;
-color: var(--light);
-}
-/* Pricing Cards Style - FIXED */
-.pricing-section {
-margin-bottom: 28px;
-}
-.pricing-section h4 {
-font-family: 'Caveat', cursive;
-font-size: 28px;
-margin-bottom: 20px;
-color: var(--light);
-font-weight: 700;
-display: flex;
-align-items: center;
-gap: 10px;
-}
-.pricing-grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
 gap: 15px;
-margin-bottom: 20px;
+max-width: 80%;
+opacity: 0;
+animation: messageStaircase 0.5s ease forwards;
 }
-.pricing-card {
-padding: 18px 15px;
-border-radius: 16px;
-transition: all 0.3s ease;
-min-width: 0;
-overflow: hidden;
+.chat-message-item.user {
+align-self: flex-end;
+flex-direction: row-reverse;
 }
-.pricing-card:hover {
-transform: translateY(-3px);
+.chat-message-item.operator {
+align-self: flex-start;
 }
-.pricing-card-day {
-background: var(--day-bg);
-border: 1px solid var(--day-border);
-}
-.pricing-card-night {
-background: var(--night-bg);
-border: 1px solid var(--night-border);
-}
-.pricing-card-header {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-bottom: 12px;
-flex-wrap: nowrap;
-}
-.pricing-icon {
-font-size: 28px;
-flex-shrink: 0;
-}
-.pricing-duration {
-font-family: 'Caveat', cursive;
-font-size: 20px;
-font-weight: 700;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-.pricing-row {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 6px 0;
-border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-gap: 8px;
-}
-.pricing-row:last-child {
-border-bottom: none;
-}
-.pricing-label {
-font-size: 13px;
-color: var(--gray);
-white-space: nowrap;
-flex-shrink: 0;
-}
-.pricing-amount {
-font-family: 'Caveat', cursive;
-font-size: 17px;
-font-weight: 700;
+.message-avatar {
+width: 45px;
+height: 45px;
+border-radius: 50%;
 background: var(--gradient);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-white-space: nowrap;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 18px;
 flex-shrink: 0;
-text-align: right;
-max-width: 95px;
-overflow: hidden;
-text-overflow: ellipsis;
+box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
 }
-.pricing-note {
-font-size: 13px;
+.chat-message-item.user .message-avatar {
+background: rgba(255, 255, 255, 0.2);
+}
+.message-content {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+.chat-bubble {
+padding: 16px 22px;
+border-radius: 20px;
+font-size: 16px;
+line-height: 1.5;
+word-wrap: break-word;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.chat-message-item.operator .chat-bubble {
+background: rgba(255, 255, 255, 0.08);
+border-bottom-left-radius: 5px;
+}
+.chat-message-item.user .chat-bubble {
+background: var(--gradient);
+border-bottom-right-radius: 5px;
+}
+.message-time {
+font-size: 12px;
 color: var(--gray);
+padding: 0 5px;
+}
+.chat-message-item.user .message-time {
+text-align: right;
+}
+.empty-chat {
 text-align: center;
-margin-top: 15px;
-font-style: italic;
+padding: 60px 20px;
+color: var(--gray);
+flex: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+.empty-chat-icon {
+font-size: 64px;
+margin-bottom: 20px;
+opacity: 0.5;
+}
+.empty-chat-text {
+font-size: 18px;
+margin-bottom: 10px;
+}
+.empty-chat-subtext {
+font-size: 14px;
+opacity: 0.7;
+}
+.chat-input-container {
+padding: 25px 30px;
+background: rgba(0, 0, 0, 0.2);
+border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.chat-input-wrapper {
+display: flex;
+gap: 15px;
+align-items: center;
+}
+.chat-input {
+flex: 1;
+padding: 18px 25px;
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 30px;
+color: white;
+font-size: 16px;
+transition: all 0.3s ease;
+font-family: 'Montserrat', sans-serif;
+}
+.chat-input:focus {
+outline: none;
+border-color: var(--primary);
+background: rgba(255, 255, 255, 0.08);
+}
+.chat-input::placeholder {
+color: var(--gray);
+}
+.chat-send {
+width: 60px;
+height: 60px;
+border-radius: 50%;
+background: var(--gradient);
+border: none;
+color: white;
+cursor: pointer;
+transition: all 0.3s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24px;
+flex-shrink: 0;
+}
+.chat-send:hover {
+transform: scale(1.1);
+box-shadow: 0 5px 20px rgba(233, 30, 99, 0.4);
+}
+.chat-send:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+transform: none;
 }
 /* Models Section */
 .filters-bar {
@@ -762,9 +808,9 @@ transform: scale(1.05);
 padding: 25px;
 }
 .model-name {
-font-family: 'Caveat', cursive;
-font-size: 32px;
-font-weight: 700;
+font-family: 'Great Vibes', cursive;
+font-size: 36px;
+font-weight: 400;
 margin-bottom: 15px;
 }
 .model-stats {
@@ -807,9 +853,9 @@ font-size: 15px;
 color: var(--gray);
 }
 .price-value {
-font-family: 'Caveat', cursive;
-font-size: 28px;
-font-weight: 700;
+font-family: 'Great Vibes', cursive;
+font-size: 32px;
+font-weight: 400;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -842,9 +888,9 @@ font-size: 56px;
 margin-bottom: 18px;
 }
 .city-name {
-font-family: 'Caveat', cursive;
-font-size: 32px;
-font-weight: 700;
+font-family: 'Great Vibes', cursive;
+font-size: 36px;
+font-weight: 400;
 margin-bottom: 8px;
 }
 .city-count {
@@ -949,8 +995,9 @@ right: 15px;
 padding: 30px 25px;
 }
 .modal-name {
-font-family: 'Caveat', cursive;
-font-size: 42px;
+font-family: 'Great Vibes', cursive;
+font-size: 48px;
+font-weight: 400;
 margin-bottom: 15px;
 }
 .modal-stats {
@@ -981,9 +1028,150 @@ font-size: 18px;
 .modal-description {
 color: var(--gray);
 line-height: 1.8;
-margin-bottom: 30px;
+margin-bottom: 25px;
 font-size: 16px;
 }
+/* Additional Services Section */
+.additional-services {
+background: linear-gradient(145deg, rgba(233, 30, 99, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
+border: 1px solid rgba(233, 30, 99, 0.2);
+border-radius: 16px;
+padding: 25px;
+margin-bottom: 25px;
+}
+.additional-services h4 {
+font-family: 'Great Vibes', cursive;
+font-size: 32px;
+font-weight: 400;
+margin-bottom: 20px;
+color: var(--light);
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.services-list {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+.service-item {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 10px 0;
+border-bottom: 1px dotted rgba(255, 255, 255, 0.15);
+transition: all 0.3s ease;
+}
+.service-item:last-child {
+border-bottom: none;
+}
+.service-item:hover {
+border-bottom-color: var(--primary);
+}
+.service-check {
+color: var(--primary);
+font-size: 18px;
+font-weight: 700;
+flex-shrink: 0;
+}
+.service-text {
+font-size: 15px;
+color: var(--light);
+}
+
+/* ===== PRICING CARDS - NEW STYLE ===== */
+.pricing-section {
+margin-bottom: 25px;
+}
+
+.pricing-section h4 {
+font-family: 'Great Vibes', cursive;
+font-size: 36px;
+font-weight: 400;
+margin-bottom: 20px;
+color: var(--light);
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.pricing-grid {
+display: flex;
+flex-direction: column;
+gap: 15px;
+margin-bottom: 25px;
+}
+
+.pricing-card {
+padding: 20px 25px;
+border-radius: 20px;
+transition: all 0.3s ease;
+border: 1px solid;
+}
+
+.pricing-card-day {
+background: var(--day-bg);
+border-color: var(--day-border);
+}
+
+.pricing-card-night {
+background: var(--night-bg);
+border-color: var(--night-border);
+}
+
+.pricing-card-trip {
+background: var(--trip-bg);
+border-color: var(--trip-border);
+}
+
+.pricing-card-header {
+display: flex;
+align-items: center;
+gap: 12px;
+margin-bottom: 15px;
+}
+
+.pricing-icon {
+font-size: 28px;
+}
+
+.pricing-duration {
+font-family: 'Great Vibes', cursive;
+font-size: 28px;
+font-weight: 400;
+color: var(--light);
+}
+
+.pricing-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px 0;
+}
+
+.pricing-label {
+font-size: 15px;
+color: var(--gray);
+}
+
+.pricing-amount {
+font-family: 'Great Vibes', cursive;
+font-size: 28px;
+font-weight: 400;
+background: var(--gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.pricing-note {
+font-size: 13px;
+color: var(--gray);
+text-align: center;
+margin-top: 15px;
+font-style: italic;
+}
+
 .modal-donation-box {
 background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
 border: 1px solid rgba(233, 30, 99, 0.3);
@@ -998,9 +1186,9 @@ color: var(--gray);
 margin-bottom: 8px;
 }
 .modal-donation-amount {
-font-family: 'Caveat', cursive;
-font-size: 42px;
-font-weight: 700;
+font-family: 'Great Vibes', cursive;
+font-size: 48px;
+font-weight: 400;
 background: var(--gradient);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
@@ -1040,392 +1228,6 @@ font-size: 16px;
 background: rgba(233, 30, 99, 0.2);
 border-color: var(--primary);
 transform: translateY(-2px);
-}
-/* Chat Modal */
-.chat-modal {
-position: fixed;
-bottom: 25px;
-right: 25px;
-width: 420px;
-background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
-border-radius: 20px;
-border: 1px solid rgba(233, 30, 99, 0.3);
-display: none;
-flex-direction: column;
-z-index: 3000;
-box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-overflow: hidden;
-}
-.chat-modal.active {
-display: flex;
-animation: slideUp 0.3s ease;
-}
-@keyframes slideUp {
-from { opacity: 0; transform: translateY(20px); }
-to { opacity: 1; transform: translateY(0); }
-}
-.chat-header {
-padding: 18px 24px;
-border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-display: flex;
-justify-content: space-between;
-align-items: center;
-background: linear-gradient(135deg, rgba(233, 30, 99, 0.15) 0%, rgba(156, 39, 176, 0.15) 100%);
-border-radius: 20px 20px 0 0;
-}
-.chat-header-info {
-display: flex;
-align-items: center;
-gap: 14px;
-}
-.operator-avatar {
-width: 50px;
-height: 50px;
-border-radius: 50%;
-background: var(--gradient);
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 600;
-font-size: 20px;
-position: relative;
-flex-shrink: 0;
-}
-.operator-status {
-width: 14px;
-height: 14px;
-background: var(--success);
-border-radius: 50%;
-position: absolute;
-bottom: 2px;
-right: 2px;
-border: 3px solid #1a1a2e;
-animation: pulse 2s infinite;
-}
-@keyframes pulse {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.5; }
-}
-.operator-info {
-display: flex;
-flex-direction: column;
-gap: 2px;
-}
-.operator-name {
-font-weight: 600;
-font-size: 16px;
-}
-.operator-status-text {
-font-size: 13px;
-color: var(--success);
-display: flex;
-align-items: center;
-gap: 5px;
-}
-.chat-header-actions {
-display: flex;
-gap: 8px;
-}
-.chat-header-btn {
-width: 36px;
-height: 36px;
-border-radius: 50%;
-background: rgba(255, 255, 255, 0.1);
-border: none;
-color: white;
-cursor: pointer;
-transition: all 0.3s ease;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 18px;
-}
-.chat-header-btn:hover {
-background: rgba(233, 30, 99, 0.5);
-}
-.chat-body {
-padding: 20px 24px;
-height: 380px;
-overflow-y: auto;
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
-.chat-message {
-display: flex;
-gap: 12px;
-max-width: 85%;
-animation: messageSlide 0.3s ease;
-}
-@keyframes messageSlide {
-from { opacity: 0; transform: translateY(10px); }
-to { opacity: 1; transform: translateY(0); }
-}
-.chat-message.operator { align-self: flex-start; }
-.chat-message.user { align-self: flex-end; flex-direction: row-reverse; }
-.message-avatar {
-width: 36px;
-height: 36px;
-border-radius: 50%;
-background: var(--gradient);
-display: flex;
-align-items: center;
-justify-content: center;
-font-weight: 600;
-font-size: 14px;
-flex-shrink: 0;
-}
-.chat-message.user .message-avatar {
-background: rgba(255, 255, 255, 0.2);
-}
-.message-content {
-display: flex;
-flex-direction: column;
-gap: 4px;
-}
-.chat-bubble {
-padding: 14px 18px;
-border-radius: 18px;
-font-size: 16px;
-line-height: 1.5;
-word-wrap: break-word;
-}
-.chat-message.operator .chat-bubble {
-background: rgba(255, 255, 255, 0.08);
-border-bottom-left-radius: 4px;
-}
-.chat-message.user .chat-bubble {
-background: var(--gradient);
-border-bottom-right-radius: 4px;
-}
-.message-time {
-font-size: 12px;
-color: var(--gray);
-padding: 0 4px;
-}
-.chat-message.user .message-time {
-text-align: right;
-}
-.typing-indicator {
-display: none;
-align-items: center;
-gap: 8px;
-padding: 12px 18px;
-background: rgba(255, 255, 255, 0.08);
-border-radius: 18px;
-border-bottom-left-radius: 4px;
-width: fit-content;
-margin-left: 48px;
-}
-.typing-indicator.active {
-display: flex;
-}
-.typing-dot {
-width: 8px;
-height: 8px;
-background: var(--gray);
-border-radius: 50%;
-animation: typingBounce 1.4s infinite;
-}
-.typing-dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingBounce {
-0%, 60%, 100% { transform: translateY(0); }
-30% { transform: translateY(-8px); }
-}
-.chat-input-area {
-padding: 16px 24px;
-border-top: 1px solid rgba(255, 255, 255, 0.1);
-display: flex;
-gap: 12px;
-background: rgba(0, 0, 0, 0.2);
-}
-.chat-input {
-flex: 1;
-padding: 14px 18px;
-background: rgba(255, 255, 255, 0.05);
-border: 1px solid rgba(255, 255, 255, 0.1);
-border-radius: 25px;
-color: white;
-font-size: 16px;
-transition: all 0.3s ease;
-}
-.chat-input:focus {
-outline: none;
-border-color: var(--primary);
-background: rgba(255, 255, 255, 0.08);
-}
-.chat-input::placeholder {
-color: var(--gray);
-}
-.chat-send {
-width: 50px;
-height: 50px;
-border-radius: 50%;
-background: var(--gradient);
-border: none;
-color: white;
-cursor: pointer;
-transition: all 0.3s ease;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 20px;
-flex-shrink: 0;
-}
-.chat-send:hover {
-transform: scale(1.1);
-box-shadow: 0 5px 20px rgba(233, 30, 99, 0.4);
-}
-.chat-send:disabled {
-opacity: 0.5;
-cursor: not-allowed;
-transform: none;
-}
-/* Transfer Button */
-.transfer-btn {
-background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-color: white;
-padding: 12px 24px;
-border-radius: 12px;
-border: none;
-cursor: pointer;
-font-weight: 600;
-margin: 10px 0;
-width: 100%;
-transition: all 0.3s ease;
-display: none;
-}
-.transfer-btn.visible {
-display: block;
-animation: pulse 2s infinite;
-}
-.transfer-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
-}
-/* Price List in Chat */
-.price-list-box {
-background: linear-gradient(145deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
-border: 1px solid rgba(233, 30, 99, 0.3);
-border-radius: 14px;
-padding: 16px;
-margin: 10px 0;
-}
-.price-list-item {
-display: flex;
-justify-content: space-between;
-padding: 8px 0;
-border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-font-size: 16px;
-}
-.price-list-item:last-child {
-border-bottom: none;
-}
-.price-list-label {
-color: var(--gray);
-}
-.price-list-value {
-font-family: 'Caveat', cursive;
-font-size: 22px;
-font-weight: 700;
-background: var(--gradient);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
-/* Model Card in Chat */
-.model-card-chat {
-background: linear-gradient(145deg, rgba(233, 30, 99, 0.08) 0%, rgba(156, 39, 176, 0.08) 100%);
-border: 1px solid rgba(233, 30, 99, 0.3);
-border-radius: 14px;
-padding: 16px;
-margin: 10px 0;
-display: flex;
-gap: 15px;
-align-items: center;
-}
-.model-card-chat img {
-width: 80px;
-height: 80px;
-border-radius: 10px;
-object-fit: cover;
-}
-.model-card-chat-info {
-flex: 1;
-}
-.model-card-chat-name {
-font-family: 'Caveat', cursive;
-font-size: 24px;
-font-weight: 700;
-margin-bottom: 5px;
-}
-.model-card-chat-details {
-font-size: 14px;
-color: var(--gray);
-margin-bottom: 8px;
-}
-/* Chat Notifications */
-.chat-notification {
-position: fixed;
-top: 100px;
-right: 25px;
-background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
-border: 1px solid rgba(233, 30, 99, 0.3);
-border-radius: 16px;
-padding: 16px 20px;
-display: none;
-align-items: center;
-gap: 15px;
-z-index: 3500;
-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-animation: slideIn 0.3s ease;
-}
-.chat-notification.active {
-display: flex;
-}
-@keyframes slideIn {
-from { opacity: 0; transform: translateX(20px); }
-to { opacity: 1; transform: translateX(0); }
-}
-.notification-icon {
-width: 45px;
-height: 45px;
-border-radius: 50%;
-background: var(--gradient);
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 20px;
-flex-shrink: 0;
-}
-.notification-content {
-flex: 1;
-}
-.notification-title {
-font-weight: 600;
-font-size: 16px;
-margin-bottom: 4px;
-}
-.notification-message {
-font-size: 14px;
-color: var(--gray);
-}
-.notification-close {
-width: 32px;
-height: 32px;
-border-radius: 50%;
-background: rgba(255, 255, 255, 0.1);
-border: none;
-color: white;
-cursor: pointer;
-transition: all 0.3s ease;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.notification-close:hover {
-background: rgba(233, 30, 99, 0.5);
 }
 /* Footer */
 .footer {
@@ -1467,14 +1269,16 @@ padding: 15px 20px;
 }
 @media (max-width: 768px) {
 .hero { padding: 130px 20px 70px; }
-.hero h1 { font-size: 48px; }
+.hero h1 { font-size: 56px; }
 .section { padding: 60px 20px; }
 .models-grid, .services-grid, .cities-grid { grid-template-columns: 1fr; }
 .profile-modal-body { grid-template-columns: 1fr; }
 .modal-images { height: 350px; }
 .modal-details { padding: 25px; }
-.chat-modal { width: calc(100% - 20px); left: 10px; right: 10px; bottom: 10px; }
-.chat-notification { left: 10px; right: 10px; top: 80px; }
+.chat-container { height: 75vh; min-height: 500px; }
+.chat-messages { padding: 20px; }
+.chat-header-custom { padding: 20px; }
+.chat-input-container { padding: 20px; }
 .form-row { grid-template-columns: 1fr; }
 .city-dropdown { min-width: 240px; }
 .nav-links {
@@ -1496,13 +1300,13 @@ margin-top: 20px;
 padding: 15px 20px;
 }
 .payment-notice-highlight {
-font-size: 22px;
+font-size: 24px;
 }
 .logo-img {
 height: 45px;
 }
 .logo-text {
-font-size: 24px;
+font-size: 28px;
 }
 .pricing-grid {
 grid-template-columns: 1fr;
@@ -1520,14 +1324,24 @@ transform: translateY(-100%);
 }
 /* Fixed pricing for mobile */
 .pricing-duration {
-font-size: 18px;
+font-size: 24px;
 }
 .pricing-amount {
-font-size: 16px;
-max-width: 90px;
+font-size: 24px;
 }
 .modal-donation-amount {
 font-size: 36px;
+}
+.chat-input-wrapper {
+flex-direction: column;
+}
+.chat-send {
+width: 100%;
+border-radius: 30px;
+height: 55px;
+}
+.chat-message-item {
+max-width: 90%;
 }
 }
 /* Animations */
@@ -1543,8 +1357,8 @@ animation: fadeIn 0.6s ease forwards;
 ::-webkit-scrollbar-track { background: var(--darker); }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
-.chat-body::-webkit-scrollbar { width: 6px; }
-.chat-body::-webkit-scrollbar-thumb { background: rgba(233, 30, 99, 0.5); border-radius: 3px; }
+.chat-messages::-webkit-scrollbar { width: 6px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(233, 30, 99, 0.5); border-radius: 3px; }
 </style>
 </head>
 <body>
@@ -1573,7 +1387,7 @@ animation: fadeIn 0.6s ease forwards;
 <div class="nav-container">
 <nav class="nav-links">
 <a href="#models" class="nav-link active" data-section="models">Анкеты</a>
-<a href="#services" class="nav-link" data-section="services">Услуги</a>
+<a href="#chat" class="nav-link" data-section="chat">💬 Чат</a>
 <a href="#" class="nav-link" id="cityNavLink">Города</a>
 </nav>
 <div class="city-dropdown" id="cityDropdown">
@@ -1605,7 +1419,7 @@ animation: fadeIn 0.6s ease forwards;
 <p class="animate-fadeInUp">Индивидуальные встречи с роскошными моделями. Полная конфиденциальность и высокий сервис. Только проверенные анкеты.</p>
 <div class="hero-buttons animate-fadeInUp">
 <a href="#models" class="btn btn-primary" id="viewProfilesBtn">🔥 Смотреть Анкеты</a>
-<button class="btn btn-secondary" id="heroChatBtn">💬 Консультация</button>
+<a href="#chat" class="btn btn-secondary nav-link-btn" data-section="chat">💬 Консультация</a>
 </div>
 <!-- Payment Notice -->
 <div class="payment-notice">
@@ -1617,7 +1431,39 @@ animation: fadeIn 0.6s ease forwards;
 </div>
 </div>
 </section>
-<!-- Models Section (Active by default) -->
+<!-- Chat Section -->
+<section class="section" id="chat">
+<div class="section-header">
+<h2 class="animate-fadeInUp">💬 Чат с Оператором</h2>
+<p class="animate-fadeInUp">История ваших сообщений сохраняется автоматически</p>
+</div>
+<div class="chat-section">
+<div class="chat-container">
+<div class="chat-header-custom">
+<div class="chat-header-info">
+<div class="chat-avatar">👨‍💼</div>
+<div>
+<div style="font-weight: 600; font-size: 18px; margin-bottom: 5px;">Менеджер BABYGIRL_LNR</div>
+<div class="chat-status">
+<span class="status-dot"></span>
+Онлайн
+</div>
+</div>
+</div>
+</div>
+<div class="chat-messages" id="chatMessages">
+<!-- Messages will be loaded here -->
+</div>
+<div class="chat-input-container">
+<div class="chat-input-wrapper">
+<input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+<button class="chat-send" id="chatSend" onclick="sendChatMessage()">➤</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Models Section -->
 <section class="section active" id="models">
 <div class="section-header">
 <h2 class="animate-fadeInUp">Анкеты Девушек</h2>
@@ -1630,141 +1476,6 @@ animation: fadeIn 0.6s ease forwards;
 <button class="filter-btn" data-filter="stakhanov">Стаханов</button>
 </div>
 <div class="models-grid" id="modelsGrid"></div>
-</section>
-<!-- Services Section - Preferences Style -->
-<section class="section" id="services">
-<div class="section-header">
-<h2 class="animate-fadeInUp">Условия Встречи</h2>
-<p class="animate-fadeInUp">Ниже можно лучше ознакомиться с условиями встречи со мной</p>
-</div>
-<div class="services-intro">
-<p class="services-intro-text">Ознакомьтесь с моими предпочтениями и услугами. Все детали можно обсудить индивидуально.</p>
-<button class="btn btn-details" onclick="openChat()">Подробнее</button>
-</div>
-<div class="preferences-section">
-<h3 class="preferences-title">Предпочтения</h3>
-<div class="preferences-grid">
-<div class="preference-column">
-<div class="preference-column-title">Секс</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Секс классический</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Минет в резинке</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Минет без резинки</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Минет глубокий</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Минет в машине</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Окончание на грудь</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Окончание в рот $</span>
-</div>
-</div>
-<div class="preference-column">
-<div class="preference-column-title">Разное</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">GFE</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Сопровождение</span>
-</div>
-<div class="preference-item">
-<span class="preference-check">✓</span>
-<span class="preference-text">Готова к поездкам в другой город</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Pricing Section -->
-<div class="pricing-section">
-<h4>☀️ Днём</h4>
-<div class="pricing-grid">
-<div class="pricing-card pricing-card-day">
-<div class="pricing-card-header">
-<span class="pricing-icon">☀️</span>
-<span class="pricing-duration">1 час</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">15.000 ₽</span>
-</div>
-</div>
-<div class="pricing-card pricing-card-day">
-<div class="pricing-card-header">
-<span class="pricing-icon">☀️</span>
-<span class="pricing-duration">2 часа</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">30.000 ₽</span>
-</div>
-</div>
-</div>
-<h4 style="margin-top: 25px;">🌙 Ночью</h4>
-<div class="pricing-grid">
-<div class="pricing-card pricing-card-night">
-<div class="pricing-card-header">
-<span class="pricing-icon">🌙</span>
-<span class="pricing-duration">1 час</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">40.000 ₽</span>
-</div>
-</div>
-<div class="pricing-card pricing-card-night">
-<div class="pricing-card-header">
-<span class="pricing-icon">🌕</span>
-<span class="pricing-duration">Ночь</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">80.000 ₽</span>
-</div>
-</div>
-</div>
-<h4 style="margin-top: 25px;">🚗 Выезд</h4>
-<div class="pricing-grid">
-<div class="pricing-card pricing-card-day">
-<div class="pricing-card-header">
-<span class="pricing-icon">🚗</span>
-<span class="pricing-duration">от 2 часов</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">40.000 ₽</span>
-</div>
-</div>
-<div class="pricing-card pricing-card-night">
-<div class="pricing-card-header">
-<span class="pricing-icon">🌕</span>
-<span class="pricing-duration">Ночь</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">100.000 ₽</span>
-</div>
-</div>
-</div>
-<p class="pricing-note">* Дорога на выезде включена в стоимость</p>
-</div>
 </section>
 <!-- City Section -->
 <section class="section" id="city">
@@ -1802,7 +1513,9 @@ animation: fadeIn 0.6s ease forwards;
 <h2 class="modal-name" id="modalName"></h2>
 <div class="modal-stats" id="modalStats"></div>
 <p class="modal-description" id="modalDescription"></p>
-<!-- Pricing Section in Modal -->
+<!-- Additional Services Section -->
+<div class="additional-services" id="additionalServices"></div>
+<!-- Pricing Section in Modal - UPDATED (1 hour removed from Night) -->
 <div class="pricing-section">
 <h4>☀️ Днём</h4>
 <div class="pricing-grid">
@@ -1827,18 +1540,8 @@ animation: fadeIn 0.6s ease forwards;
 </div>
 </div>
 </div>
-<h4 style="margin-top: 25px;">🌙 Ночью</h4>
+<h4>🌙 Ночью</h4>
 <div class="pricing-grid">
-<div class="pricing-card pricing-card-night">
-<div class="pricing-card-header">
-<span class="pricing-icon">🌙</span>
-<span class="pricing-duration">1 час</span>
-</div>
-<div class="pricing-row">
-<span class="pricing-label">Стоимость</span>
-<span class="pricing-amount">40.000 ₽</span>
-</div>
-</div>
 <div class="pricing-card pricing-card-night">
 <div class="pricing-card-header">
 <span class="pricing-icon">🌕</span>
@@ -1850,9 +1553,9 @@ animation: fadeIn 0.6s ease forwards;
 </div>
 </div>
 </div>
-<h4 style="margin-top: 25px;">🚗 Выезд</h4>
+<h4>🚗 Выезд</h4>
 <div class="pricing-grid">
-<div class="pricing-card pricing-card-day">
+<div class="pricing-card pricing-card-trip">
 <div class="pricing-card-header">
 <span class="pricing-icon">🚗</span>
 <span class="pricing-duration">от 2 часов</span>
@@ -1862,7 +1565,7 @@ animation: fadeIn 0.6s ease forwards;
 <span class="pricing-amount">40.000 ₽</span>
 </div>
 </div>
-<div class="pricing-card pricing-card-night">
+<div class="pricing-card pricing-card-trip">
 <div class="pricing-card-header">
 <span class="pricing-icon">🌕</span>
 <span class="pricing-duration">Ночь</span>
@@ -1880,34 +1583,6 @@ animation: fadeIn 0.6s ease forwards;
 </div>
 </div>
 </div>
-<!-- Chat Modal -->
-<div class="chat-modal" id="chatModal">
-<div class="chat-header">
-<div class="chat-header-info">
-<div class="operator-avatar" id="chatAvatar">👤</div>
-<div>
-<div style="font-weight: 600;" id="chatOperatorName">Менеджер</div>
-<div style="font-size: 13px; color: var(--success);" id="chatStatusText">● Онлайн</div>
-</div>
-</div>
-<button class="modal-close" id="closeChat" style="position: static; width: 36px; height: 36px; font-size: 18px;">×</button>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message operator">
-<div class="chat-bubble">Здравствуйте! Добро пожаловать в BABYGIRL_LNR. Помогу вам подобрать девушку и оформить встречу. Чем могу помочь? 😊</div>
-</div>
-</div>
-<div class="typing-indicator" id="typingIndicator">
-<div class="typing-dot"></div>
-<div class="typing-dot"></div>
-<div class="typing-dot"></div>
-</div>
-<button class="transfer-btn" id="transferBtn" onclick="transferToOperator()">👤 Соединить с оператором</button>
-<div class="chat-input-area">
-<input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
-<button class="chat-send" id="chatSend">➤</button>
-</div>
-</div>
 <!-- Footer -->
 <footer class="footer">
 <div class="age-warning">🔞 18+ Только для совершеннолетних</div>
@@ -1915,7 +1590,7 @@ animation: fadeIn 0.6s ease forwards;
 <p class="footer-text">Полная конфиденциальность гарантирована.</p>
 </footer>
 <script>
-// Data - Profiles with multiple services
+// Data - Profiles with multiple services and additional services
 let profiles = [
 {
 id: 1,
@@ -1934,7 +1609,8 @@ services: [
 { name: 'Свидание (2 часа)', time: '120 минут', price: 30000 },
 { name: 'Выезд (от 2 часов)', time: 'от 120 минут', price: 40000 },
 { name: 'Ночь', time: '12 часов', price: 100000 }
-]
+],
+additionalServices: ['GFE (Girlfriend Experience)', 'Французский поцелуй', 'Массаж эротический']
 },
 {
 id: 2,
@@ -1953,7 +1629,8 @@ services: [
 { name: 'Свидание (2 часа)', time: '120 минут', price: 30000 },
 { name: 'Выезд (от 2 часов)', time: 'от 120 минут', price: 40000 },
 { name: 'Ночь', time: '12 часов', price: 100000 }
-]
+],
+additionalServices: ['Стриптиз', 'Глубокий минет', 'Окончание на лицо']
 },
 {
 id: 3,
@@ -1972,7 +1649,8 @@ services: [
 { name: 'Свидание (2 часа)', time: '120 минут', price: 30000 },
 { name: 'Выезд (от 2 часов)', time: 'от 120 минут', price: 40000 },
 { name: 'Ночь', time: '12 часов', price: 100000 }
-]
+],
+additionalServices: ['Ролевые игры', 'БДСМ (лёгкий)', 'Тантра']
 },
 {
 id: 4,
@@ -1991,7 +1669,8 @@ services: [
 { name: 'Свидание (2 часа)', time: '120 минут', price: 30000 },
 { name: 'Выезд (от 2 часов)', time: 'от 120 минут', price: 40000 },
 { name: 'Ночь', time: '12 часов', price: 100000 }
-]
+],
+additionalServices: ['Двойное удовольствие', 'Камшот', '69 позиция']
 },
 {
 id: 5,
@@ -2010,7 +1689,8 @@ services: [
 { name: 'Свидание (2 часа)', time: '120 минут', price: 30000 },
 { name: 'Выезд (от 2 часов)', time: 'от 120 минут', price: 40000 },
 { name: 'Ночь', time: '12 часов', price: 100000 }
-]
+],
+additionalServices: ['Анал (нежно)', 'Минет втроём', 'Секс в душе']
 },
 {
 id: 6,
@@ -2029,7 +1709,8 @@ services: [
 { name: 'Свидание (2 часа)', time: '120 минут', price: 30000 },
 { name: 'Выезд (от 2 часов)', time: 'от 120 минут', price: 40000 },
 { name: 'Ночь', time: '12 часов', price: 100000 }
-]
+],
+additionalServices: ['Доминирование', 'Фистинг (аккуратно)', 'Золотой дождь']
 }
 ];
 let cities = [
@@ -2037,62 +1718,101 @@ let cities = [
 { id: 'lugansk', name: 'Луганск', icon: '🏛️', count: 0 },
 { id: 'stakhanov', name: 'Стаханов', icon: '⛏️', count: 0 }
 ];
-// Chat Bot State - Order Form Logic
-let chatBotState = {
-messageCount: 0,
-isOperator: false,
-selectedModel: null,
-selectedService: null,
-city: null,
-cityAsked: false,
-step: 0,
-pendingModel: null,
-orderData: {
-city: null,
-model: null,
-service: null,
-time: null,
-phone: null
+let currentModalProfile = null;
+let cityDropdownOpen = false;
+
+// Chat History Management with localStorage
+function getChatHistory() {
+const history = localStorage.getItem('chatHistory_babygirl');
+return history ? JSON.parse(history) : [];
 }
+
+function saveChatHistory(history) {
+localStorage.setItem('chatHistory_babygirl', JSON.stringify(history));
+}
+
+function addMessageToHistory(text, isUser) {
+const history = getChatHistory();
+const message = {
+text: text,
+isUser: isUser,
+timestamp: new Date().toISOString()
 };
-// Standard Price List
-const standardPriceList = `
-<div class="price-list-box">
-<div class="price-list-item">
-<span class="price-list-label">⏱️ 1 час</span>
-<span class="price-list-value">15.000 ₽</span>
+history.push(message);
+saveChatHistory(history);
+renderChatMessages();
+}
+
+function renderChatMessages() {
+const chatMessages = document.getElementById('chatMessages');
+const history = getChatHistory();
+
+if (history.length === 0) {
+chatMessages.innerHTML = `
+<div class="empty-chat">
+<div class="empty-chat-icon">💬</div>
+<div class="empty-chat-text">История пуста</div>
+<div class="empty-chat-subtext">Напишите первое сообщение, чтобы начать диалог</div>
 </div>
-<div class="price-list-item">
-<span class="price-list-label">⏱️ 2 часа</span>
-<span class="price-list-value">30.000 ₽</span>
-</div>
-<div class="price-list-item">
-<span class="price-list-label">🚗 Выезд от 2 часов</span>
-<span class="price-list-value">40.000 ₽</span>
-</div>
-<div class="price-list-item">
-<span class="price-list-label">🌙 Ночь</span>
-<span class="price-list-value">100.000 ₽</span>
+`;
+return;
+}
+
+chatMessages.innerHTML = history.map((msg, index) => {
+const time = new Date(msg.timestamp).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+const delay = Math.min(index * 0.1, 1.5);
+return `
+<div class="chat-message-item ${msg.isUser ? 'user' : 'operator'}" style="animation-delay: ${delay}s">
+<div class="message-avatar">${msg.isUser ? '👤' : '👨‍💼'}</div>
+<div class="message-content">
+<div class="chat-bubble">${escapeHtml(msg.text)}</div>
+<div class="message-time">${time}</div>
 </div>
 </div>
 `;
-let chatMessages = [];
-let currentModalProfile = null;
-let cityDropdownOpen = false;
+}).join('');
+
+chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function sendChatMessage() {
+const input = document.getElementById('chatInput');
+const message = input.value.trim();
+if (!message) return;
+
+// Add user message
+addMessageToHistory(message, true);
+input.value = '';
+
+// Auto-reply after delay
+setTimeout(() => {
+const replies = [
+'Спасибо за сообщение! Я свяжусь с вами в ближайшее время. 😊',
+'Ваше сообщение получено. Оператор скоро ответит.',
+'Спасибо! Мы скоро свяжемся с вами для уточнения деталей. 💎'
+];
+const randomReply = replies[Math.floor(Math.random() * replies.length)];
+addMessageToHistory(randomReply, false);
+}, 1500);
+}
+
+// Initialize - Check age FIRST
+(function initAgeVerification() {
+var verified = localStorage.getItem('ageVerified');
+var modal = document.getElementById('ageModal');
+if (verified === 'true' && modal) {
+modal.classList.add('hidden');
+}
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
 updateCitiesCount();
 renderModels();
+renderChatMessages();
 setupEventListeners();
 setupScrollHeader();
-var viewProfilesBtn = document.getElementById('viewProfilesBtn');
-if (viewProfilesBtn) {
-viewProfilesBtn.addEventListener('click', function(e) {
-e.preventDefault();
-switchSection('models');
-document.getElementById('models').scrollIntoView({ behavior: 'smooth' });
 });
-}
-});
+
 function setupScrollHeader() {
 var header = document.getElementById('header');
 var lastScroll = 0;
@@ -2104,13 +1824,10 @@ if (!ticking) {
 window.requestAnimationFrame(function() {
 var currentScroll = window.pageYOffset;
 
-// Hide header when scrolling down, show when scrolling up
 if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
-// Scrolling down
 header.classList.add('hidden');
 header.classList.remove('scrolled');
 } else if (currentScroll < lastScroll || currentScroll <= scrollThreshold) {
-// Scrolling up or at top
 header.classList.remove('hidden');
 if (currentScroll > 0) {
 header.classList.add('scrolled');
@@ -2126,16 +1843,15 @@ ticking = true;
 }
 }, { passive: true });
 }
+
 function setupEventListeners() {
 var confirmBtn = document.getElementById('confirmBtn');
 var exitBtn = document.getElementById('exitBtn');
 if (confirmBtn) {
 confirmBtn.onclick = function() {
+localStorage.setItem('ageVerified', 'true');
 var modal = document.getElementById('ageModal');
 if (modal) modal.classList.add('hidden');
-setTimeout(function() {
-switchSection('models');
-}, 300);
 };
 }
 if (exitBtn) {
@@ -2143,7 +1859,7 @@ exitBtn.onclick = function() {
 window.location.href = 'https://www.google.com';
 };
 }
-document.querySelectorAll('.nav-link').forEach(function(link) {
+document.querySelectorAll('.nav-link, .nav-link-btn').forEach(function(link) {
 link.addEventListener('click', function(e) {
 if (this.id === 'cityNavLink') {
 e.preventDefault();
@@ -2158,21 +1874,12 @@ switchSection(section);
 document.querySelectorAll('.city-dropdown-item, .city-card').forEach(function(item) {
 item.addEventListener('click', function() {
 var city = this.dataset.city;
-var cityName = this.querySelector('.city-dropdown-name') ? this.querySelector('.city-dropdown-name').textContent : this.querySelector('.city-name').textContent;
-chatBotState.city = cityName;
-chatBotState.cityAsked = true;
-chatBotState.orderData.city = cityName;
 document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
 var filterBtn = document.querySelector('.filter-btn[data-filter="' + city + '"]');
 if (filterBtn) filterBtn.classList.add('active');
 switchSection('models');
 filterModels(city);
 closeCityDropdown();
-if (document.getElementById('chatModal').classList.contains('active')) {
-setTimeout(function() {
-addBotMessage("Отлично! Запомнил, вы в городе " + cityName + ". 📍 Теперь подсказать свободных девушек?");
-}, 500);
-}
 });
 });
 document.addEventListener('click', function(e) {
@@ -2189,254 +1896,19 @@ filterModels(this.dataset.filter);
 });
 document.getElementById('closeProfileModal').addEventListener('click', closeProfileModal);
 document.getElementById('modalOrderBtn').addEventListener('click', function() { 
-chatBotState.selectedModel = currentModalProfile;
-chatBotState.orderData.model = currentModalProfile.name;
-openChat();
-setTimeout(function() {
-handleOrderRequest(currentModalProfile);
-}, 1000);
-});
-document.getElementById('heroChatBtn').addEventListener('click', function() { openChat(); });
-document.getElementById('closeChat').addEventListener('click', closeChat);
-document.getElementById('chatSend').addEventListener('click', sendChatMessage);
-document.getElementById('chatInput').addEventListener('keypress', function(e) {
-if (e.key === 'Enter') sendChatMessage();
+const message = `Здравствуйте! Хочу заказать встречу с ${currentModalProfile.name}.`;
+addMessageToHistory(message, true);
+setTimeout(() => {
+addMessageToHistory('Отличный выбор! Оператор скоро свяжется с вами для подтверждения деталей. 😊', false);
+}, 1500);
+closeProfileModal();
+switchSection('chat');
 });
 document.getElementById('profileModal').addEventListener('click', function(e) {
 if (e.target === this) closeProfileModal();
 });
 }
-// Bot Functions
-function openChat() {
-document.getElementById('chatModal').classList.add('active');
-if (chatMessages.length === 0) {
-var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML = '<div class="chat-message operator"><div class="chat-bubble">Здравствуйте! Добро пожаловать в BABYGIRL_LNR. Помогу вам подобрать девушку и оформить встречу. Чем могу помочь? 😊</div></div>';
-chatBotState.messageCount = 0;
-chatBotState.step = 0;
-chatBotState.isOperator = false;
-updateChatHeader();
-}
-}
-function closeChat() {
-document.getElementById('chatModal').classList.remove('active');
-}
-function updateChatHeader() {
-var avatar = document.getElementById('chatAvatar');
-var name = document.getElementById('chatOperatorName');
-var status = document.getElementById('chatStatusText');
-var transferBtn = document.getElementById('transferBtn');
-avatar.textContent = '👤';
-name.textContent = 'Менеджер';
-status.textContent = '● Онлайн';
-status.style.color = 'var(--success)';
-if (chatBotState.messageCount >= 3 && !chatBotState.isOperator) {
-transferBtn.classList.add('visible');
-}
-}
-function showTyping() {
-document.getElementById('typingIndicator').classList.add('active');
-}
-function hideTyping() {
-document.getElementById('typingIndicator').classList.remove('active');
-}
-function addBotMessage(text) {
-showTyping();
-setTimeout(function() {
-hideTyping();
-var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML += '<div class="chat-message operator"><div class="message-avatar">👤</div><div class="chat-bubble">' + text + '</div></div>';
-chatBody.scrollTop = chatBody.scrollHeight;
-}, 800 + Math.random() * 700);
-}
-function addUserMessage(text) {
-var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML += '<div class="chat-message user"><div class="chat-bubble">' + escapeHtml(text) + '</div></div>';
-chatBody.scrollTop = chatBody.scrollHeight;
-}
-// Handle order request - check if city is known
-function handleOrderRequest(model) {
-if (!chatBotState.cityAsked) {
-addBotMessage("Для оформления встречи мне нужно знать ваш город. 📍 Вы в каком городе? (Первомайск, Луганск, Стаханов)");
-chatBotState.step = 1;
-chatBotState.pendingModel = model;
-return;
-}
-// City known - send model info with price
-sendModelInfo(model);
-}
-// Send model info with price list
-function sendModelInfo(model) {
-var modelCard = `
-<div class="model-card-chat">
-<img src="${model.images[0]}" alt="${model.name}">
-<div class="model-card-chat-info">
-<div class="model-card-chat-name">${model.name}</div>
-<div class="model-card-chat-details">${model.age} лет • ${model.height} см • ${model.cityName}</div>
-<div>${model.description.substring(0, 60)}...</div>
-</div>
-</div>
-${standardPriceList}
-`;
-addBotMessage("Отличный выбор! " + model.name + " доступна для встречи. 😊" + modelCard + "Какую услугу хотите заказать?");
-chatBotState.step = 3;
-}
-function processBotResponse(userMessage) {
-chatBotState.messageCount++;
-var msg = userMessage.toLowerCase();
-// Check for operator request
-if (msg.includes('оператор') || msg.includes('человек') || msg.includes('живой') || msg.includes('менеджер')) {
-transferToOperator();
-return;
-}
-// STEP 1: Ask for city (mandatory first step)
-if (chatBotState.step === 1 && !chatBotState.cityAsked) {
-if (msg.includes('первомайск') || msg.includes('луганск') || msg.includes('стаханов')) {
-if (msg.includes('первомайск')) {
-chatBotState.city = 'Первомайск';
-chatBotState.orderData.city = 'Первомайск';
-} else if (msg.includes('луганск')) {
-chatBotState.city = 'Луганск';
-chatBotState.orderData.city = 'Луганск';
-} else if (msg.includes('стаханов')) {
-chatBotState.city = 'Стаханов';
-chatBotState.orderData.city = 'Стаханов';
-}
-chatBotState.cityAsked = true;
-addBotMessage("Принято! Вы в городе " + chatBotState.city + ". ✅");
-// If there's a pending model, send info now
-if (chatBotState.pendingModel) {
-setTimeout(function() {
-sendModelInfo(chatBotState.pendingModel);
-chatBotState.pendingModel = null;
-}, 1000);
-} else {
-addBotMessage(standardPriceList + "Теперь выберите девушку в разделе 'Анкеты' или я подскажу свободных в вашем городе.");
-}
-chatBotState.step = 2;
-} else {
-addBotMessage("Пожалуйста, укажите один из городов: Первомайск, Луганск или Стаханов");
-}
-return;
-}
-// STEP 2: City known, waiting for model selection
-if (chatBotState.step === 2 && chatBotState.cityAsked) {
-if (msg.includes('девушк') || msg.includes('модель') || msg.includes('анкет') || msg.includes('выбрать') || msg.includes('посмотреть') || msg.includes('свободн') || msg.includes('кто есть')) {
-addBotMessage("Посмотрите доступные анкеты в разделе 'Анкеты' — там все девушки с фото и описанием. Выберите понравившуюся и нажмите 'Заказать'! 😊");
-} else {
-addBotMessage("Выберите девушку в разделе 'Анкеты' и нажмите 'Заказать' — я сразу покажу прайс и помогу оформить. 💎");
-}
-return;
-}
-// STEP 3: Model selected, asking for service
-if (chatBotState.step === 3) {
-if (msg.includes('час') || msg.includes('1') || msg.includes('один')) {
-chatBotState.orderData.service = '1 час';
-chatBotState.orderData.time = '60 минут';
-proceedToPhone();
-} else if (msg.includes('2') || msg.includes('два') || msg.includes('свидани')) {
-chatBotState.orderData.service = '2 часа';
-chatBotState.orderData.time = '120 минут';
-proceedToPhone();
-} else if (msg.includes('выезд') || msg.includes('от 2')) {
-chatBotState.orderData.service = 'Выезд';
-chatBotState.orderData.time = 'от 120 минут';
-proceedToPhone();
-} else if (msg.includes('ночь') || msg.includes('12')) {
-chatBotState.orderData.service = 'Ночь';
-chatBotState.orderData.time = '12 часов';
-proceedToPhone();
-} else {
-addBotMessage("Выберите формат: ⏱️ 1 час (15.000₽), ⏱️ 2 часа (30.000₽), 🚗 Выезд от 2 часов (40.000₽), 🌙 Ночь (100.000₽)");
-}
-return;
-}
-// STEP 4: Ask for phone
-if (chatBotState.step === 4) {
-if (msg.match(/[0-9]{10,}/)) {
-chatBotState.orderData.phone = userMessage;
-addBotMessage("Спасибо! ✅ Заказ оформлен:");
-addBotMessage(`📍 Город: ${chatBotState.orderData.city}
-👤 Девушка: ${chatBotState.orderData.model}
-⏱️ Услуга: ${chatBotState.orderData.service} (${chatBotState.orderData.time})
-📞 Телефон: ${chatBotState.orderData.phone}
 
-Оператор свяжется с вами в течение 5 минут для подтверждения! 💎`);
-setTimeout(transferToOperator, 2000);
-} else {
-addBotMessage("Пожалуйста, укажите ваш номер телефона для связи (например: +7 999 123 45 67)");
-}
-return;
-}
-// Default: Check if city is needed
-if (!chatBotState.cityAsked) {
-if (msg.includes('девушк') || msg.includes('модель') || msg.includes('анкет') || msg.includes('цена') || msg.includes('стоимость') || msg.includes('прайс') || msg.includes('заказать') || msg.includes('выбрать')) {
-addBotMessage("Для подбора девушек мне нужно знать ваш город. 📍 Вы в каком городе? (Первомайск, Луганск, Стаханов)");
-chatBotState.step = 1;
-return;
-}
-}
-// City already known - provide info
-if (chatBotState.cityAsked) {
-if (msg.includes('девушк') || msg.includes('модель') || msg.includes('анкет') || msg.includes('свободн')) {
-addBotMessage("Посмотрите раздел 'Анкеты' — там все доступные девушки в городе " + chatBotState.city + ". Выберите и нажмите 'Заказать'! 😊");
-return;
-}
-if (msg.includes('цена') || msg.includes('стоимость') || msg.includes('прайс') || msg.includes('сколько')) {
-addBotMessage(standardPriceList + "Выберите девушку в анкетах для оформления!");
-return;
-}
-}
-// Fallback
-addBotMessage("Чтобы оформить встречу: 1️⃣ Укажите город 2️⃣ Выберите девушку 3️⃣ Выберите услугу. Чем помочь?");
-updateChatHeader();
-}
-// Proceed to phone collection
-function proceedToPhone() {
-addBotMessage("Отлично! Для подтверждения заказа укажите ваш номер телефона. 📞");
-chatBotState.step = 4;
-}
-function transferToOperator() {
-if (chatBotState.isOperator) return;
-chatBotState.isOperator = true;
-var transferBtn = document.getElementById('transferBtn');
-transferBtn.classList.remove('visible');
-transferBtn.style.display = 'none';
-addBotMessage("⏳ Соединяю с оператором...");
-setTimeout(function() {
-updateChatHeader();
-var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML += '<div class="chat-message operator"><div class="message-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">👤</div><div class="chat-bubble">Здравствуйте! Я оператор BABYGIRL_LNR. Вижу вашу заявку. Помогу оформить встречу прямо сейчас! 💎</div></div>';
-chatBody.scrollTop = chatBody.scrollHeight;
-showTransferNotification();
-}, 2000);
-}
-function showTransferNotification() {
-var notification = document.createElement('div');
-notification.className = 'chat-notification active';
-notification.innerHTML = '<div class="notification-icon">👤</div><div class="notification-content"><div class="notification-title">Оператор подключён</div><div class="notification-message">Теперь вы общаетесь с менеджером</div></div><button class="notification-close" onclick="this.parentElement.remove()">×</button>';
-document.body.appendChild(notification);
-setTimeout(function() {
-notification.classList.remove('active');
-setTimeout(function() { notification.remove(); }, 300);
-}, 5000);
-}
-function sendChatMessage() {
-var input = document.getElementById('chatInput');
-var message = input.value.trim();
-if (!message) return;
-addUserMessage(message);
-input.value = '';
-if (chatBotState.isOperator) {
-setTimeout(function() {
-var chatBody = document.getElementById('chatBody');
-chatBody.innerHTML += '<div class="chat-message operator"><div class="message-avatar" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">👤</div><div class="chat-bubble">Спасибо за информацию! Сейчас проверю доступность и свяжусь с вами для подтверждения деталей. ⏱️</div></div>';
-chatBody.scrollTop = chatBody.scrollHeight;
-}, 1500);
-} else {
-processBotResponse(message);
-}
-}
 function toggleCityDropdown() {
 cityDropdownOpen = !cityDropdownOpen;
 var dropdown = document.getElementById('cityDropdown');
@@ -2446,10 +1918,12 @@ dropdown.classList.add('active');
 closeCityDropdown();
 }
 }
+
 function closeCityDropdown() {
 cityDropdownOpen = false;
 document.getElementById('cityDropdown').classList.remove('active');
 }
+
 function switchSection(section) {
 document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
 document.getElementById(section).classList.add('active');
@@ -2458,7 +1932,12 @@ link.classList.remove('active');
 if (link.dataset.section === section) link.classList.add('active');
 });
 closeCityDropdown();
+if (section === 'chat') {
+renderChatMessages();
 }
+window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function updateCitiesCount() {
 cities.forEach(function(city) {
 city.count = profiles.filter(function(p) { return p.city === city.id; }).length;
@@ -2468,10 +1947,12 @@ if (countEl) countEl.textContent = city.count;
 if (countCardEl) countCardEl.textContent = city.count + ' девушек';
 });
 }
+
 function declension(number, titles) {
 var cases = [2, 0, 1, 1, 1, 2];
 return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 }
+
 function renderModels(filter) {
 var grid = document.getElementById('modelsGrid');
 var filtered = filter === 'all' ? profiles : profiles.filter(function(p) { return p.city === filter; });
@@ -2492,7 +1973,7 @@ html += '<div class="model-card" data-id="' + p.id + '">' +
 '</div>' +
 '<p class="model-description">' + p.description.substring(0, 80) + '...</p>' +
 '<div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">' + minPrice + ' ₽</span></div>' +
-'<button class="btn btn-order" onclick="event.stopPropagation(); openChat()">Заказать</button>' +
+'<button class="btn btn-order" onclick="event.stopPropagation(); openProfile(' + i + ')">Заказать</button>' +
 '</div></div>';
 }
 grid.innerHTML = html;
@@ -2500,14 +1981,16 @@ document.querySelectorAll('.model-card').forEach(function(card) {
 card.addEventListener('click', function() {
 var id = parseInt(this.dataset.id);
 var index = profiles.findIndex(function(p) { return p.id === id; });
-openProfileModal(index);
+openProfile(index);
 });
 });
 }
+
 function filterModels(filter) {
 renderModels(filter);
 }
-function openProfileModal(index) {
+
+function openProfile(index) {
 currentModalProfile = profiles[index];
 var ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год', 'года', 'лет']);
 document.getElementById('modalImage').src = currentModalProfile.images[0];
@@ -2519,21 +2002,22 @@ document.getElementById('modalStats').innerHTML =
 '<div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color: var(--gray); font-size: 12px;">Грудь</div><div>' + currentModalProfile.bust + ' размер</div></div></div>' +
 '<div class="modal-stat"><div class="modal-stat-icon">📍</div><div><div style="color: var(--gray); font-size: 12px;">Город</div><div>' + currentModalProfile.cityName + '</div></div></div>';
 document.getElementById('modalDescription').textContent = currentModalProfile.description;
+
+// Render additional services
+var servicesHtml = '<div class="additional-services"><h4>💎 Доп. Услуги</h4><div class="services-list">';
+currentModalProfile.additionalServices.forEach(function(service) {
+servicesHtml += '<div class="service-item"><span class="service-check">✓</span><span class="service-text">' + service + '</span></div>';
+});
+servicesHtml += '</div></div>';
+document.getElementById('additionalServices').innerHTML = servicesHtml;
+
 document.getElementById('profileModal').classList.add('active');
 }
-function selectService(serviceName) {
-chatBotState.selectedService = serviceName;
-openChat();
-setTimeout(function() {
-var input = document.getElementById('chatInput');
-if (input) {
-input.value = 'Хочу заказать: ' + serviceName;
-}
-}, 500);
-}
+
 function closeProfileModal() {
 document.getElementById('profileModal').classList.remove('active');
 }
+
 function escapeHtml(text) {
 var div = document.createElement('div');
 div.textContent = text;
@@ -2542,3 +2026,4 @@ return div.innerHTML;
 </script>
 </body>
 </html>
+
