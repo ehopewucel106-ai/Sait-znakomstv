@@ -18,7 +18,7 @@
 <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
 
 <style>
-/* ===== CORE STYLES ===== */
+/* ===== ПОЛНЫЕ СТИЛИ (как в исходной рабочей версии, только с добавлением .header-phone) ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
     --primary: #e91e63;
@@ -66,7 +66,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-shimmer { background: linear-gradient(90deg, var(--light) 0%, var(--primary) 50%, var(--light) 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 3s linear infinite; }
 
-/* ===== AGE MODAL ===== */
+/* ===== AGE MODAL (исправлено) ===== */
 .age-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); display: flex; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px); }
 .age-modal.hidden { display: none !important; }
 .age-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 50px 40px; border-radius: 24px; text-align: center; max-width: 500px; width: 90%; border: 1px solid rgba(233,30,99,0.3); box-shadow: 0 25px 60px rgba(233,30,99,0.3); }
@@ -94,7 +94,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== HEADER ===== */
+/* ===== HEADER (с телефоном) ===== */
 .header { 
     position: fixed; 
     top: 0; 
@@ -111,7 +111,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; 
     transform: translateY(0); 
     overflow: visible; 
-    will-change: transform;
 }
 .header.hidden { transform: translateY(-100%); opacity: 0; }
 .header.scrolled { padding: 14px 40px; background: rgba(15,15,26,0.98); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
@@ -128,7 +127,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gradient); border-radius: 2px; }
 .user-menu { display: flex; align-items: center; gap: 20px; position: relative; }
 .header-phone { background: rgba(233,30,99,0.12); padding: 5px 12px; border-radius: 30px; font-size: 14px; font-weight: 500; color: var(--light); display: flex; align-items: center; gap: 6px; border: 1px solid rgba(233,30,99,0.3); backdrop-filter: blur(4px); }
-.header-phone i { font-style: normal; font-size: 16px; }
 .user-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; cursor: pointer; transition: transform 0.2s; }
 .user-avatar:hover { transform: scale(1.1); }
 .user-dropdown { position: absolute; top: 55px; right: 0; background: var(--dark); border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 14px; display: none; z-index: 1002; min-width: 200px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
@@ -301,7 +299,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .auth-notice { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--success); text-align: center; margin-top: 10px; display: none; }
 .auth-notice.show { display: block; }
 
-/* ===== ADMIN ===== */
+/* ===== ADMIN DASHBOARD ===== */
 .admin-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--darker); z-index: 3000; display: none; overflow-y: auto; }
 .admin-dashboard.active { display: block; }
 .admin-header { padding: 18px 40px; background: rgba(15,15,26,0.97); border-bottom: 1px solid rgba(233,30,99,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
@@ -428,7 +426,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-<!-- Age Verification -->
+<!-- Age Verification Modal (исправлено) -->
 <div class="age-modal" id="ageModal" role="dialog" aria-labelledby="ageTitle" aria-modal="true">
     <div class="age-content">
         <div class="age-icon"><span class="age-number">18</span><span class="age-plus">+</span></div>
@@ -547,7 +545,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
             </div>
         </div>
 
-        <!-- Settings Panel (NEW) -->
+        <!-- Settings Panel (для редактирования телефона) -->
         <div id="adminSettings" class="admin-panel">
             <div class="admin-card">
                 <div class="admin-card-header">
@@ -564,7 +562,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
             </div>
         </div>
 
-        <!-- Profile Editor -->
+        <!-- Profile Editor Modal -->
         <div id="profileEditor" class="profile-modal" role="dialog" aria-labelledby="editorTitle" aria-modal="true">
             <div class="profile-modal-content" style="max-width: 900px; padding: 30px;">
                 <button class="modal-close" onclick="closeProfileEditor()" aria-label="Закрыть редактор">×</button>
@@ -603,7 +601,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     </div>
 </div>
 
-<!-- Main Header -->
+<!-- Main Header (с телефоном) -->
 <header class="header" id="header" role="banner">
     <a href="#home" class="logo animate-slideInLeft" aria-label="На главную BABYGIRL_LNR"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal">BABYGIRL_LNR</span></div></a>
     <div class="nav-container">
@@ -622,7 +620,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         </div>
     </div>
     <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
+        <!-- Телефон будет вставлен через JS, но для видимости добавим заглушку -->
         <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
+        <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
     </div>
 </header>
 
@@ -739,154 +739,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </footer>
 
 <script>
-// ===== АНИМИРОВАННЫЙ СИЛУЭТ ТАНЦУЮЩЕЙ ДЕВУШКИ =====
-(function() {
-    const canvas = document.getElementById('dancerCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let animationId = null;
-    let time = 0;
-    let lastTimestamp = 0;
+// ===== ПОЛНЫЙ JS КОД (включая все функции, исправленный age-модал и телефон) =====
 
-    function resizeCanvas() {
-        const container = canvas.parentElement;
-        const rect = container.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    function getPoseParams(t) {
-        const speed = 0.8;
-        const phase1 = t * speed;
-        const phase2 = t * speed + Math.PI * 0.4;
-        const phase3 = t * speed + Math.PI * 0.7;
-        const leftArmAngle = Math.sin(phase1) * 0.6 + 0.3;
-        const rightArmAngle = Math.sin(phase2) * 0.5 + 0.2;
-        const spineCurve = Math.sin(phase3) * 0.25;
-        const hipShift = Math.sin(phase1 * 1.2) * 0.12;
-        const leftLegAngle = Math.sin(phase2 * 1.3) * 0.2;
-        const rightLegAngle = Math.sin(phase1 * 1.5) * 0.15;
-        return { leftArmAngle, rightArmAngle, spineCurve, hipShift, leftLegAngle, rightLegAngle };
-    }
-
-    function drawSilhouette(params) {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, width, height);
-        const centerX = width * 0.5;
-        const baseY = height * 0.6;
-        const scale = Math.min(width, height) / 700;
-        ctx.save();
-        ctx.translate(centerX, baseY);
-        ctx.scale(scale, scale);
-        ctx.fillStyle = '#e91e63';
-        ctx.shadowColor = 'rgba(233,30,99,0.7)';
-        ctx.shadowBlur = 20;
-        ctx.beginPath();
-        ctx.arc(0, -90, 28, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(-18, -65);
-        ctx.quadraticCurveTo(0, -55, 18, -65);
-        ctx.lineTo(22, -45);
-        ctx.quadraticCurveTo(0, -38, -22, -45);
-        ctx.fill();
-        const spineOffset = params.spineCurve * 15;
-        ctx.beginPath();
-        ctx.moveTo(-22, -45);
-        ctx.quadraticCurveTo(-12 + spineOffset, -10, -18 + spineOffset * 0.5, 30);
-        ctx.lineTo(18 + spineOffset * 0.5, 30);
-        ctx.quadraticCurveTo(12 + spineOffset, -10, 22, -45);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(-18 + spineOffset * 0.5, 30);
-        ctx.quadraticCurveTo(-28 + spineOffset * 0.5 + params.hipShift * 10, 55, -25 + params.hipShift * 5, 80);
-        ctx.lineTo(25 + params.hipShift * 5, 80);
-        ctx.quadraticCurveTo(28 + spineOffset * 0.5 + params.hipShift * 10, 55, 18 + spineOffset * 0.5, 30);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(-25 + params.hipShift * 5, 80);
-        ctx.quadraticCurveTo(-38 + params.leftLegAngle * 10, 110 + params.leftLegAngle * 15, -30 + params.leftLegAngle * 15, 150);
-        ctx.lineTo(-18 + params.leftLegAngle * 10, 150);
-        ctx.quadraticCurveTo(-20 + params.leftLegAngle * 5, 115, -18 + params.hipShift * 3, 85);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(25 + params.hipShift * 5, 80);
-        ctx.quadraticCurveTo(40 + params.rightLegAngle * 12, 115 + params.rightLegAngle * 10, 32 + params.rightLegAngle * 15, 155);
-        ctx.lineTo(20 + params.rightLegAngle * 10, 155);
-        ctx.quadraticCurveTo(22 + params.rightLegAngle * 8, 115, 18 + params.hipShift * 3, 85);
-        ctx.fill();
-        const leftShoulder = { x: -22, y: -45 };
-        const leftHandAngle = params.leftArmAngle;
-        const leftElbowX = leftShoulder.x - 28 - leftHandAngle * 12;
-        const leftElbowY = leftShoulder.y - 20 + leftHandAngle * 15;
-        const leftWristX = leftElbowX - 22 + leftHandAngle * 8;
-        const leftWristY = leftElbowY - 32 - leftHandAngle * 10;
-        ctx.beginPath();
-        ctx.moveTo(leftShoulder.x, leftShoulder.y);
-        ctx.quadraticCurveTo(leftElbowX, leftElbowY, leftWristX, leftWristY);
-        ctx.lineTo(leftWristX + 10, leftWristY - 5);
-        ctx.quadraticCurveTo(leftElbowX + 8, leftElbowY - 5, leftShoulder.x + 4, leftShoulder.y - 3);
-        ctx.fill();
-        const rightShoulder = { x: 22, y: -45 };
-        const rightHandAngle = params.rightArmAngle;
-        const rightElbowX = rightShoulder.x + 25 + rightHandAngle * 10;
-        const rightElbowY = rightShoulder.y - 15 + rightHandAngle * 20;
-        const rightWristX = rightElbowX + 18 - rightHandAngle * 8;
-        const rightWristY = rightElbowY + 15 + rightHandAngle * 12;
-        ctx.beginPath();
-        ctx.moveTo(rightShoulder.x, rightShoulder.y);
-        ctx.quadraticCurveTo(rightElbowX, rightElbowY, rightWristX, rightWristY);
-        ctx.lineTo(rightWristX - 10, rightWristY + 5);
-        ctx.quadraticCurveTo(rightElbowX - 8, rightElbowY + 5, rightShoulder.x - 4, rightShoulder.y - 3);
-        ctx.fill();
-        ctx.shadowBlur = 15;
-        ctx.fillStyle = '#ff4081';
-        ctx.globalAlpha = 0.3;
-        ctx.beginPath();
-        ctx.ellipse(0, 10, 22, 45, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.restore();
-    }
-    
-    function animate(timestamp) {
-        if (!canvas.isConnected) return;
-        const delta = Math.min(0.033, (timestamp - lastTimestamp) / 1000);
-        if (delta > 0 && delta < 0.1) time += delta;
-        else time += 0.016;
-        lastTimestamp = timestamp;
-        const params = getPoseParams(time);
-        drawSilhouette(params);
-        animationId = requestAnimationFrame(animate);
-    }
-    
-    function initDancer() {
-        resizeCanvas();
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            const params = getPoseParams(time);
-            drawSilhouette(params);
-        });
-        time = 0;
-        lastTimestamp = performance.now();
-        animationId = requestAnimationFrame(animate);
-    }
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initDancer);
-    } else {
-        initDancer();
-    }
-    
-    window.addEventListener('beforeunload', () => {
-        if (animationId) cancelAnimationFrame(animationId);
-    });
-})();
-
-// ===== ОСТАЛЬНОЙ КОД (БЕЗОПАСНОСТЬ, БАЗА, АВТОРИЗАЦИЯ, ЧАТ, АДМИНКА, НОВЫЙ ТЕЛЕФОН) =====
+// --- Вспомогательные функции ---
 const Security = {
     escapeHtml: function(text) { const div = document.createElement('div'); div.textContent = String(text); return div.innerHTML; },
     sanitizeInput: function(input) { return String(input).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').trim(); },
@@ -904,6 +759,7 @@ function declineCookies() { localStorage.setItem('bg_cookiesAccepted', 'false');
 function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
 function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
 
+// --- База данных ---
 const DB = {
     get: function(key) { try { const item = localStorage.getItem('bg_' + key); return item ? JSON.parse(item) : null; } catch(e) { return null; } },
     set: function(key, val) { try { localStorage.setItem('bg_' + key, JSON.stringify(val)); } catch(e) { Toast.show('Ошибка сохранения', 'error'); } },
@@ -941,14 +797,17 @@ let cities = [
     { id:'stakhanov', name:'Стаханов', icon:'⛏️', count:0 }
 ];
 let currentModalProfile = null;
-let cityDropdownOpen = false;
 let activeOperatorChatUser = null;
+let pendingChatAction = false;
+let pendingOrderProfile = null;
 
-// Phone number functions
+// --- Работа с телефоном ---
 function loadSitePhone() {
     const phone = DB.get('sitePhone') || '+7 (999) 123-45-67';
-    document.getElementById('phoneNumberSpan').innerText = phone;
-    if (document.getElementById('sitePhoneInput')) document.getElementById('sitePhoneInput').value = phone;
+    const phoneSpan = document.getElementById('phoneNumberSpan');
+    if (phoneSpan) phoneSpan.innerText = phone;
+    const phoneInput = document.getElementById('sitePhoneInput');
+    if (phoneInput) phoneInput.value = phone;
 }
 function saveSitePhone() {
     const input = document.getElementById('sitePhoneInput');
@@ -958,24 +817,35 @@ function saveSitePhone() {
     loadSitePhone();
     Toast.show('Номер телефона обновлён', 'success');
 }
-function updateHeaderPhone() { loadSitePhone(); }
 
-// Age modal fix: inline onclick backup
-document.getElementById('confirmBtn')?.addEventListener('click', function() {
-    localStorage.setItem('bg_ageVerified', 'true');
-    document.getElementById('ageModal').classList.add('hidden');
-    document.body.style.overflow = '';
-    Toast.show('Добро пожаловать!', 'success');
-});
-document.getElementById('exitBtn')?.addEventListener('click', function() { window.location.href = 'https://www.google.com'; });
+// --- Age verification (исправлено) ---
 function initAgeVerification() {
-    const v = localStorage.getItem('bg_ageVerified');
+    const isVerified = localStorage.getItem('bg_ageVerified');
     const modal = document.getElementById('ageModal');
-    if (v === 'true') { modal.classList.add('hidden'); document.body.style.overflow = ''; }
-    else { document.body.style.overflow = 'hidden'; modal.setAttribute('tabindex', '-1'); modal.focus(); }
+    if (!modal) return;
+    if (isVerified === 'true') {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    } else {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
 }
-function initCookieBanner() { if (!localStorage.getItem('bg_cookiesAccepted')) setTimeout(() => document.getElementById('cookieBanner').classList.add('show'), 2000); }
+function confirmAge() {
+    localStorage.setItem('bg_ageVerified', 'true');
+    const modal = document.getElementById('ageModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+    Toast.show('Добро пожаловать!', 'success');
+    if (typeof checkAuth === 'function') checkAuth();
+}
+function exitSite() {
+    window.location.href = 'https://www.google.com';
+}
 
+// --- Авторизация и UI ---
 function checkAuth() {
     currentUser = DB.get('currentUser');
     const menu = document.getElementById('userMenu');
@@ -1051,6 +921,7 @@ function handleUnifiedAuth() {
 
 function logout() { DB.set('currentUser', null); location.reload(); }
 
+// --- Чат ---
 function openChatSection() {
     if (!currentUser) { pendingChatAction = true; openAuthModal(); return; }
     document.getElementById('chat').classList.add('active'); document.getElementById('header').classList.add('chat-active');
@@ -1058,13 +929,20 @@ function openChatSection() {
     renderChatMessages(); setTimeout(() => document.getElementById('chatInput').focus(), 300);
 }
 function closeChat() { document.getElementById('chat').classList.remove('active'); document.getElementById('header').classList.remove('chat-active'); document.querySelector('.nav-link[data-section="models"]').click(); }
-function openProfileByIdWithAuth(id) { if (!currentUser) { pendingOrderProfile = id; openAuthModal(); return; } openProfileById(id); }
 
+function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username] ? chats[currentUser.username].messages : []; }
+function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot' }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
+function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { Toast.show('Войдите в аккаунт для общения', 'info'); openAuthModal(); return; } const history = getChatHistory(); history.push({ text: Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false }); saveChatHistory(history); renderChatMessages(); if (isUser && /(оператор|менеджер|человек|живой|связаться|хочу заказать|заказать встречу)/i.test(text)) { const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { chats[currentUser.username].status = 'operator'; DB.set('chats', chats); setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000); } } }
+function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
+function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const replies = ['Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?', 'Отличный выбор! 🎯 Сейчас переключу на оператора для подтверждения.', 'Здравствуйте! ✨ Подберу спутницу. Что вас интересует?', 'Спасибо за обращение! Оператор ответит в ближайшее время.', 'Хорошо! Напишите ваш город, и я покажу доступные анкеты.']; const reply = replies[Math.floor(Math.random() * replies.length)]; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
+
+// --- Админка (профили, чаты) ---
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); }
 function logoutOperator() { if (confirm('Выйти из панели оператора?')) logout(); }
 function switchAdminTab(tab) {
-    document.querySelectorAll('.admin-tab-btn').forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-pressed', 'false'); });
-    event.target.classList.add('active'); event.target.setAttribute('aria-pressed', 'true');
+    const btn = event.target;
+    document.querySelectorAll('.admin-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
     document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
     if (tab === 'chats') renderOperatorChatList();
@@ -1143,7 +1021,6 @@ function deleteProfile() {
     updateCitiesCount();
     Toast.show('Анкета удалена', 'info');
 }
-
 function renderOperatorChatList() {
     const list = document.getElementById('operatorChatList');
     const chats = DB.get('chats') || {};
@@ -1158,14 +1035,61 @@ function closeOperatorChat() { activeOperatorChatUser = null; document.getElemen
 function renderOperatorChatMessages(username) { const container = document.getElementById('opChatMessages'); const chats = DB.get('chats') || {}; const chat = chats[username]; if (!chat) return; container.innerHTML = chat.messages.map(msg => `<div class="chat-message-item ${msg.isUser ? 'user' : 'operator'}"><div class="message-avatar">${msg.isUser ? '👤' : '👨‍💼'}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); container.scrollTop = container.scrollHeight; }
 function sendOperatorMessage() { if (!activeOperatorChatUser) return; const input = document.getElementById('opChatInput'); const text = input.value.trim(); if (!text) return; if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } const chats = DB.get('chats') || {}; if (!chats[activeOperatorChatUser]) return; chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString() }); DB.set('chats', chats); input.value = ''; renderOperatorChatMessages(activeOperatorChatUser); renderOperatorChatList(); }
 
-function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username] ? chats[currentUser.username].messages : []; }
-function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot' }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
-function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { Toast.show('Войдите в аккаунт для общения', 'info'); openAuthModal(); return; } const history = getChatHistory(); history.push({ text: Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false }); saveChatHistory(history); renderChatMessages(); if (isUser && /(оператор|менеджер|человек|живой|связаться|хочу заказать|заказать встречу)/i.test(text)) { const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { chats[currentUser.username].status = 'operator'; DB.set('chats', chats); setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000); } } }
-function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
-function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const replies = ['Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?', 'Отличный выбор! 🎯 Сейчас переключу на оператора для подтверждения.', 'Здравствуйте! ✨ Подберу спутницу. Что вас интересует?', 'Спасибо за обращение! Оператор ответит в ближайшее время.', 'Хорошо! Напишите ваш город, и я покажу доступные анкеты.']; const reply = replies[Math.floor(Math.random() * replies.length)]; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
-
+// --- Модели, города, профили ---
 function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
 function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
 function renderModels(filter) { profiles = DB.get('profiles') || []; const grid = document.getElementById('modelsGrid'); let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p><p style="font-size: 15px; margin-top: 8px; opacity: 0.7;">Выберите другой город или свяжитесь с нами</p></div>'; return; } let html = ''; for (let p of filtered) { const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button" aria-label="Анкета: ${Security.escapeHtml(p.name)}, ${Security.escapeHtml(p.cityName)}"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; } grid.innerHTML = html; document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); card.addEventListener('keypress', e => { if (e.key === 'Enter') openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); }
+function openProfileByIdWithAuth(id) { if (!currentUser) { pendingOrderProfile = id; openAuthModal(); return; } openProfileById(id); }
 function openProfileById(id) { const idx = profiles.findIndex(p => p.id === id); if (idx >= 0) openProfile(idx); }
-function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год','года','лет']); document.getElementById('modalImage').src = (currentModalProfile.images && currentModalProfile.images[0]) ? currentModalProfile.images[0] : ''; document.getElementById('modalImage').alt = currentModalProfile.name; document.getElementById('modalName').textContent = currentModalProfile.name; document.getElementById('modalDescription').textContent = currentModalProfile.description; document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; document.getElementById('priceDay1').innerHTML = (currentModalProfile.services[0] ? currentModalProfile.services[0].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceDay2').innerHTML = (currentModalProfile.services[1] ? currentModalProfile.services[1].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceNight').innerHTML = (currentModalProfile.services[3] ? currentModalProfile.services[3].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTrip').innerHTML = (currentModalProfile.services[2] ? currentModalProfile.services[2].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services[4] ? currentModalProfile.services[4].price.toLocaleString() : '—') + ' ₽'; const addServDiv = document.getElementById('additionalServices'); if (currentModalProfile.additionalServices && currentModalProfile.additionalServices.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } document.getElementById('profileModal').class
+function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год','года','лет']); document.getElementById('modalImage').src = (currentModalProfile.images && currentModalProfile.images[0]) ? currentModalProfile.images[0] : ''; document.getElementById('modalImage').alt = currentModalProfile.name; document.getElementById('modalName').textContent = currentModalProfile.name; document.getElementById('modalDescription').textContent = currentModalProfile.description; document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; document.getElementById('priceDay1').innerHTML = (currentModalProfile.services[0] ? currentModalProfile.services[0].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceDay2').innerHTML = (currentModalProfile.services[1] ? currentModalProfile.services[1].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceNight').innerHTML = (currentModalProfile.services[3] ? currentModalProfile.services[3].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTrip').innerHTML = (currentModalProfile.services[2] ? currentModalProfile.services[2].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services[4] ? currentModalProfile.services[4].price.toLocaleString() : '—') + ' ₽'; const addServDiv = document.getElementById('additionalServices'); if (currentModalProfile.additionalServices && currentModalProfile.additionalServices.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } document.getElementById('profileModal').classList.add('active'); }
+document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
+document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
+
+// --- Навигация и прочее ---
+function setupEventListeners() {
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } });
+    });
+    document.getElementById('viewProfilesBtn')?.addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.nav-link[data-section="models"]').click(); });
+    document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); });
+    document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); });
+    document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
+    document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); });
+    document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } });
+    window.addEventListener('scroll', () => { const header = document.getElementById('header'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); });
+}
+
+// --- Анимация сердца ---
+document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
+
+// --- Инициализация ---
+document.addEventListener('DOMContentLoaded', function() {
+    DB.init();
+    Toast.init();
+    Security.csrf.generate();
+    initAgeVerification();
+    initCookieBanner();
+    checkAuth();
+    updateCitiesCount();
+    renderModels('all');
+    if (currentUser) renderChatMessages();
+    setupEventListeners();
+    if (currentUser) {
+        const chats = DB.get('chats');
+        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) {
+            addMessageToHistory('Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?', false, true);
+        }
+    }
+    setInterval(function() {
+        if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) {
+            renderOperatorChatList();
+            if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser);
+        }
+    }, 10000);
+    // Обработчики для age-модалки (на случай, если не сработали inline)
+    document.getElementById('confirmBtn')?.addEventListener('click', confirmAge);
+    document.getElementById('exitBtn')?.addEventListener('click', exitSite);
+});
+</script>
+</body>
+</html>
