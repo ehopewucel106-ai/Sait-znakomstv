@@ -118,37 +118,58 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== HEADER (скрывается при скролле, кнопка профиля справа) ===== */
+/* ===== HEADER - ДВУХСТРОЧНАЯ ВЕРСИЯ (ЛОГОТИП ВВЕРХУ, НАВИГАЦИЯ И АВАТАР ВНИЗУ) ===== */
 .header { 
     position: fixed; 
     top: 0; 
     left: 0; 
     right: 0; 
-    padding: 18px 40px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
     background: rgba(15,15,26,0.95); 
     backdrop-filter: blur(20px); 
     z-index: 1000; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
     transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease; 
     transform: translateY(0); 
+    display: flex;
+    flex-direction: column;
+    padding: 12px 40px;
 }
 .header.hidden { transform: translateY(-100%); }
-.header.scrolled { padding: 14px 40px; background: rgba(15,15,26,0.98); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
+.header.scrolled { background: rgba(15,15,26,0.98); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
 .header.chat-active { display: none; }
+
+/* Верхняя строка: логотип слева, телефон справа */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .logo-animation-wrapper { display: flex; align-items: center; gap: 15px; min-height: 70px; padding: 5px 0; }
 .heart-svg { width: 60px; height: 60px; position: relative; flex-shrink: 0; overflow: visible; }
 .heart-path { fill: none; stroke: url(#ribbonGradient); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: var(--heart-len, 350); stroke-dashoffset: var(--heart-len, 350); animation: drawHeart 2.5s cubic-bezier(0.4,0,0.2,1) forwards, heartPulseFinal 2s ease-in-out 2.5s infinite; }
 .logo-text-reveal { font-family: 'Great Vibes', cursive; font-size: 52px; font-weight: 400; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; opacity: 0; line-height: 1; animation: logoReveal 0.8s cubic-bezier(0.4,0,0.2,1) 2.2s forwards; }
-.nav-container { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 40px; }
+
+/* Нижняя строка: навигация по центру, аватар справа */
+.header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.nav-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
 .nav-links { display: flex; gap: 40px; position: relative; }
 .nav-links a { color: var(--gray); text-decoration: none; font-weight: 600; transition: all 0.3s ease; position: relative; padding: 8px 0; cursor: pointer; white-space: nowrap; font-size: 17px; }
 .nav-links a:hover, .nav-links a.active { color: var(--light); }
 .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gradient); border-radius: 2px; }
-.user-menu { display: flex; align-items: center; gap: 20px; position: relative; margin-left: auto; justify-content: flex-end; }
+
+.user-menu { display: flex; align-items: center; gap: 20px; position: relative; }
 .user-avatar { 
     width: 42px; 
     height: 42px; 
@@ -162,7 +183,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     cursor: pointer; 
     transition: transform 0.2s;
     flex-shrink: 0;
-    order: 2;
 }
 .user-avatar:hover { transform: scale(1.1); }
 .header-phone { 
@@ -177,14 +197,13 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     gap: 6px; 
     border: 1px solid rgba(233,30,99,0.3); 
     backdrop-filter: blur(4px);
-    order: 1;
 }
 .user-dropdown { position: absolute; top: 55px; right: 0; background: var(--dark); border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 14px; display: none; z-index: 1002; min-width: 200px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
 .user-dropdown.show { display: block; animation: fadeInUp 0.2s ease; }
 .user-dropdown-item { display: block; width: 100%; padding: 8px 0; font-size: 14px; background: none; border: none; color: var(--light); cursor: pointer; text-align: left; }
 .user-dropdown-item:hover { color: var(--primary); }
 
-/* City Dropdown */
+/* City Dropdown - позиционируем относительно навигации */
 .city-dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border: 1px solid rgba(233,30,99,0.3); border-radius: 16px; padding: 16px; min-width: 290px; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1001; }
 .city-dropdown.active { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(15px); }
 .city-dropdown-title { font-size: 15px; color: var(--gray); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; font-weight: 600; }
@@ -416,10 +435,10 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .nav-container { position: static; transform: none; }
-    .header { flex-wrap: wrap; gap: 12px; padding: 15px 20px; }
-    .logo { order: 1; }
-    .nav-container { order: 3; width: 100%; justify-content: center; }
+    .header { padding: 12px 20px; }
+    .header-bottom { flex-wrap: wrap; gap: 10px; }
+    .nav-container { order: 1; width: 100%; justify-content: center; }
+    .user-menu { order: 2; justify-content: flex-end; }
     .operator-chat-view { grid-template-columns: 1fr; height: auto; }
     .operator-chat-list { max-height: 200px; }
     .admin-header { flex-direction: column; align-items: flex-start; }
@@ -651,27 +670,41 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     </div>
 </div>
 
-<!-- Main Header (с телефоном и кнопкой профиля справа) -->
+<!-- Main Header - двухстрочный -->
 <header class="header" id="header" role="banner">
-    <a href="#home" class="logo animate-slideInLeft" aria-label="На главную BABYGIRL_LNR"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal">BABYGIRL_LNR</span></div></a>
-    <div class="nav-container">
-        <nav class="nav-links" aria-label="Главная навигация">
-            <a href="#models" class="nav-link active" data-section="models" role="link" tabindex="0">Анкеты</a>
-            <a href="#chat" class="nav-link" data-section="chat" role="link" tabindex="0">💬 Чат</a>
-            <a href="#" class="nav-link" id="cityNavLink" role="button" aria-haspopup="true" aria-expanded="false">Города</a>
-        </nav>
-        <div class="city-dropdown" id="cityDropdown" role="menu" aria-label="Выбор города">
-            <div class="city-dropdown-title">📍 Выберите город</div>
-            <div class="city-dropdown-list">
-                <div class="city-dropdown-item" data-city="pervomaisk" role="menuitem"><span class="city-dropdown-icon">🏙️</span><span class="city-dropdown-name">Первомайск</span><span class="city-dropdown-count" id="pervomaiskCount">0</span></div>
-                <div class="city-dropdown-item" data-city="lugansk" role="menuitem"><span class="city-dropdown-icon">🏛️</span><span class="city-dropdown-name">Луганск</span><span class="city-dropdown-count" id="luganskCount">0</span></div>
-                <div class="city-dropdown-item" data-city="stakhanov" role="menuitem"><span class="city-dropdown-icon">⛏️</span><span class="city-dropdown-name">Стаханов</span><span class="city-dropdown-count" id="stakhanovCount">0</span></div>
+    <!-- Верхняя строка: логотип слева, телефон справа -->
+    <div class="header-top">
+        <a href="#home" class="logo animate-slideInLeft" aria-label="На главную BABYGIRL_LNR">
+            <div class="logo-animation-wrapper">
+                <svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true">
+                    <defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs>
+                    <path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" />
+                </svg>
+                <span class="logo-text-reveal">BABYGIRL_LNR</span>
+            </div>
+        </a>
+        <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
+    </div>
+    <!-- Нижняя строка: навигация по центру, аватар справа -->
+    <div class="header-bottom">
+        <div class="nav-container">
+            <nav class="nav-links" aria-label="Главная навигация">
+                <a href="#models" class="nav-link active" data-section="models" role="link" tabindex="0">Анкеты</a>
+                <a href="#chat" class="nav-link" data-section="chat" role="link" tabindex="0">💬 Чат</a>
+                <a href="#" class="nav-link" id="cityNavLink" role="button" aria-haspopup="true" aria-expanded="false">Города</a>
+            </nav>
+            <div class="city-dropdown" id="cityDropdown" role="menu" aria-label="Выбор города">
+                <div class="city-dropdown-title">📍 Выберите город</div>
+                <div class="city-dropdown-list">
+                    <div class="city-dropdown-item" data-city="pervomaisk" role="menuitem"><span class="city-dropdown-icon">🏙️</span><span class="city-dropdown-name">Первомайск</span><span class="city-dropdown-count" id="pervomaiskCount">0</span></div>
+                    <div class="city-dropdown-item" data-city="lugansk" role="menuitem"><span class="city-dropdown-icon">🏛️</span><span class="city-dropdown-name">Луганск</span><span class="city-dropdown-count" id="luganskCount">0</span></div>
+                    <div class="city-dropdown-item" data-city="stakhanov" role="menuitem"><span class="city-dropdown-icon">⛏️</span><span class="city-dropdown-name">Стаханов</span><span class="city-dropdown-count" id="stakhanovCount">0</span></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
-        <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
-        <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
+        <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
+            <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
+        </div>
     </div>
 </header>
 
@@ -788,7 +821,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </footer>
 
 <script>
-// ===== ПОЛНЫЙ JS КОД (с исправленной возрастной проверкой, скрытием шапки и кнопкой профиля справа) =====
+// ===== ПОЛНЫЙ JS КОД (с исправленной возрастной проверкой, двухстрочной шапкой и скрытием при скролле) =====
 
 // --- Вспомогательные функции ---
 const Security = {
@@ -888,9 +921,7 @@ function confirmAge() {
         document.body.style.overflow = '';
     }
     Toast.show('Добро пожаловать!', 'success');
-    // После подтверждения возраста запускаем проверку авторизации и рендер
     if (typeof checkAuth === 'function') checkAuth();
-    // Если были отложенные действия, они выполнятся в checkAuth
 }
 function exitSite() {
     window.location.href = 'https://www.google.com';
@@ -899,12 +930,11 @@ function exitSite() {
 // --- Авторизация и UI ---
 function checkAuth() {
     currentUser = DB.get('currentUser');
-    const menu = document.getElementById('userMenu');
+    const userMenu = document.getElementById('userMenu');
     if (currentUser) {
         const initial = currentUser.username.charAt(0).toUpperCase();
         const isOp = currentUser.role === 'operator';
-        const phoneHtml = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(DB.get('sitePhone') || '+7 (999) 123-45-67')}</span></div>`;
-        menu.innerHTML = phoneHtml + `
+        userMenu.innerHTML = `
             <div class="user-avatar" onclick="toggleUserMenu()" title="${Security.escapeHtml(currentUser.username)}" tabindex="0" role="button" aria-label="Меню пользователя ${Security.escapeHtml(currentUser.username)}">${initial}</div>
             <div id="userDropdown" class="user-dropdown">
                 <div style="font-weight: 700; margin-bottom: 6px; font-size: 15px;">${Security.escapeHtml(currentUser.username)}</div>
@@ -918,7 +948,7 @@ function checkAuth() {
         if (pendingChatAction) { pendingChatAction = false; openChatSection(); }
         if (pendingOrderProfile) { openProfileById(pendingOrderProfile); pendingOrderProfile = null; }
     } else {
-        menu.innerHTML = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(DB.get('sitePhone') || '+7 (999) 123-45-67')}</span></div><div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`;
+        userMenu.innerHTML = `<div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`;
     }
     loadSitePhone();
 }
