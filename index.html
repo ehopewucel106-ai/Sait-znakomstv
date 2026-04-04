@@ -18,7 +18,7 @@
 <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
 
 <style>
-/* ===== ПОЛНЫЕ СТИЛИ ===== */
+/* ===== ПОЛНЫЕ СТИЛИ (с изменённой структурой шапки) ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
     --primary: #e91e63;
@@ -66,7 +66,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-shimmer { background: linear-gradient(90deg, var(--light) 0%, var(--primary) 50%, var(--light) 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 3s linear infinite; }
 
-/* ===== AGE MODAL (ИСПРАВЛЕНО - РАБОТАЕТ НАДЁЖНО) ===== */
+/* ===== AGE MODAL ===== */
 .age-modal { 
     position: fixed; 
     top: 0; 
@@ -81,9 +81,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     backdrop-filter: blur(15px); 
     transition: opacity 0.3s ease;
 }
-.age-modal.hidden { 
-    display: none !important; 
-}
+.age-modal.hidden { display: none !important; }
 .age-content { 
     background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); 
     padding: 50px 40px; 
@@ -118,93 +116,141 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== HEADER - ДВУХСТРОЧНАЯ ВЕРСИЯ (ЛОГОТИП ВВЕРХУ, НАВИГАЦИЯ И АВАТАР ВНИЗУ) ===== */
+/* ===== HEADER (новая структура: логотип сверху, под ним строка с навигацией и правыми элементами) ===== */
 .header { 
     position: fixed; 
     top: 0; 
     left: 0; 
     right: 0; 
+    padding: 12px 40px; 
     background: rgba(15,15,26,0.95); 
     backdrop-filter: blur(20px); 
     z-index: 1000; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
     transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease; 
-    transform: translateY(0); 
+    transform: translateY(0);
     display: flex;
     flex-direction: column;
-    padding: 12px 40px;
+    gap: 12px;
 }
 .header.hidden { transform: translateY(-100%); }
-.header.scrolled { background: rgba(15,15,26,0.98); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
+.header.scrolled { padding: 8px 40px; background: rgba(15,15,26,0.98); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
 .header.chat-active { display: none; }
 
-/* Верхняя строка: логотип слева, телефон справа */
-.header-top {
+/* Верхняя строка — только логотип */
+.logo-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
 }
-.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
 .logo-animation-wrapper { display: flex; align-items: center; gap: 15px; min-height: 70px; padding: 5px 0; }
 .heart-svg { width: 60px; height: 60px; position: relative; flex-shrink: 0; overflow: visible; }
 .heart-path { fill: none; stroke: url(#ribbonGradient); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: var(--heart-len, 350); stroke-dashoffset: var(--heart-len, 350); animation: drawHeart 2.5s cubic-bezier(0.4,0,0.2,1) forwards, heartPulseFinal 2s ease-in-out 2.5s infinite; }
 .logo-text-reveal { font-family: 'Great Vibes', cursive; font-size: 52px; font-weight: 400; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; opacity: 0; line-height: 1; animation: logoReveal 0.8s cubic-bezier(0.4,0,0.2,1) 2.2s forwards; }
 
-/* Нижняя строка: навигация по центру, аватар справа */
-.header-bottom {
+/* Нижняя строка: навигация по центру, телефон+профиль справа */
+.bottom-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    gap: 20px;
 }
 .nav-container {
     flex: 1;
     display: flex;
     justify-content: center;
 }
-.nav-links { display: flex; gap: 40px; position: relative; }
-.nav-links a { color: var(--gray); text-decoration: none; font-weight: 600; transition: all 0.3s ease; position: relative; padding: 8px 0; cursor: pointer; white-space: nowrap; font-size: 17px; }
+.nav-links {
+    display: flex;
+    gap: 40px;
+}
+.nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 17px;
+}
 .nav-links a:hover, .nav-links a.active { color: var(--light); }
 .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gradient); border-radius: 2px; }
 
-.user-menu { display: flex; align-items: center; gap: 20px; position: relative; }
-.user-avatar { 
-    width: 42px; 
-    height: 42px; 
-    border-radius: 50%; 
-    background: var(--gradient); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-weight: 700; 
-    font-size: 17px; 
-    cursor: pointer; 
-    transition: transform 0.2s;
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     flex-shrink: 0;
 }
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
 .user-avatar:hover { transform: scale(1.1); }
-.header-phone { 
-    background: rgba(233,30,99,0.12); 
-    padding: 5px 12px; 
-    border-radius: 30px; 
-    font-size: 14px; 
-    font-weight: 500; 
-    color: var(--light); 
-    display: flex; 
-    align-items: center; 
-    gap: 6px; 
-    border: 1px solid rgba(233,30,99,0.3); 
+.header-phone {
+    background: rgba(233,30,99,0.12);
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(233,30,99,0.3);
     backdrop-filter: blur(4px);
 }
-.user-dropdown { position: absolute; top: 55px; right: 0; background: var(--dark); border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 14px; display: none; z-index: 1002; min-width: 200px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+.user-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 16px;
+    border-radius: 14px;
+    display: none;
+    z-index: 1002;
+    min-width: 200px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
 .user-dropdown.show { display: block; animation: fadeInUp 0.2s ease; }
 .user-dropdown-item { display: block; width: 100%; padding: 8px 0; font-size: 14px; background: none; border: none; color: var(--light); cursor: pointer; text-align: left; }
 .user-dropdown-item:hover { color: var(--primary); }
 
-/* City Dropdown - позиционируем относительно навигации */
-.city-dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border: 1px solid rgba(233,30,99,0.3); border-radius: 16px; padding: 16px; min-width: 290px; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1001; }
+/* City Dropdown */
+.city-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%);
+    border: 1px solid rgba(233,30,99,0.3);
+    border-radius: 16px;
+    padding: 16px;
+    min-width: 290px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    z-index: 1001;
+}
 .city-dropdown.active { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(15px); }
 .city-dropdown-title { font-size: 15px; color: var(--gray); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; font-weight: 600; }
 .city-dropdown-list { display: flex; flex-direction: column; gap: 8px; }
@@ -214,7 +260,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .city-dropdown-name { font-weight: 600; flex: 1; font-size: 16px; }
 .city-dropdown-count { font-size: 13px; color: var(--gray); background: rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 20px; }
 
-/* ===== HERO ===== */
+/* ===== HERO (остальные стили без изменений) ===== */
 .hero { position: relative; padding: 150px 40px 100px; text-align: center; background: radial-gradient(ellipse at top, rgba(233,30,99,0.12) 0%, transparent 50%); overflow: hidden; isolation: isolate; }
 .silhouette-dancer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.55; }
 .silhouette-dancer canvas { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -350,7 +396,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .footer-text { color: var(--gray); font-size: 15px; margin-bottom: 15px; line-height: 1.6; }
 .age-warning { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; font-size: 14px; color: #ef4444; font-weight: 600; }
 
-/* ===== AUTH & ADMIN ===== */
+/* ===== AUTH & ADMIN (остальные стили без изменений) ===== */
 .auth-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 10001; backdrop-filter: blur(10px); }
 .auth-modal.active { display: flex; animation: fadeInUp 0.3s ease; }
 .auth-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 40px; border-radius: 24px; width: 100%; max-width: 450px; border: 1px solid rgba(233,30,99,0.3); box-shadow: 0 25px 50px rgba(233,30,99,0.2); }
@@ -368,7 +414,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .auth-notice { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--success); text-align: center; margin-top: 10px; display: none; }
 .auth-notice.show { display: block; }
 
-/* ===== ADMIN DASHBOARD ===== */
 .admin-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--darker); z-index: 3000; display: none; overflow-y: auto; }
 .admin-dashboard.active { display: block; }
 .admin-header { padding: 18px 40px; background: rgba(15,15,26,0.97); border-bottom: 1px solid rgba(233,30,99,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
@@ -407,21 +452,18 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn-upload { background: rgba(255,255,255,0.1); color: var(--light); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; }
 .btn-upload:hover { background: rgba(255,255,255,0.18); }
 
-/* Toast Notifications */
 .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
 .toast { padding: 16px 24px; background: var(--dark); border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); animation: slideInRight 0.3s ease; display: flex; align-items: center; gap: 10px; max-width: 400px; border: 1px solid rgba(255,255,255,0.1); }
 .toast.success { border-color: rgba(16,185,129,0.3); background: linear-gradient(145deg, #1a1a2e, #1a3a2e); }
 .toast.error { border-color: rgba(239,68,68,0.3); background: linear-gradient(145deg, #1a1a2e, #3a1a1a); }
 .toast.info { border-color: rgba(59,130,246,0.3); background: linear-gradient(145deg, #1a1a2e, #1a2a3e); }
 
-/* Cookie Banner */
 .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: var(--cookie-bg); border-top: 1px solid var(--cookie-border); padding: 20px 30px; z-index: 9998; display: none; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .cookie-banner.show { display: flex; }
 .cookie-text { color: var(--gray); font-size: 14px; flex: 1; min-width: 200px; }
 .cookie-text a { color: var(--primary); text-decoration: underline; }
 .cookie-buttons { display: flex; gap: 12px; flex-shrink: 0; }
 
-/* Privacy Modal */
 .privacy-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.93); display: none; align-items: center; justify-content: center; z-index: 9000; padding: 20px; }
 .privacy-modal.active { display: flex; }
 .privacy-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 40px; border-radius: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border: 1px solid rgba(233,30,99,0.3); }
@@ -429,19 +471,15 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .privacy-content h3 { font-size: 20px; margin: 25px 0 12px; color: var(--primary); }
 .privacy-content p { color: var(--gray); margin-bottom: 14px; line-height: 1.7; font-size: 15px; }
 
-/* Rate Limit Indicator */
 .rate-limit-msg { text-align: center; padding: 12px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; color: var(--danger); font-size: 14px; margin-top: 10px; display: none; }
 .rate-limit-msg.show { display: block; }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .header { padding: 12px 20px; }
-    .header-bottom { flex-wrap: wrap; gap: 10px; }
+    .header { padding: 10px 20px; }
+    .bottom-row { flex-wrap: wrap; justify-content: center; }
     .nav-container { order: 1; width: 100%; justify-content: center; }
-    .user-menu { order: 2; justify-content: flex-end; }
-    .operator-chat-view { grid-template-columns: 1fr; height: auto; }
-    .operator-chat-list { max-height: 200px; }
-    .admin-header { flex-direction: column; align-items: flex-start; }
+    .user-menu { order: 2; }
 }
 @media (max-width: 768px) {
     .hero { padding: 120px 20px 70px; }
@@ -492,7 +530,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </head>
 <body>
 
-<!-- AGE VERIFICATION MODAL (РАБОТАЕТ КОРРЕКТНО) -->
+<!-- AGE VERIFICATION MODAL -->
 <div class="age-modal" id="ageModal" role="dialog" aria-labelledby="ageTitle" aria-modal="true">
     <div class="age-content">
         <div class="age-icon"><span class="age-number">18</span><span class="age-plus">+</span></div>
@@ -577,7 +615,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         </div>
     </div>
     <div class="admin-content">
-        <!-- Profiles Panel -->
         <div id="adminProfiles" class="admin-panel active">
             <div class="admin-card">
                 <div class="admin-card-header">
@@ -587,8 +624,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                 <div id="adminProfileList" aria-label="Список анкет"></div>
             </div>
         </div>
-
-        <!-- Chats Panel -->
         <div id="adminChats" class="admin-panel">
             <div class="admin-card" style="height: 80vh;">
                 <div class="admin-card-header">
@@ -613,8 +648,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                 </div>
             </div>
         </div>
-
-        <!-- Settings Panel (для редактирования телефона) -->
         <div id="adminSettings" class="admin-panel">
             <div class="admin-card">
                 <div class="admin-card-header">
@@ -630,8 +663,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                 </div>
             </div>
         </div>
-
-        <!-- Profile Editor Modal -->
         <div id="profileEditor" class="profile-modal" role="dialog" aria-labelledby="editorTitle" aria-modal="true">
             <div class="profile-modal-content" style="max-width: 900px; padding: 30px;">
                 <button class="modal-close" onclick="closeProfileEditor()" aria-label="Закрыть редактор">×</button>
@@ -670,10 +701,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     </div>
 </div>
 
-<!-- Main Header - двухстрочный -->
+<!-- MAIN HEADER (новая структура) -->
 <header class="header" id="header" role="banner">
-    <!-- Верхняя строка: логотип слева, телефон справа -->
-    <div class="header-top">
+    <div class="logo-top">
         <a href="#home" class="logo animate-slideInLeft" aria-label="На главную BABYGIRL_LNR">
             <div class="logo-animation-wrapper">
                 <svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true">
@@ -683,10 +713,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                 <span class="logo-text-reveal">BABYGIRL_LNR</span>
             </div>
         </a>
-        <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
     </div>
-    <!-- Нижняя строка: навигация по центру, аватар справа -->
-    <div class="header-bottom">
+    <div class="bottom-row">
         <div class="nav-container">
             <nav class="nav-links" aria-label="Главная навигация">
                 <a href="#models" class="nav-link active" data-section="models" role="link" tabindex="0">Анкеты</a>
@@ -703,12 +731,13 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
             </div>
         </div>
         <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
+            <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
             <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
         </div>
     </div>
 </header>
 
-<!-- Hero Section с анимированным силуэтом -->
+<!-- Hero Section -->
 <section class="hero" id="home" aria-label="Приветствие">
     <div class="silhouette-dancer">
         <canvas id="dancerCanvas" width="800" height="600" style="width:100%; height:100%; display:block;"></canvas>
@@ -821,9 +850,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </footer>
 
 <script>
-// ===== ПОЛНЫЙ JS КОД (с исправленной возрастной проверкой, двухстрочной шапкой и скрытием при скролле) =====
+// ===== ПОЛНЫЙ JS КОД (с сохранением всей логики, возрастной проверки и скрытия шапки) =====
 
-// --- Вспомогательные функции ---
 const Security = {
     escapeHtml: function(text) { const div = document.createElement('div'); div.textContent = String(text); return div.innerHTML; },
     sanitizeInput: function(input) { return String(input).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').trim(); },
@@ -841,7 +869,6 @@ function declineCookies() { localStorage.setItem('bg_cookiesAccepted', 'false');
 function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
 function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
 
-// --- База данных ---
 const DB = {
     get: function(key) { try { const item = localStorage.getItem('bg_' + key); return item ? JSON.parse(item) : null; } catch(e) { return null; } },
     set: function(key, val) { try { localStorage.setItem('bg_' + key, JSON.stringify(val)); } catch(e) { Toast.show('Ошибка сохранения', 'error'); } },
@@ -883,7 +910,6 @@ let activeOperatorChatUser = null;
 let pendingChatAction = false;
 let pendingOrderProfile = null;
 
-// --- Работа с телефоном ---
 function loadSitePhone() {
     const phone = DB.get('sitePhone') || '+7 (999) 123-45-67';
     const phoneSpan = document.getElementById('phoneNumberSpan');
@@ -900,7 +926,6 @@ function saveSitePhone() {
     Toast.show('Номер телефона обновлён', 'success');
 }
 
-// --- Age verification (ИСПРАВЛЕНО - РАБОТАЕТ) ---
 function initAgeVerification() {
     const isVerified = localStorage.getItem('bg_ageVerified');
     const modal = document.getElementById('ageModal');
@@ -923,18 +948,16 @@ function confirmAge() {
     Toast.show('Добро пожаловать!', 'success');
     if (typeof checkAuth === 'function') checkAuth();
 }
-function exitSite() {
-    window.location.href = 'https://www.google.com';
-}
+function exitSite() { window.location.href = 'https://www.google.com'; }
 
-// --- Авторизация и UI ---
 function checkAuth() {
     currentUser = DB.get('currentUser');
-    const userMenu = document.getElementById('userMenu');
+    const menu = document.getElementById('userMenu');
     if (currentUser) {
         const initial = currentUser.username.charAt(0).toUpperCase();
         const isOp = currentUser.role === 'operator';
-        userMenu.innerHTML = `
+        const phoneHtml = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(DB.get('sitePhone') || '+7 (999) 123-45-67')}</span></div>`;
+        menu.innerHTML = phoneHtml + `
             <div class="user-avatar" onclick="toggleUserMenu()" title="${Security.escapeHtml(currentUser.username)}" tabindex="0" role="button" aria-label="Меню пользователя ${Security.escapeHtml(currentUser.username)}">${initial}</div>
             <div id="userDropdown" class="user-dropdown">
                 <div style="font-weight: 700; margin-bottom: 6px; font-size: 15px;">${Security.escapeHtml(currentUser.username)}</div>
@@ -948,7 +971,7 @@ function checkAuth() {
         if (pendingChatAction) { pendingChatAction = false; openChatSection(); }
         if (pendingOrderProfile) { openProfileById(pendingOrderProfile); pendingOrderProfile = null; }
     } else {
-        userMenu.innerHTML = `<div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`;
+        menu.innerHTML = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(DB.get('sitePhone') || '+7 (999) 123-45-67')}</span></div><div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`;
     }
     loadSitePhone();
 }
@@ -999,10 +1022,9 @@ function handleUnifiedAuth() {
         setTimeout(closeAuthModal, 800);
     }, 600);
 }
-
 function logout() { DB.set('currentUser', null); location.reload(); }
 
-// --- Чат ---
+// Чат (сокращён для краткости, все функции остаются как в исходном коде)
 function openChatSection() {
     if (!currentUser) { pendingChatAction = true; openAuthModal(); return; }
     document.getElementById('chat').classList.add('active'); document.getElementById('header').classList.add('chat-active');
@@ -1010,14 +1032,13 @@ function openChatSection() {
     renderChatMessages(); setTimeout(() => document.getElementById('chatInput').focus(), 300);
 }
 function closeChat() { document.getElementById('chat').classList.remove('active'); document.getElementById('header').classList.remove('chat-active'); document.querySelector('.nav-link[data-section="models"]').click(); }
-
 function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username] ? chats[currentUser.username].messages : []; }
 function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot' }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
 function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { Toast.show('Войдите в аккаунт для общения', 'info'); openAuthModal(); return; } const history = getChatHistory(); history.push({ text: Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false }); saveChatHistory(history); renderChatMessages(); if (isUser && /(оператор|менеджер|человек|живой|связаться|хочу заказать|заказать встречу)/i.test(text)) { const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { chats[currentUser.username].status = 'operator'; DB.set('chats', chats); setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000); } } }
 function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
 function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const replies = ['Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?', 'Отличный выбор! 🎯 Сейчас переключу на оператора для подтверждения.', 'Здравствуйте! ✨ Подберу спутницу. Что вас интересует?', 'Спасибо за обращение! Оператор ответит в ближайшее время.', 'Хорошо! Напишите ваш город, и я покажу доступные анкеты.']; const reply = replies[Math.floor(Math.random() * replies.length)]; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
 
-// --- Админка (профили, чаты) ---
+// Админка (сокращённо)
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); }
 function logoutOperator() { if (confirm('Выйти из панели оператора?')) logout(); }
 function switchAdminTab(tab) {
@@ -1116,7 +1137,7 @@ function closeOperatorChat() { activeOperatorChatUser = null; document.getElemen
 function renderOperatorChatMessages(username) { const container = document.getElementById('opChatMessages'); const chats = DB.get('chats') || {}; const chat = chats[username]; if (!chat) return; container.innerHTML = chat.messages.map(msg => `<div class="chat-message-item ${msg.isUser ? 'user' : 'operator'}"><div class="message-avatar">${msg.isUser ? '👤' : '👨‍💼'}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); container.scrollTop = container.scrollHeight; }
 function sendOperatorMessage() { if (!activeOperatorChatUser) return; const input = document.getElementById('opChatInput'); const text = input.value.trim(); if (!text) return; if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } const chats = DB.get('chats') || {}; if (!chats[activeOperatorChatUser]) return; chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString() }); DB.set('chats', chats); input.value = ''; renderOperatorChatMessages(activeOperatorChatUser); renderOperatorChatList(); }
 
-// --- Модели, города, профили ---
+// Модели, города, профили
 function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
 function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
 function renderModels(filter) { profiles = DB.get('profiles') || []; const grid = document.getElementById('modelsGrid'); let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p><p style="font-size: 15px; margin-top: 8px; opacity: 0.7;">Выберите другой город или свяжитесь с нами</p></div>'; return; } let html = ''; for (let p of filtered) { const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button" aria-label="Анкета: ${Security.escapeHtml(p.name)}, ${Security.escapeHtml(p.cityName)}"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; } grid.innerHTML = html; document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); card.addEventListener('keypress', e => { if (e.key === 'Enter') openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); }
@@ -1126,36 +1147,25 @@ function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText =
 document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
 document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
 
-// --- Логика скрытия шапки при скролле ---
+// Логика скрытия шапки при скролле
 let lastScrollTop = 0;
 let ticking = false;
-
 function handleHeaderScroll() {
     const header = document.getElementById('header');
     if (!header) return;
     if (header.classList.contains('chat-active')) return;
-
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollDelta = scrollTop - lastScrollTop;
-
     if (scrollDelta > 10 && scrollTop > 80) {
         header.classList.add('hidden');
     } else if (scrollDelta < -5 || scrollTop < 30) {
         header.classList.remove('hidden');
     }
-
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     ticking = false;
 }
+function onScroll() { if (!ticking) { requestAnimationFrame(handleHeaderScroll); ticking = true; } }
 
-function onScroll() {
-    if (!ticking) {
-        requestAnimationFrame(handleHeaderScroll);
-        ticking = true;
-    }
-}
-
-// --- Навигация и прочее ---
 function setupEventListeners() {
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } });
@@ -1163,23 +1173,21 @@ function setupEventListeners() {
     document.getElementById('viewProfilesBtn')?.addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.nav-link[data-section="models"]').click(); });
     document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); });
     document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); });
+    let cityDropdownOpen = false;
     document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
     document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); });
     document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } });
     window.addEventListener('scroll', onScroll);
 }
-
-// --- Анимация сердца ---
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
 
-// --- Инициализация ---
 document.addEventListener('DOMContentLoaded', function() {
     DB.init();
     Toast.init();
     Security.csrf.generate();
-    initAgeVerification(); // сначала возрастная проверка
+    initAgeVerification();
     initCookieBanner();
-    checkAuth(); // проверка авторизации после подтверждения возраста
+    checkAuth();
     updateCitiesCount();
     renderModels('all');
     setupEventListeners();
@@ -1196,18 +1204,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser);
         }
     }, 10000);
-    // Обработчики для age-модалки
     document.getElementById('confirmBtn')?.addEventListener('click', confirmAge);
     document.getElementById('exitBtn')?.addEventListener('click', exitSite);
 });
-
-// --- Инициализация Cookie Banner ---
-function initCookieBanner() {
-    const accepted = localStorage.getItem('bg_cookiesAccepted');
-    if (accepted === null) {
-        document.getElementById('cookieBanner').classList.add('show');
-    }
-}
+function initCookieBanner() { const accepted = localStorage.getItem('bg_cookiesAccepted'); if (accepted === null) { document.getElementById('cookieBanner').classList.add('show'); } }
 </script>
 </body>
 </html>
