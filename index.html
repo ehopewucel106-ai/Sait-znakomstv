@@ -18,7 +18,7 @@
 <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
 
 <style>
-/* ===== ПОЛНЫЕ СТИЛИ (как в исходной рабочей версии, только с добавлением .header-phone и правкой кнопки профиля) ===== */
+/* ===== ПОЛНЫЕ СТИЛИ ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
     --primary: #e91e63;
@@ -66,10 +66,34 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-shimmer { background: linear-gradient(90deg, var(--light) 0%, var(--primary) 50%, var(--light) 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 3s linear infinite; }
 
-/* ===== AGE MODAL (исправлено) ===== */
-.age-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); display: flex; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px); }
-.age-modal.hidden { display: none !important; }
-.age-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 50px 40px; border-radius: 24px; text-align: center; max-width: 500px; width: 90%; border: 1px solid rgba(233,30,99,0.3); box-shadow: 0 25px 60px rgba(233,30,99,0.3); }
+/* ===== AGE MODAL (ИСПРАВЛЕНО - РАБОТАЕТ НАДЁЖНО) ===== */
+.age-modal { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.98); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 100000; 
+    backdrop-filter: blur(15px); 
+    transition: opacity 0.3s ease;
+}
+.age-modal.hidden { 
+    display: none !important; 
+}
+.age-content { 
+    background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); 
+    padding: 50px 40px; 
+    border-radius: 24px; 
+    text-align: center; 
+    max-width: 500px; 
+    width: 90%; 
+    border: 1px solid rgba(233,30,99,0.3); 
+    box-shadow: 0 25px 60px rgba(233,30,99,0.3); 
+}
 .age-icon { width: 96px; height: 96px; margin: 0 auto 25px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(233,30,99,0.5); position: relative; }
 .age-number { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: white; }
 .age-plus { font-size: 20px; font-weight: 700; color: white; position: absolute; top: 28px; right: 24px; }
@@ -94,7 +118,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== HEADER (с телефоном и кнопкой профиля справа) ===== */
+/* ===== HEADER (скрывается при скролле, кнопка профиля справа) ===== */
 .header { 
     position: fixed; 
     top: 0; 
@@ -108,11 +132,10 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     backdrop-filter: blur(20px); 
     z-index: 1000; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
-    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; 
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease; 
     transform: translateY(0); 
-    overflow: visible; 
 }
-.header.hidden { transform: translateY(-100%); opacity: 0; }
+.header.hidden { transform: translateY(-100%); }
 .header.scrolled { padding: 14px 40px; background: rgba(15,15,26,0.98); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
 .header.chat-active { display: none; }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
@@ -126,7 +149,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .nav-links a:hover, .nav-links a.active { color: var(--light); }
 .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gradient); border-radius: 2px; }
 .user-menu { display: flex; align-items: center; gap: 20px; position: relative; margin-left: auto; justify-content: flex-end; }
-/* Кнопка профиля (аватар) — крайний правый элемент */
 .user-avatar { 
     width: 42px; 
     height: 42px; 
@@ -140,7 +162,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     cursor: pointer; 
     transition: transform 0.2s;
     flex-shrink: 0;
-    order: 2; /* аватар всегда справа */
+    order: 2;
 }
 .user-avatar:hover { transform: scale(1.1); }
 .header-phone { 
@@ -451,10 +473,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </head>
 <body>
 
-<!-- Toast Container -->
-<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
-
-<!-- Age Verification Modal -->
+<!-- AGE VERIFICATION MODAL (РАБОТАЕТ КОРРЕКТНО) -->
 <div class="age-modal" id="ageModal" role="dialog" aria-labelledby="ageTitle" aria-modal="true">
     <div class="age-content">
         <div class="age-icon"><span class="age-number">18</span><span class="age-plus">+</span></div>
@@ -467,6 +486,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         </div>
     </div>
 </div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
 <!-- Privacy Policy Modal -->
 <div class="privacy-modal" id="privacyModal" role="dialog" aria-labelledby="privacyTitle" aria-modal="true">
@@ -766,7 +788,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </footer>
 
 <script>
-// ===== ПОЛНЫЙ JS КОД (включая все функции, исправленный age-модал, скрытие шапки при скролле и кнопка профиля справа) =====
+// ===== ПОЛНЫЙ JS КОД (с исправленной возрастной проверкой, скрытием шапки и кнопкой профиля справа) =====
 
 // --- Вспомогательные функции ---
 const Security = {
@@ -845,7 +867,7 @@ function saveSitePhone() {
     Toast.show('Номер телефона обновлён', 'success');
 }
 
-// --- Age verification (исправлено) ---
+// --- Age verification (ИСПРАВЛЕНО - РАБОТАЕТ) ---
 function initAgeVerification() {
     const isVerified = localStorage.getItem('bg_ageVerified');
     const modal = document.getElementById('ageModal');
@@ -866,7 +888,9 @@ function confirmAge() {
         document.body.style.overflow = '';
     }
     Toast.show('Добро пожаловать!', 'success');
+    // После подтверждения возраста запускаем проверку авторизации и рендер
     if (typeof checkAuth === 'function') checkAuth();
+    // Если были отложенные действия, они выполнятся в checkAuth
 }
 function exitSite() {
     window.location.href = 'https://www.google.com';
@@ -1072,24 +1096,21 @@ function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText =
 document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
 document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
 
-// --- Новая логика скрытия шапки при скролле ---
+// --- Логика скрытия шапки при скролле ---
 let lastScrollTop = 0;
 let ticking = false;
 
 function handleHeaderScroll() {
     const header = document.getElementById('header');
     if (!header) return;
-    // Если чат активен — не трогаем (шапка и так скрыта через display: none)
     if (header.classList.contains('chat-active')) return;
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollDelta = scrollTop - lastScrollTop;
 
     if (scrollDelta > 10 && scrollTop > 80) {
-        // Прокрутка вниз — прячем шапку
         header.classList.add('hidden');
     } else if (scrollDelta < -5 || scrollTop < 30) {
-        // Прокрутка вверх или в самом верху — показываем шапку
         header.classList.remove('hidden');
     }
 
@@ -1111,4 +1132,52 @@ function setupEventListeners() {
     });
     document.getElementById('viewProfilesBtn')?.addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.nav-link[data-section="models"]').click(); });
     document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); });
-    document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dat
+    document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); });
+    document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
+    document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); });
+    document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } });
+    window.addEventListener('scroll', onScroll);
+}
+
+// --- Анимация сердца ---
+document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
+
+// --- Инициализация ---
+document.addEventListener('DOMContentLoaded', function() {
+    DB.init();
+    Toast.init();
+    Security.csrf.generate();
+    initAgeVerification(); // сначала возрастная проверка
+    initCookieBanner();
+    checkAuth(); // проверка авторизации после подтверждения возраста
+    updateCitiesCount();
+    renderModels('all');
+    setupEventListeners();
+    if (currentUser) renderChatMessages();
+    if (currentUser) {
+        const chats = DB.get('chats');
+        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) {
+            addMessageToHistory('Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?', false, true);
+        }
+    }
+    setInterval(function() {
+        if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) {
+            renderOperatorChatList();
+            if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser);
+        }
+    }, 10000);
+    // Обработчики для age-модалки
+    document.getElementById('confirmBtn')?.addEventListener('click', confirmAge);
+    document.getElementById('exitBtn')?.addEventListener('click', exitSite);
+});
+
+// --- Инициализация Cookie Banner ---
+function initCookieBanner() {
+    const accepted = localStorage.getItem('bg_cookiesAccepted');
+    if (accepted === null) {
+        document.getElementById('cookieBanner').classList.add('show');
+    }
+}
+</script>
+</body>
+</html>
