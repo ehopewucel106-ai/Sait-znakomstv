@@ -10,6 +10,10 @@
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="X-XSS-Protection" content="0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src 'self' https: data: blob:; connect-src 'self';">
+<!-- Мета-теги для мобильных -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
 <title>BABYGIRL_LNR - Элитные Услуги 18+</title>
 <link href="https://cdn.jsdelivr.net/npm/fontsource-great-vibes@5.0.0/index.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/fontsource-montserrat@5.0.0/index.css" rel="stylesheet">
@@ -37,7 +41,7 @@
     --cookie-border: #e91e63;
 }
 
-/* ===== ВИДЕО-ФОН ===== */
+/* ===== ВИДЕО-ФОН (с поддержкой мобильных) ===== */
 .video-bg {
     position: fixed;
     top: 0;
@@ -47,6 +51,8 @@
     object-fit: cover;
     z-index: -3;
     pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .video-overlay {
@@ -60,15 +66,32 @@
     pointer-events: none;
 }
 
-@media (max-width: 768px), (prefers-reduced-motion: reduce) {
-    .video-bg { display: none; }
+/* Мобильная оптимизация: не скрываем видео, но улучшаем читаемость */
+@media (max-width: 768px) {
+    .video-bg {
+        object-position: center;
+    }
     .video-overlay {
-        background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+        background: linear-gradient(135deg, rgba(15,15,26,0.95) 0%, rgba(26,26,46,0.92) 100%);
     }
 }
 
+/* Для пользователей с режимом экономии данных */
+@media (prefers-reduced-data: reduce) {
+    .video-bg { display: none; }
+}
+
+/* iOS Safari фиксы */
 @supports (-webkit-touch-callout: none) {
-    .video-bg[playsinline] { -webkit-playsinline: true; }
+    .video-bg {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+/* Если пользователь отключил анимации */
+@media (prefers-reduced-motion: reduce) {
+    .video-bg { animation: none !important; }
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 140px; }
@@ -457,8 +480,12 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </head>
 <body>
 
-<!-- ===== ВИДЕО-ФОН ===== -->
-<video id="bgVideo" class="video-bg" autoplay muted loop playsinline poster="fallback.jpg" aria-hidden="true">
+<!-- ===== ВИДЕО-ФОН (с полной мобильной поддержкой) ===== -->
+<video id="bgVideo" class="video-bg" 
+       autoplay muted loop playsinline webkit-playsinline 
+       poster="fallback.jpg" 
+       aria-hidden="true"
+       preload="auto">
     <source src="your-video.mp4" type="video/mp4">
     <source src="your-video.webm" type="video/webm">
 </video>
@@ -526,236 +553,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     </div>
 </div>
 
-<div class="admin-dashboard" id="adminDashboard" role="main">
-    <div class="admin-header">
-        <div class="logo"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal" style="opacity: 1;">ADMIN PANEL</span></div></div>
-        <div class="admin-nav">
-            <button class="admin-tab-btn active" onclick="switchAdminTab('profiles')" aria-pressed="true">Анкеты</button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('chats')" aria-pressed="false">Чаты <span id="newChatBadge" style="background: var(--danger); padding: 2px 7px; border-radius: 10px; font-size: 11px; display: none;">!</span></button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('settings')" aria-pressed="false">Настройки</button>
-            <button class="admin-tab-btn btn-danger" onclick="logoutOperator()">Выход</button>
-        </div>
-    </div>
-    <div class="admin-content">
-        <div id="adminProfiles" class="admin-panel active">
-            <div class="admin-card">
-                <div class="admin-card-header">
-                    <h2 class="admin-card-title">Управление Анкетами</h2>
-                    <button class="btn btn-primary btn-small" onclick="openProfileEditor()">+ Добавить Модель</button>
-                </div>
-                <div id="adminProfileList" aria-label="Список анкет"></div>
-            </div>
-        </div>
-        <div id="adminChats" class="admin-panel">
-            <div class="admin-card" style="height: 80vh;">
-                <div class="admin-card-header"><h2 class="admin-card-title">Активные Чаты</h2></div>
-                <div class="operator-chat-view">
-                    <div class="operator-chat-list" id="operatorChatList" aria-label="Список чатов"></div>
-                    <div class="operator-chat-window" id="operatorChatWindow">
-                        <div class="chat-header-custom" style="background: rgba(0,0,0,0.3);">
-                            <div class="chat-header-info">
-                                <button class="chat-back-btn" onclick="closeOperatorChat()" aria-label="Назад">← Назад</button>
-                                <div class="chat-avatar" id="opChatAvatar">👤</div>
-                                <div><div style="font-weight: 600;" id="opChatUserName">Client</div><div class="chat-status"><span class="status-dot"></span>Онлайн</div></div>
-                            </div>
-                        </div>
-                        <div class="op-chat-messages" id="opChatMessages"></div>
-                        <div class="op-chat-input">
-                            <input type="text" class="chat-input" id="opChatInput" placeholder="Ответ оператора..." onkeypress="if(event.key === 'Enter') sendOperatorMessage()" maxlength="1000">
-                            <button class="chat-send" onclick="sendOperatorMessage()" style="width: 50px; height: 50px; font-size: 20px;" aria-label="Отправить">➤</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="adminSettings" class="admin-panel">
-            <div class="admin-card">
-                <div class="admin-card-header"><h2 class="admin-card-title">Настройки контента</h2></div>
-                <div class="auth-form">
-                    <div class="form-group">
-                        <label class="form-label">📞 Контактный телефон (шапка)</label>
-                        <input type="text" class="form-input" id="sitePhoneInput" placeholder="+7 (123) 456-78-90" maxlength="30">
-                    </div>
-                    <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
-                    <h3 style="font-size: 20px; margin-bottom: 15px;">📝 Тексты на странице (оглавление)</h3>
-                    <div class="form-group">
-                        <label class="form-label">Заголовок раздела "Анкеты"</label>
-                        <input type="text" class="form-input" id="textModelsTitle" placeholder="Анкеты Девушек">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Подзаголовок раздела "Анкеты"</label>
-                        <input type="text" class="form-input" id="textModelsSubtitle" placeholder="Выберите идеальную спутницу">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Заголовок раздела "Города"</label>
-                        <input type="text" class="form-input" id="textCitiesTitle" placeholder="Города Присутствия">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Подзаголовок раздела "Города"</label>
-                        <input type="text" class="form-input" id="textCitiesSubtitle" placeholder="Наши девушки доступны в следующих городах">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Приветствие бота в чате (первое сообщение)</label>
-                        <textarea class="form-input" id="textBotWelcome" rows="3" placeholder="Привет! 👋 Я менеджер..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Текст предупреждения 18+ в футере</label>
-                        <input type="text" class="form-input" id="textFooterWarning" placeholder="🔞 18+ Только для совершеннолетних">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Копирайт в футере</label>
-                        <input type="text" class="form-input" id="textFooterCopyright" placeholder="© 2026 BABYGIRL_LNR. ...">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Текст о конфиденциальности в футере</label>
-                        <input type="text" class="form-input" id="textFooterConfidentiality" placeholder="Полная конфиденциальность гарантирована.">
-                    </div>
-                    <button class="btn btn-primary" onclick="saveSiteTexts()">Сохранить все тексты</button>
-                </div>
-            </div>
-        </div>
-        <div id="profileEditor" class="profile-modal" role="dialog" aria-labelledby="editorTitle" aria-modal="true">
-            <div class="profile-modal-content" style="max-width: 900px; padding: 30px;">
-                <button class="modal-close" onclick="closeProfileEditor()" aria-label="Закрыть редактор">×</button>
-                <h2 class="modal-name" style="text-align: center;" id="editorTitle">Редактор Анкеты</h2>
-                <div class="auth-form" style="max-width: 100%; margin: 0 auto;">
-                    <input type="hidden" id="editProfileId">
-                    <div class="form-group"><label class="form-label" for="editName">Имя</label><input type="text" class="form-input" id="editName" maxlength="50"></div>
-                    <div class="form-group"><label class="form-label" for="editCity">Город</label>
-                        <select class="form-input" id="editCity"><option value="pervomaisk">Первомайск</option><option value="lugansk">Луганск</option><option value="stakhanov">Стаханов</option></select>
-                    </div>
-                    <div class="form-group"><label class="form-label" for="editDescription">Описание</label><textarea class="form-input" id="editDescription" rows="3" maxlength="500"></textarea></div>
-                    <div class="form-group">
-                        <label class="form-label">Фото (URL или Загрузка)</label>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                            <input type="text" class="form-input" id="editImage" placeholder="https://..." style="flex:1; min-width: 200px;">
-                            <div class="file-upload-wrapper"><button class="btn-upload" type="button">📷 Загрузить</button><input type="file" id="editImageUpload" accept="image/*" onchange="handleImageUpload(this)"></div>
-                        </div>
-                        <img id="editImagePreview" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: none;" alt="Превью">
-                    </div>
-                    <div class="form-group"><label class="form-label">💰 Прайс-лист (₽)</label>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;">
-                            <input type="number" class="form-input" id="editPrice1h" placeholder="1 час" min="1000">
-                            <input type="number" class="form-input" id="editPrice2h" placeholder="2 часа" min="1000">
-                            <input type="number" class="form-input" id="editPriceTrip" placeholder="Выезд (2ч)" min="1000">
-                            <input type="number" class="form-input" id="editPriceNight" placeholder="Ночь" min="1000">
-                            <input type="number" class="form-input" id="editPriceTripNight" placeholder="Выезд ночь" min="1000">
-                        </div>
-                    </div>
-                    <div class="form-group"><label class="form-label" for="editAdditionalServices">✨ Дополнительные услуги (через запятую)</label><input type="text" class="form-input" id="editAdditionalServices" placeholder="GFE, Стриптиз, Массаж..." maxlength="300"></div>
-                    <div class="form-group"><label class="form-label" for="editPrice">💰 Базовая цена</label><input type="number" class="form-input" id="editPrice" placeholder="от" min="1000"></div>
-                    <button class="btn btn-primary" onclick="saveProfile()">Сохранить</button>
-                    <button class="btn btn-danger" id="deleteProfileBtn" onclick="deleteProfile()" style="display: none;">🗑 Удалить анкету</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<header class="header" id="header" role="banner">
-    <a href="#models" class="logo animate-slideInLeft" aria-label="На главную"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal">BABYGIRL_LNR</span></div></a>
-    <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
-        <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
-        <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
-    </div>
-    <div class="nav-container">
-        <nav class="nav-links" aria-label="Главная навигация">
-            <a href="#models" class="nav-link active" data-section="models" role="link" tabindex="0">Анкеты</a>
-            <a href="#chat" class="nav-link" data-section="chat" role="link" tabindex="0">💬 Чат</a>
-            <a href="#" class="nav-link" id="cityNavLink" role="button" aria-haspopup="true" aria-expanded="false">Города</a>
-        </nav>
-        <div class="city-dropdown" id="cityDropdown" role="menu" aria-label="Выбор города">
-            <div class="city-dropdown-title">📍 Выберите город</div>
-            <div class="city-dropdown-list">
-                <div class="city-dropdown-item" data-city="pervomaisk" role="menuitem"><span class="city-dropdown-icon">🏙️</span><span class="city-dropdown-name">Первомайск</span><span class="city-dropdown-count" id="pervomaiskCount">0</span></div>
-                <div class="city-dropdown-item" data-city="lugansk" role="menuitem"><span class="city-dropdown-icon">🏛️</span><span class="city-dropdown-name">Луганск</span><span class="city-dropdown-count" id="luganskCount">0</span></div>
-                <div class="city-dropdown-item" data-city="stakhanov" role="menuitem"><span class="city-dropdown-icon">⛏️</span><span class="city-dropdown-name">Стаханов</span><span class="city-dropdown-count" id="stakhanovCount">0</span></div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<section class="section active" id="models" aria-label="Анкеты моделей" role="region">
-    <div class="section-header">
-        <h2 class="animate-fadeInUp" id="modelsTitle">Анкеты Девушек</h2>
-        <p class="animate-fadeInUp" id="modelsSubtitle">Выберите идеальную спутницу</p>
-    </div>
-    <div class="filters-bar" role="group" aria-label="Фильтр по городу">
-        <button class="filter-btn active" data-filter="all" aria-pressed="true">Все Города</button>
-        <button class="filter-btn" data-filter="pervomaisk" aria-pressed="false">Первомайск</button>
-        <button class="filter-btn" data-filter="lugansk" aria-pressed="false">Луганск</button>
-        <button class="filter-btn" data-filter="stakhanov" aria-pressed="false">Стаханов</button>
-    </div>
-    <div class="models-grid" id="modelsGrid"></div>
-</section>
-
-<section class="section" id="chat" aria-label="Чат поддержки" role="region">
-    <div class="chat-section">
-        <div class="chat-container">
-            <div class="chat-header-custom">
-                <div class="chat-header-info">
-                    <button class="chat-back-btn" onclick="closeChat()" aria-label="Закрыть чат">← Назад</button>
-                    <div class="chat-avatar" aria-hidden="true">👨‍💼</div>
-                    <div><div style="font-weight: 600; font-size: 16px;">Менеджер BABYGIRL_LNR</div><div class="chat-status"><span class="status-dot"></span>Онлайн</div></div>
-                </div>
-                <button class="chat-back-btn" id="operatorBtn" style="background: rgba(233,30,99,0.2); display: none;" onclick="openAdminPanel()">👨‍💻 Оператор</button>
-            </div>
-            <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
-            <div class="chat-input-container">
-                <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." onkeypress="if(event.key === 'Enter') sendChatMessage()" maxlength="1000" aria-label="Поле ввода">
-                    <button class="chat-send" id="chatSend" onclick="sendChatMessage()" aria-label="Отправить">➤</button>
-                </div>
-                <div class="rate-limit-msg" id="rateLimitMsg">⏳ Подождите перед отправкой</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section" id="city" aria-label="Города присутствия" role="region">
-    <div class="section-header">
-        <h2 class="animate-fadeInUp" id="citiesTitle">Города Присутствия</h2>
-        <p class="animate-fadeInUp" id="citiesSubtitle">Наши девушки доступны в следующих городах</p>
-    </div>
-    <div class="cities-grid">
-        <div class="city-card animate-fadeInUp" data-city="pervomaisk" tabindex="0" role="button"><div class="city-icon">🏙️</div><div class="city-name">Первомайск</div><div class="city-count" id="pervomaiskCountCard">0 девушек</div></div>
-        <div class="city-card animate-fadeInUp" data-city="lugansk" tabindex="0" role="button"><div class="city-icon">🏛️</div><div class="city-name">Луганск</div><div class="city-count" id="luganskCountCard">0 девушек</div></div>
-        <div class="city-card animate-fadeInUp" data-city="stakhanov" tabindex="0" role="button"><div class="city-icon">⛏️</div><div class="city-name">Стаханов</div><div class="city-count" id="stakhanovCountCard">0 девушек</div></div>
-    </div>
-</section>
-
-<div class="profile-modal" id="profileModal" role="dialog" aria-labelledby="modalName" aria-modal="true">
-    <div class="profile-modal-content">
-        <button class="modal-close" id="closeProfileModal" aria-label="Закрыть профиль">×</button>
-        <div class="profile-modal-body">
-            <div class="modal-images"><img src="" alt="" class="modal-image" id="modalImage" loading="lazy"></div>
-            <div class="modal-details">
-                <h2 class="modal-name" id="modalName"></h2>
-                <div class="modal-stats" id="modalStats"></div>
-                <p class="modal-description" id="modalDescription"></p>
-                <div class="additional-services" id="additionalServices"></div>
-                <div class="pricing-section">
-                    <h4>☀️ Днём</h4>
-                    <div class="pricing-grid">
-                        <div class="pricing-card pricing-card-day"><div class="pricing-card-header"><span class="pricing-icon">☀️</span><span class="pricing-duration">1 час</span></div><div class="pricing-row"><span class="pricing-label">Стоимость</span><span class="pricing-amount" id="priceDay1">15.000 ₽</span></div></div>
-                        <div class="pricing-card pricing-card-day"><div class="pricing-card-header"><span class="pricing-icon">☀️</span><span class="pricing-duration">2 часа</span></div><div class="pricing-row"><span class="pricing-label">Стоимость</span><span class="pricing-amount" id="priceDay2">30.000 ₽</span></div></div>
-                    </div>
-                    <h4>🌙 Ночью</h4>
-                    <div class="pricing-grid">
-                        <div class="pricing-card pricing-card-night"><div class="pricing-card-header"><span class="pricing-icon">🌕</span><span class="pricing-duration">Ночь</span></div><div class="pricing-row"><span class="pricing-label">Стоимость</span><span class="pricing-amount" id="priceNight">80.000 ₽</span></div></div>
-                    </div>
-                    <h4>🚗 Выезд</h4>
-                    <div class="pricing-grid">
-                        <div class="pricing-card pricing-card-trip"><div class="pricing-card-header"><span class="pricing-icon">🚗</span><span class="pricing-duration">от 2 часов</span></div><div class="pricing-row"><span class="pricing-label">Стоимость</span><span class="pricing-amount" id="priceTrip">40.000 ₽</span></div></div>
-                        <div class="pricing-card pricing-card-trip"><div class="pricing-card-header"><span class="pricing-icon">🌕</span><span class="pricing-duration">Ночь</span></div><div class="pricing-row"><span class="pricing-label">Стоимость</span><span class="pricing-amount" id="priceTripNight">100.000 ₽</span></div></div>
-                    </div>
-                    <p class="pricing-note">* Дорога на выезде включена в стоимость</p>
-                </div>
-                <button class="btn btn-order" id="modalOrderBtn">📞 Заказать Встречу</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- [Остальной контент сайта без изменений...] -->
+<!-- Для краткости здесь сокращено, в полной версии вставь весь свой остальной HTML -->
 
 <footer class="footer" role="contentinfo">
     <div class="age-warning" id="footerWarning">🔞 18+ Только для совершеннолетних</div>
@@ -765,419 +564,66 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </footer>
 
 <script>
-const Security = {
-    escapeHtml: function(text) { const div = document.createElement('div'); div.textContent = String(text); return div.innerHTML; },
-    sanitizeInput: function(input) { return String(input).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').trim(); },
-    simpleHash: function(str) { let hash = 0; for (let i = 0; i < str.length; i++) { const char = str.charCodeAt(i); hash = ((hash << 5) - hash) + char; hash |= 0; } return 'h_' + Math.abs(hash).toString(36) + '_' + btoa(String(str.length)).slice(0, 8); },
-    validateUsername: function(username) { return /^[a-zA-Zа-яА-ЯёЁ0-9_]{3,30}$/.test(username); },
-    validatePassword: function(password) { return password.length >= 6; },
-    rateLimit: { _storage: {}, check: function(key, maxRequests, windowMs) { const now = Date.now(); if (!this._storage[key]) this._storage[key] = []; this._storage[key] = this._storage[key].filter(t => now - t < windowMs); if (this._storage[key].length >= maxRequests) return false; this._storage[key].push(now); return true; } },
-    csrf: { token: null, generate: function() { const arr = new Uint8Array(16); crypto.getRandomValues(arr); this.token = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join(''); return this.token; }, getToken: function() { if (!this.token) this.generate(); return this.token; } }
-};
+// [Весь твой существующий JS код...]
 
-const Toast = { container: null, init: function() { this.container = document.getElementById('toastContainer'); }, show: function(message, type = 'info', duration = 4000) { if (!this.container) this.init(); const toast = document.createElement('div'); toast.className = `toast ${type}`; const icons = { success: '✅', error: '❌', info: 'ℹ️' }; toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${Security.escapeHtml(message)}</span>`; this.container.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; toast.style.transition = 'all 0.3s ease'; setTimeout(() => toast.remove(), 300); }, duration); } };
-
-function acceptCookies() { localStorage.setItem('bg_cookiesAccepted', 'true'); document.getElementById('cookieBanner').classList.remove('show'); }
-function declineCookies() { localStorage.setItem('bg_cookiesAccepted', 'false'); document.getElementById('cookieBanner').classList.remove('show'); }
-function initCookieBanner() { const accepted = localStorage.getItem('bg_cookiesAccepted'); if (accepted !== 'true') { document.getElementById('cookieBanner').classList.add('show'); } }
-function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
-function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
-
-const SITE_TEXTS_DEFAULT = {
-    modelsTitle: 'Анкеты Девушек',
-    modelsSubtitle: 'Выберите идеальную спутницу',
-    citiesTitle: 'Города Присутствия',
-    citiesSubtitle: 'Наши девушки доступны в следующих городах',
-    botWelcome: 'Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?',
-    footerWarning: '🔞 18+ Только для совершеннолетних',
-    footerCopyright: '© 2026 BABYGIRL_LNR. Все услуги предоставляются исключительно лицам старше 18 лет.',
-    footerConfidentiality: 'Полная конфиденциальность гарантирована.'
-};
-
-function loadSiteTexts() {
-    const saved = DB.get('siteTexts');
-    const texts = saved ? { ...SITE_TEXTS_DEFAULT, ...saved } : { ...SITE_TEXTS_DEFAULT };
-    document.getElementById('modelsTitle').innerText = texts.modelsTitle;
-    document.getElementById('modelsSubtitle').innerText = texts.modelsSubtitle;
-    document.getElementById('citiesTitle').innerText = texts.citiesTitle;
-    document.getElementById('citiesSubtitle').innerText = texts.citiesSubtitle;
-    document.getElementById('footerWarning').innerText = texts.footerWarning;
-    document.getElementById('footerCopyright').innerText = texts.footerCopyright;
-    document.getElementById('footerConfidentiality').innerText = texts.footerConfidentiality;
-    window.botWelcomeMessage = texts.botWelcome;
-    return texts;
-}
-
-function saveSiteTexts() {
-    const newTexts = {
-        modelsTitle: document.getElementById('textModelsTitle').value.trim(),
-        modelsSubtitle: document.getElementById('textModelsSubtitle').value.trim(),
-        citiesTitle: document.getElementById('textCitiesTitle').value.trim(),
-        citiesSubtitle: document.getElementById('textCitiesSubtitle').value.trim(),
-        botWelcome: document.getElementById('textBotWelcome').value.trim(),
-        footerWarning: document.getElementById('textFooterWarning').value.trim(),
-        footerCopyright: document.getElementById('textFooterCopyright').value.trim(),
-        footerConfidentiality: document.getElementById('textFooterConfidentiality').value.trim()
-    };
-    if (!newTexts.modelsTitle || !newTexts.modelsSubtitle) { Toast.show('Заполните заголовки разделов', 'error'); return; }
-    DB.set('siteTexts', newTexts);
-    loadSiteTexts();
-    Toast.show('Тексты обновлены', 'success');
-}
-
-function loadSitePhone() {
-    const phone = DB.get('sitePhone') || '+7 (999) 123-45-67';
-    document.getElementById('phoneNumberSpan').innerText = phone;
-    document.getElementById('sitePhoneInput').value = phone;
-}
-function saveSitePhone() {
-    const input = document.getElementById('sitePhoneInput');
-    let newPhone = input.value.trim();
-    if (!newPhone) { Toast.show('Введите номер телефона', 'error'); return; }
-    DB.set('sitePhone', newPhone);
-    loadSitePhone();
-    Toast.show('Номер телефона обновлён', 'success');
-}
-
-function populateSettingsForm() {
-    const texts = DB.get('siteTexts') || SITE_TEXTS_DEFAULT;
-    document.getElementById('textModelsTitle').value = texts.modelsTitle || '';
-    document.getElementById('textModelsSubtitle').value = texts.modelsSubtitle || '';
-    document.getElementById('textCitiesTitle').value = texts.citiesTitle || '';
-    document.getElementById('textCitiesSubtitle').value = texts.citiesSubtitle || '';
-    document.getElementById('textBotWelcome').value = texts.botWelcome || '';
-    document.getElementById('textFooterWarning').value = texts.footerWarning || '';
-    document.getElementById('textFooterCopyright').value = texts.footerCopyright || '';
-    document.getElementById('textFooterConfidentiality').value = texts.footerConfidentiality || '';
-    loadSitePhone();
-}
-
-const DB = {
-    get: function(key) { try { const item = localStorage.getItem('bg_' + key); return item ? JSON.parse(item) : null; } catch(e) { return null; } },
-    set: function(key, val) { try { localStorage.setItem('bg_' + key, JSON.stringify(val)); } catch(e) { Toast.show('Ошибка сохранения', 'error'); } },
-    init: function() {
-        if (!DB.get('profiles')) {
-            DB.set('profiles', [
-                { id:1, name:'Алина', age:22, height:172, weight:54, bust:'3', city:'pervomaisk', cityName:'Первомайск', description:'Элегантная и утонченная девушка с прекрасным чувством стиля.', price:15000, images:[''],
-                  services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}],
-                  additionalServices:['GFE (Girlfriend Experience)','Французский поцелуй','Массаж эротический'] },
-                { id:2, name:'Виктория', age:24, height:168, weight:52, bust:'2', city:'lugansk', cityName:'Луганск', description:'Яркая и энергичная натура. Обожаю активный отдых.', price:18000, images:[''],
-                  services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}],
-                  additionalServices:['Стриптиз','Глубокий минет','Окончание на лицо'] },
-                { id:3, name:'Екатерина', age:21, height:175, weight:56, bust:'3', city:'stakhanov', cityName:'Стаханов', description:'Нежная и романтичная особа. Ценю искренность.', price:20000, images:[''],
-                  services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}],
-                  additionalServices:['Ролевые игры','БДСМ (лёгкий)','Тантра'] }
-            ]);
-        }
-        if (!DB.get('users')) DB.set('users', []);
-        if (!DB.get('chats')) DB.set('chats', {});
-        if (!DB.get('currentUser')) DB.set('currentUser', null);
-        if (!DB.get('sitePhone')) DB.set('sitePhone', '+7 (999) 123-45-67');
-        if (!DB.get('siteTexts')) DB.set('siteTexts', SITE_TEXTS_DEFAULT);
-    }
-};
-
-const OPERATOR_CREDENTIALS = [
-    { username: "operator_master", hash: Security.simpleHash("B@byG1rl!2025#Secure") },
-    { username: "operator_elite", hash: Security.simpleHash("Elite$Pass2025%Admin") }
-];
-
-let currentUser = DB.get('currentUser');
-let profiles = DB.get('profiles') || [];
-let cities = [
-    { id:'pervomaisk', name:'Первомайск', icon:'🏙️', count:0 },
-    { id:'lugansk', name:'Луганск', icon:'🏛️', count:0 },
-    { id:'stakhanov', name:'Стаханов', icon:'⛏️', count:0 }
-];
-let currentModalProfile = null;
-let activeOperatorChatUser = null;
-let pendingChatAction = false;
-let pendingOrderProfile = null;
-let cityDropdownOpen = false;
-
-function initAgeVerification() {
-    const modal = document.getElementById('ageModal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-}
-function confirmAge() {
-    const modal = document.getElementById('ageModal');
-    if (modal) {
-        modal.classList.add('hidden');
-        document.body.style.overflow = '';
-    }
-    Toast.show('Добро пожаловать!', 'success');
-    checkAuth();
-}
-function exitSite() {
-    window.location.href = 'https://www.google.com';
-}
-
-function checkAuth() {
-    currentUser = DB.get('currentUser');
-    const menu = document.getElementById('userMenu');
-    const phone = DB.get('sitePhone') || '+7 (999) 123-45-67';
-    if (currentUser) {
-        const initial = currentUser.username.charAt(0).toUpperCase();
-        const isOp = currentUser.role === 'operator';
-        const phoneHtml = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div>`;
-        menu.innerHTML = phoneHtml + `
-            <div class="user-avatar" onclick="toggleUserMenu()" title="${Security.escapeHtml(currentUser.username)}" tabindex="0" role="button" aria-label="Меню">${initial}</div>
-            <div id="userDropdown" class="user-dropdown">
-                <div style="font-weight: 700; margin-bottom: 6px; font-size: 15px;">${Security.escapeHtml(currentUser.username)}</div>
-                <div style="font-size: 12px; color: var(--gray); margin-bottom: 14px;">${isOp ? '👨‍💻 Оператор' : '👤 Клиент'}</div>
-                ${isOp ? '<button class="user-dropdown-item" onclick="openAdminPanel()">📊 Панель оператора</button>' : ''}
-                <button class="user-dropdown-item" style="color: var(--danger);" onclick="logout()">🚪 Выйти</button>
-            </div>
-        `;
-        if (isOp) document.getElementById('operatorBtn').style.display = 'inline-flex';
-        else document.getElementById('operatorBtn').style.display = 'none';
-        if (pendingChatAction) { pendingChatAction = false; openChatSection(); }
-        if (pendingOrderProfile) { openProfileById(pendingOrderProfile); pendingOrderProfile = null; }
-    } else {
-        menu.innerHTML = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div><div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`;
-    }
-    loadSitePhone();
-}
-
-function toggleUserMenu() { const dd = document.getElementById('userDropdown'); if (dd) { const isShown = dd.classList.contains('show'); document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); if (!isShown) dd.classList.add('show'); } }
-document.addEventListener('click', function(e) { if (!e.target.closest('.user-menu')) document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); });
-
-function openAuthModal() { document.getElementById('authModal').classList.add('active'); document.getElementById('authUsername').focus(); }
-function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); document.getElementById('usernameError').classList.remove('show'); document.getElementById('passwordError').classList.remove('show'); document.getElementById('authUsername').classList.remove('invalid'); document.getElementById('authPassword').classList.remove('invalid'); document.getElementById('authNotice').classList.remove('show'); }
-
-function handleUnifiedAuth() {
-    const usernameInput = document.getElementById('authUsername');
-    const passwordInput = document.getElementById('authPassword');
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-    const usernameError = document.getElementById('usernameError');
-    const passwordError = document.getElementById('passwordError');
-    const notice = document.getElementById('authNotice');
-    const submitBtn = document.getElementById('authSubmitBtn');
-    usernameError.classList.remove('show'); passwordError.classList.remove('show'); usernameInput.classList.remove('invalid'); passwordInput.classList.remove('invalid'); notice.classList.remove('show');
-    let hasError = false;
-    if (!Security.validateUsername(username)) { usernameError.classList.add('show'); usernameInput.classList.add('invalid'); hasError = true; }
-    if (!Security.validatePassword(password)) { passwordError.classList.add('show'); passwordInput.classList.add('invalid'); hasError = true; }
-    if (hasError) return;
-    submitBtn.classList.add('loading'); submitBtn.textContent = ''; submitBtn.disabled = true;
-    setTimeout(function() {
-        submitBtn.classList.remove('loading'); submitBtn.textContent = 'Войти / Зарегистрироваться'; submitBtn.disabled = false;
-        const opHash = Security.simpleHash(password);
-        const operator = OPERATOR_CREDENTIALS.find(op => op.username === username && op.hash === opHash);
-        if (operator) {
-            DB.set('currentUser', { username: username, role: 'operator' });
-            closeAuthModal(); checkAuth(); openAdminPanel(); Toast.show('Добро пожаловать, оператор!', 'success');
-            return;
-        }
-        let users = DB.get('users') || [];
-        const userHash = Security.simpleHash(password);
-        let user = users.find(u => u.username === username);
-        if (user) {
-            if (user.hash !== userHash) { passwordError.textContent = 'Неверный пароль'; passwordError.classList.add('show'); passwordInput.classList.add('invalid'); return; }
-            if (user.role !== 'client') { Toast.show('Не клиентский аккаунт', 'error'); return; }
-        } else {
-            user = { username: username, hash: userHash, role: 'client', createdAt: new Date().toISOString() };
-            users.push(user); DB.set('users', users);
-            notice.textContent = '✅ Аккаунт создан! Добро пожаловать!'; notice.classList.add('show');
-        }
-        DB.set('currentUser', user);
-        checkAuth(); Toast.show('Добро пожаловать!', 'success');
-        setTimeout(closeAuthModal, 800);
-    }, 600);
-}
-
-function logout() { DB.set('currentUser', null); location.reload(); }
-
-function openChatSection() {
-    if (!currentUser) { pendingChatAction = true; openAuthModal(); return; }
-    document.getElementById('chat').classList.add('active'); 
-    document.getElementById('header').classList.add('chat-active');
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); 
-    document.querySelector('.nav-link[data-section="chat"]').classList.add('active');
-    renderChatMessages(); 
-    setTimeout(() => document.getElementById('chatInput').focus(), 300);
-}
-function closeChat() { 
-    document.getElementById('chat').classList.remove('active'); 
-    document.getElementById('header').classList.remove('chat-active'); 
-    document.querySelector('.nav-link[data-section="models"]').click(); 
-}
-
-function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username] ? chats[currentUser.username].messages : []; }
-function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot' }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
-function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { Toast.show('Войдите в аккаунт', 'info'); openAuthModal(); return; } const history = getChatHistory(); history.push({ text: Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false }); saveChatHistory(history); renderChatMessages(); if (isUser && /(оператор|менеджер|человек|живой|связаться|хочу заказать|заказать встречу)/i.test(text)) { const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { chats[currentUser.username].status = 'operator'; DB.set('chats', chats); setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000); } } }
-function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
-function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const reply = window.botWelcomeMessage || 'Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?'; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
-
-function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
-function logoutOperator() { if (confirm('Выйти из панели оператора?')) logout(); }
-function switchAdminTab(tab) {
-    const btn = event.target;
-    document.querySelectorAll('.admin-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-    btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
-    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
-    if (tab === 'chats') renderOperatorChatList();
-    if (tab === 'settings') populateSettingsForm();
-}
-function renderAdminProfiles() {
-    const list = document.getElementById('adminProfileList');
-    const profileList = DB.get('profiles') || [];
-    if (!profileList.length) { list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:20px;">Нет анкет.</p>'; return; }
-    list.innerHTML = profileList.map(p => `<div class="profile-list-item"><img src="${p.images && p.images[0] ? Security.escapeHtml(p.images[0]) : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2220%22%3E👤%3C/text%3E%3C/svg%3E'}" alt="${Security.escapeHtml(p.name)}" class="profile-thumb" loading="lazy"><div class="profile-info"><div class="profile-name-lg">${Security.escapeHtml(p.name)}</div><div class="profile-city-sm">${Security.escapeHtml(p.cityName)} • ${(p.price || 0).toLocaleString()} ₽</div></div><div class="profile-actions"><button class="btn btn-primary btn-small" onclick="openProfileEditor(${p.id})">✏️ Ред.</button></div></div>`).join('');
-}
-function openProfileEditor(id) {
-    const profileList = DB.get('profiles') || [];
-    const p = id ? profileList.find(x => x.id === id) : null;
-    document.getElementById('editProfileId').value = p ? p.id : '';
-    document.getElementById('editName').value = p ? p.name : '';
-    document.getElementById('editCity').value = p ? p.city : 'pervomaisk';
-    document.getElementById('editDescription').value = p ? p.description : '';
-    document.getElementById('editImage').value = p && p.images ? p.images[0] : '';
-    document.getElementById('editPrice').value = p ? p.price : '';
-    const services = p && p.services ? p.services : [];
-    document.getElementById('editPrice1h').value = services[0] ? services[0].price : 15000;
-    document.getElementById('editPrice2h').value = services[1] ? services[1].price : 30000;
-    document.getElementById('editPriceTrip').value = services[2] ? services[2].price : 40000;
-    document.getElementById('editPriceNight').value = services[3] ? services[3].price : 100000;
-    document.getElementById('editPriceTripNight').value = (services[4] && services[4].price) ? services[4].price : 100000;
-    document.getElementById('editAdditionalServices').value = p && p.additionalServices ? p.additionalServices.join(', ') : '';
-    const preview = document.getElementById('editImagePreview');
-    if (p && p.images && p.images[0]) { preview.src = p.images[0]; preview.style.display = 'block'; } else preview.style.display = 'none';
-    document.getElementById('deleteProfileBtn').style.display = p ? 'inline-flex' : 'none';
-    document.getElementById('profileEditor').classList.add('active');
-}
-function closeProfileEditor() { document.getElementById('profileEditor').classList.remove('active'); }
-function handleImageUpload(input) { if (input.files && input.files[0]) { const file = input.files[0]; if (file.size > 2 * 1024 * 1024) { Toast.show('Файл слишком большой (макс. 2 МБ)', 'error'); return; } if (!file.type.startsWith('image/')) { Toast.show('Можно загружать только изображения', 'error'); return; } const reader = new FileReader(); reader.onload = function(e) { document.getElementById('editImage').value = e.target.result; document.getElementById('editImagePreview').src = e.target.result; document.getElementById('editImagePreview').style.display = 'block'; }; reader.readAsDataURL(file); } }
-function saveProfile() {
-    const id = document.getElementById('editProfileId').value;
-    const name = Security.sanitizeInput(document.getElementById('editName').value);
-    const city = document.getElementById('editCity').value;
-    const desc = Security.sanitizeInput(document.getElementById('editDescription').value);
-    const img = Security.sanitizeInput(document.getElementById('editImage').value);
-    const price = parseInt(document.getElementById('editPrice').value) || 15000;
-    const price1h = parseInt(document.getElementById('editPrice1h').value) || 15000;
-    const price2h = parseInt(document.getElementById('editPrice2h').value) || 30000;
-    const priceTrip = parseInt(document.getElementById('editPriceTrip').value) || 40000;
-    const priceNight = parseInt(document.getElementById('editPriceNight').value) || 100000;
-    const priceTripNight = parseInt(document.getElementById('editPriceTripNight').value) || 100000;
-    const addServicesRaw = document.getElementById('editAdditionalServices').value;
-    const additional = addServicesRaw.split(',').map(s => Security.sanitizeInput(s.trim())).filter(s => s);
-    if (!name) { Toast.show('Введите имя', 'error'); return; }
-    let profileList = DB.get('profiles') || [];
-    const cityName = city === 'pervomaisk' ? 'Первомайск' : city === 'lugansk' ? 'Луганск' : 'Стаханов';
-    if (id) {
-        const idx = profileList.findIndex(p => p.id == id);
-        if (idx !== -1) { profileList[idx] = { ...profileList[idx], name, city, cityName, description: desc, images: [img], price, services: [ { name:'Встреча (1 час)', time:'60 минут', price:price1h }, { name:'Свидание (2 часа)', time:'120 минут', price:price2h }, { name:'Выезд (от 2 часов)', time:'от 120 минут', price:priceTrip }, { name:'Ночь', time:'12 часов', price:priceNight }, { name:'Выезд ночь', time:'12 часов', price:priceTripNight } ], additionalServices: additional }; Toast.show('Анкета обновлена', 'success'); }
-    } else {
-        const newId = profileList.length ? Math.max(...profileList.map(p => p.id)) + 1 : 1;
-        profileList.push({ id: newId, name, age: 20, height: 170, weight: 50, bust: '2', city, cityName, description: desc, price, images: [img], services: [ { name:'Встреча (1 час)', time:'60 минут', price:price1h }, { name:'Свидание (2 часа)', time:'120 минут', price:price2h }, { name:'Выезд (от 2 часов)', time:'от 120 минут', price:priceTrip }, { name:'Ночь', time:'12 часов', price:priceNight }, { name:'Выезд ночь', time:'12 часов', price:priceTripNight } ], additionalServices: additional });
-        Toast.show('Анкета создана', 'success');
-    }
-    DB.set('profiles', profileList);
-    profiles = profileList;
-    closeProfileEditor();
-    renderAdminProfiles();
-    renderModels('all');
-    updateCitiesCount();
-}
-function deleteProfile() {
-    const id = document.getElementById('editProfileId').value;
-    if (!confirm('Удалить анкету?')) return;
-    let profileList = DB.get('profiles').filter(p => p.id != id);
-    DB.set('profiles', profileList);
-    profiles = profileList;
-    closeProfileEditor();
-    renderAdminProfiles();
-    renderModels('all');
-    updateCitiesCount();
-    Toast.show('Анкета удалена', 'info');
-}
-function renderOperatorChatList() {
-    const list = document.getElementById('operatorChatList');
-    const chats = DB.get('chats') || {};
-    const users = Object.keys(chats);
-    if (!users.length) { list.innerHTML = '<div style="padding:20px;color:var(--gray);text-align:center;">Нет активных чатов</div>'; return; }
-    list.innerHTML = users.map(u => { const chat = chats[u]; const lastMsg = chat.messages.length ? chat.messages[chat.messages.length - 1] : null; const needsAttn = chat.status === 'operator' && lastMsg && lastMsg.isUser; const isActive = activeOperatorChatUser === u; return `<div class="chat-list-item ${needsAttn ? 'needs-attention' : ''} ${isActive ? 'active' : ''}" onclick="openOperatorChat('${Security.escapeHtml(u)}')" tabindex="0" role="button"><div class="chat-user-name">${Security.escapeHtml(u)} ${needsAttn ? '🔴' : ''}</div><div class="chat-preview"><span class="chat-last-msg">${lastMsg ? (lastMsg.isUser ? 'Клиент: ' : 'Оператор: ') + Security.escapeHtml(lastMsg.text.substring(0, 40)) : 'Нет сообщений'}</span><span>${lastMsg ? new Date(lastMsg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : ''}</span></div></div>`; }).join('');
-    const hasUnread = users.some(u => chats[u].status === 'operator' && chats[u].messages[chats[u].messages.length - 1] && chats[u].messages[chats[u].messages.length - 1].isUser);
-    document.getElementById('newChatBadge').style.display = hasUnread ? 'inline-block' : 'none';
-}
-function openOperatorChat(username) { activeOperatorChatUser = username; document.getElementById('operatorChatWindow').classList.add('show'); document.getElementById('opChatUserName').textContent = username; const chats = DB.get('chats'); if (chats[username]) { chats[username].status = 'operator'; DB.set('chats', chats); } renderOperatorChatMessages(username); renderOperatorChatList(); document.getElementById('opChatInput').focus(); }
-function closeOperatorChat() { activeOperatorChatUser = null; document.getElementById('operatorChatWindow').classList.remove('show'); renderOperatorChatList(); }
-function renderOperatorChatMessages(username) { const container = document.getElementById('opChatMessages'); const chats = DB.get('chats') || {}; const chat = chats[username]; if (!chat) return; container.innerHTML = chat.messages.map(msg => `<div class="chat-message-item ${msg.isUser ? 'user' : 'operator'}"><div class="message-avatar">${msg.isUser ? '👤' : '👨‍💼'}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); container.scrollTop = container.scrollHeight; }
-function sendOperatorMessage() { if (!activeOperatorChatUser) return; const input = document.getElementById('opChatInput'); const text = input.value.trim(); if (!text) return; if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } const chats = DB.get('chats') || {}; if (!chats[activeOperatorChatUser]) return; chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString() }); DB.set('chats', chats); input.value = ''; renderOperatorChatMessages(activeOperatorChatUser); renderOperatorChatList(); }
-
-function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
-function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
-function renderModels(filter) { profiles = DB.get('profiles') || []; const grid = document.getElementById('modelsGrid'); let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p></div>'; return; } let html = ''; for (let p of filtered) { const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; } grid.innerHTML = html; document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); }
-function openProfileByIdWithAuth(id) { if (!currentUser) { pendingOrderProfile = id; openAuthModal(); return; } openProfileById(id); }
-function openProfileById(id) { const idx = profiles.findIndex(p => p.id === id); if (idx >= 0) openProfile(idx); }
-function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год','года','лет']); document.getElementById('modalImage').src = (currentModalProfile.images && currentModalProfile.images[0]) ? currentModalProfile.images[0] : ''; document.getElementById('modalImage').alt = currentModalProfile.name; document.getElementById('modalName').textContent = currentModalProfile.name; document.getElementById('modalDescription').textContent = currentModalProfile.description; document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; document.getElementById('priceDay1').innerHTML = (currentModalProfile.services[0] ? currentModalProfile.services[0].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceDay2').innerHTML = (currentModalProfile.services[1] ? currentModalProfile.services[1].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceNight').innerHTML = (currentModalProfile.services[3] ? currentModalProfile.services[3].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTrip').innerHTML = (currentModalProfile.services[2] ? currentModalProfile.services[2].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services[4] ? currentModalProfile.services[4].price.toLocaleString() : '—') + ' ₽'; const addServDiv = document.getElementById('additionalServices'); if (currentModalProfile.additionalServices && currentModalProfile.additionalServices.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } document.getElementById('profileModal').classList.add('active'); }
-document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
-document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
-
-function setupEventListeners() {
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } });
-    });
-    document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); });
-    document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); });
-    document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
-    document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); });
-    document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } });
-}
-
-document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
-
-// ===== ИНИЦИАЛИЗАЦИЯ ВИДЕО-ФОНА =====
+// ===== ИНИЦИАЛИЗАЦИЯ ВИДЕО-ФОНА (с мобильной поддержкой) =====
 function initVideoBackground() {
     const video = document.getElementById('bgVideo');
     if (!video) return;
     
-    video.play().catch(e => {
-        console.log('Автоплей видео заблокирован:', e);
+    // Проверка экономии данных
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType));
+    
+    if (saveData) {
+        console.log('Экономия данных: видео-фон отключен');
         video.style.display = 'none';
+        return;
+    }
+    
+    // Попытка автовоспроизведения
+    const playPromise = video.play();
+    
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                console.log('Видео-фон воспроизводится');
+                video.removeAttribute('poster');
+            })
+            .catch(error => {
+                console.log('Автоплей заблокирован:', error);
+                
+                // Включаем видео по первому взаимодействию (тап/клик)
+                const enableVideo = () => {
+                    video.play().catch(() => {});
+                    document.removeEventListener('touchstart', enableVideo);
+                    document.removeEventListener('click', enableVideo);
+                    document.removeEventListener('scroll', enableVideo);
+                };
+                
+                document.addEventListener('touchstart', enableVideo, { once: true, passive: true });
+                document.addEventListener('click', enableVideo, { once: true });
+                document.addEventListener('scroll', enableVideo, { once: true, passive: true });
+            });
+    }
+    
+    // Пауза при сворачивании вкладки
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            video.pause();
+        } else {
+            video.play().catch(() => {});
+        }
     });
     
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) video.pause();
-        else video.play().catch(() => {});
+    // Перезапуск при повороте экрана
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => { video.play().catch(() => {}); }, 500);
     });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    DB.init();
-    Toast.init();
-    Security.csrf.generate();
-    initAgeVerification();
-    initCookieBanner();
-    loadSiteTexts();
-    checkAuth();
-    updateCitiesCount();
-    renderModels('all');
-    if (currentUser) renderChatMessages();
-    setupEventListeners();
-    if (currentUser) {
-        const chats = DB.get('chats');
-        const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome;
-        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) {
-            addMessageToHistory(welcomeMsg, false, true);
-        }
-    }
-    setInterval(function() {
-        if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) {
-            renderOperatorChatList();
-            if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser);
-        }
-    }, 10000);
-    
-    const confirmBtn = document.getElementById('confirmBtn');
-    const exitBtn = document.getElementById('exitBtn');
-    if (confirmBtn) confirmBtn.addEventListener('click', confirmAge);
-    if (exitBtn) exitBtn.addEventListener('click', exitSite);
+    // [Твой существующий код инициализации...]
     
     // Инициализация видео-фона
     initVideoBackground();
