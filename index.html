@@ -102,11 +102,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
-    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, padding 0.3s ease; 
-    transform: translateY(0); 
+    transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease; 
     overflow: visible;
-    /* Статичная шапка - не скрывается при скролле */
-    will-change: transform;
 }
 .header.scrolled { padding: 14px 40px; background: rgba(15,15,26,0.99); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
 .header.chat-active { background: rgba(15,15,26,0.99); }
@@ -141,21 +138,21 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .city-dropdown-name { font-weight: 600; flex: 1; font-size: 16px; }
 .city-dropdown-count { font-size: 13px; color: var(--gray); background: rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 20px; }
 
-.hero { position: relative; padding: 160px 40px 80px; text-align: center; background: radial-gradient(ellipse at top, rgba(233,30,99,0.12) 0%, transparent 50%); overflow: hidden; isolation: isolate; }
-.silhouette-dancer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.55; }
-.silhouette-dancer canvas { display: block; width: 100%; height: 100%; object-fit: cover; }
-.hero > * { position: relative; z-index: 1; }
-.hero-badge { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: rgba(233,30,99,0.1); border: 1px solid rgba(233,30,99,0.3); border-radius: 50px; font-size: 16px; color: var(--primary); margin-bottom: 30px; font-weight: 600; }
-.hero h1 { font-family: 'Great Vibes', cursive; font-size: 80px; margin-bottom: 20px; line-height: 1.2; }
-.hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero p { color: var(--gray); font-size: 19px; max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
-.hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-.payment-notice { margin-top: 30px; padding: 25px 35px; background: linear-gradient(145deg, rgba(233,30,99,0.08) 0%, rgba(156,39,176,0.08) 100%); border: 1px solid rgba(233,30,99,0.3); border-radius: 20px; display: inline-block; animation: glowPulse 2.5s infinite; }
-.payment-notice-text { font-size: 16px; color: var(--gray); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.payment-notice-highlight { font-family: 'Great Vibes', cursive; font-size: 32px; font-weight: 400; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: flex; align-items: center; justify-content: center; gap: 15px; }
+/* Убраны hero стили */
 
 .section { padding: 80px 40px; max-width: 1400px; margin: 0 auto; display: none; }
 .section.active { display: block; animation: fadeInUp 0.4s ease; }
+
+/* Секция моделей — первая под шапкой */
+#models.active {
+    padding-top: calc(140px + 60px); /* шапка + отступ */
+}
+@media (max-width: 768px) {
+    #models.active {
+        padding-top: calc(120px + 40px);
+    }
+}
+
 .section-header { text-align: center; margin-bottom: 60px; }
 .section-header h2 { font-family: 'Great Vibes', cursive; font-size: 64px; margin-bottom: 15px; }
 .section-header p { color: var(--gray); font-size: 18px; }
@@ -381,14 +378,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         opacity: 1 !important;
         display: flex !important;
         min-height: auto !important;
-        /* Запрещаем скрытие шапки */
         will-change: auto !important;
-    }
-    
-    /* Убираем анимацию скрытия на мобильных */
-    .header.hidden {
-        transform: translateY(0) !important;
-        opacity: 1 !important;
     }
     
     .header.scrolled {
@@ -396,16 +386,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         background: rgba(15,15,26,0.99) !important;
     }
     
-    .logo { 
-        order: 1; 
-        flex-shrink: 0;
-    }
-    
-    .user-menu { 
-        order: 2; 
-        gap: 10px;
-        flex-shrink: 0;
-    }
+    .logo { order: 1; flex-shrink: 0; }
+    .user-menu { order: 2; gap: 10px; flex-shrink: 0; }
     
     .nav-container {
         order: 3;
@@ -433,141 +415,39 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         white-space: nowrap;
     }
     
-    .header-phone { 
-        font-size: 10px; 
-        padding: 3px 8px;
-    }
+    .header-phone { font-size: 10px; padding: 3px 8px; }
+    .user-avatar { width: 34px; height: 34px; font-size: 14px; }
     
-    .user-avatar { 
-        width: 34px; 
-        height: 34px; 
-        font-size: 14px;
-    }
+    .logo-animation-wrapper { min-height: 42px; gap: 8px; padding: 2px 0; }
+    .heart-svg { width: 38px; height: 38px; }
+    .logo-text-reveal { font-size: 26px; }
     
-    .logo-animation-wrapper { 
-        min-height: 42px; 
-        gap: 8px; 
-        padding: 2px 0;
-    }
+    .section { padding: 60px 20px; }
     
-    .heart-svg { 
-        width: 38px; 
-        height: 38px; 
-    }
+    .models-grid, .cities-grid { grid-template-columns: 1fr; }
     
-    .logo-text-reveal { 
-        font-size: 26px; 
-    }
+    .profile-modal-body { grid-template-columns: 1fr; }
+    .modal-images { height: 350px; }
+    .modal-details { padding: 25px; }
     
-    .hero { 
-        padding: 120px 20px 60px;
-    }
+    .chat-container { height: 100vh; height: 100dvh; }
+    .chat-header-custom { padding: 12px 16px; }
+    .chat-messages { padding: 16px; }
+    .chat-input-container { padding: 12px; }
+    .chat-input-wrapper { gap: 10px; }
+    .chat-input { padding: 12px 16px; font-size: 15px; }
+    .chat-send { width: 48px; height: 48px; font-size: 20px; }
+    .chat-message-item { max-width: 90%; }
+    .chat-bubble { padding: 10px 14px; font-size: 14px; }
+    .message-avatar { width: 34px; height: 34px; font-size: 14px; }
     
-    .hero h1 { 
-        font-size: 42px; 
-    }
+    .admin-content { padding: 20px; }
+    .age-content { padding: 35px 25px; }
+    .age-title { font-size: 32px; }
+    .auth-content { padding: 30px 20px; }
     
-    .section { 
-        padding: 60px 20px; 
-    }
-    
-    .models-grid, .cities-grid { 
-        grid-template-columns: 1fr; 
-    }
-    
-    .profile-modal-body { 
-        grid-template-columns: 1fr; 
-    }
-    
-    .modal-images { 
-        height: 350px; 
-    }
-    
-    .modal-details { 
-        padding: 25px; 
-    }
-    
-    .chat-container { 
-        height: 100vh; 
-        height: 100dvh; 
-    }
-    
-    .chat-header-custom { 
-        padding: 12px 16px; 
-    }
-    
-    .chat-messages { 
-        padding: 16px; 
-    }
-    
-    .chat-input-container { 
-        padding: 12px; 
-    }
-    
-    .chat-input-wrapper { 
-        gap: 10px; 
-    }
-    
-    .chat-input { 
-        padding: 12px 16px; 
-        font-size: 15px; 
-    }
-    
-    .chat-send { 
-        width: 48px; 
-        height: 48px; 
-        font-size: 20px; 
-    }
-    
-    .chat-message-item { 
-        max-width: 90%; 
-    }
-    
-    .chat-bubble { 
-        padding: 10px 14px; 
-        font-size: 14px; 
-    }
-    
-    .message-avatar { 
-        width: 34px; 
-        height: 34px; 
-        font-size: 14px; 
-    }
-    
-    .payment-notice-highlight { 
-        font-size: 24px; 
-    }
-    
-    .admin-content { 
-        padding: 20px; 
-    }
-    
-    .age-content { 
-        padding: 35px 25px; 
-    }
-    
-    .age-title { 
-        font-size: 32px; 
-    }
-    
-    .auth-content { 
-        padding: 30px 20px; 
-    }
-    
-    .cookie-banner { 
-        flex-direction: column; 
-        text-align: center; 
-        padding: 20px; 
-    }
-    
-    .cookie-buttons { 
-        justify-content: center; 
-        width: 100%; 
-    }
-    
-    .silhouette-dancer { 
-        opacity: 0.35; 
-    }
+    .cookie-banner { flex-direction: column; text-align: center; padding: 20px; }
+    .cookie-buttons { justify-content: center; width: 100%; }
     
     .city-dropdown {
         position: fixed;
@@ -580,54 +460,17 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         max-height: 60vh;
         overflow-y: auto;
     }
-    
-    .city-dropdown.active {
-        transform: none;
-    }
+    .city-dropdown.active { transform: none; }
 }
 
 @media (max-width: 480px) {
-    .header {
-        padding: 8px 10px !important;
-    }
-    
-    .hero h1 { 
-        font-size: 36px; 
-    }
-    
-    .hero p { 
-        font-size: 15px; 
-    }
-    
-    .btn { 
-        padding: 14px 28px; 
-        font-size: 15px; 
-    }
-    
-    .model-info { 
-        padding: 18px; 
-    }
-    
-    .modal-name { 
-        font-size: 36px; 
-    }
-    
-    .silhouette-dancer { 
-        opacity: 0.3; 
-    }
-    
-    .logo-text-reveal {
-        font-size: 22px;
-    }
-    
-    .heart-svg {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .nav-links a {
-        font-size: 12px;
-    }
+    .header { padding: 8px 10px !important; }
+    .btn { padding: 14px 28px; font-size: 15px; }
+    .model-info { padding: 18px; }
+    .modal-name { font-size: 36px; }
+    .logo-text-reveal { font-size: 22px; }
+    .heart-svg { width: 32px; height: 32px; }
+    .nav-links a { font-size: 12px; }
 }
 
 ::-webkit-scrollbar { width: 8px; }
@@ -794,7 +637,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </div>
 
 <header class="header" id="header" role="banner">
-    <a href="#home" class="logo animate-slideInLeft" aria-label="На главную"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal">BABYGIRL_LNR</span></div></a>
+    <a href="#models" class="logo animate-slideInLeft" aria-label="На главную"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal">BABYGIRL_LNR</span></div></a>
     <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
         <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
         <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
@@ -816,21 +659,20 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     </div>
 </header>
 
-<section class="hero" id="home" aria-label="Приветствие">
-    <div class="silhouette-dancer">
-        <canvas id="dancerCanvas" width="800" height="600" style="width:100%; height:100%; display:block;"></canvas>
+<!-- HERO УБРАН -->
+
+<section class="section active" id="models" aria-label="Анкеты моделей" role="region">
+    <div class="section-header">
+        <h2 class="animate-fadeInUp">Анкеты Девушек</h2>
+        <p class="animate-fadeInUp">Выберите идеальную спутницу</p>
     </div>
-    <div class="hero-badge animate-fadeInUp" aria-label="Возрастное ограничение">🔞 18+ Интимные услуги для взрослых</div>
-    <h1 class="animate-fadeInUp">Элитные <span class="animate-pulse">Девушки</span> Вашего Города</h1>
-    <p class="animate-fadeInUp">Индивидуальные встречи с роскошными моделями. Полная конфиденциальность и высокий сервис.</p>
-    <div class="hero-buttons animate-fadeInUp">
-        <a href="#models" class="btn btn-primary" id="viewProfilesBtn">🔥 Смотреть Анкеты</a>
-        <a href="#chat" class="btn btn-secondary nav-link-btn" data-section="chat">💬 Консультация</a>
+    <div class="filters-bar" role="group" aria-label="Фильтр по городу">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">Все Города</button>
+        <button class="filter-btn" data-filter="pervomaisk" aria-pressed="false">Первомайск</button>
+        <button class="filter-btn" data-filter="lugansk" aria-pressed="false">Луганск</button>
+        <button class="filter-btn" data-filter="stakhanov" aria-pressed="false">Стаханов</button>
     </div>
-    <div class="payment-notice">
-        <div class="payment-notice-text">💳 Удобная форма оплаты</div>
-        <div class="payment-notice-highlight"><span class="payment-icon">💰</span>Оплата наличными в руки<span class="payment-icon">💰</span></div>
-    </div>
+    <div class="models-grid" id="modelsGrid"></div>
 </section>
 
 <section class="section" id="chat" aria-label="Чат поддержки" role="region">
@@ -854,20 +696,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
             </div>
         </div>
     </div>
-</section>
-
-<section class="section active" id="models" aria-label="Анкеты моделей" role="region">
-    <div class="section-header">
-        <h2 class="animate-fadeInUp">Анкеты Девушек</h2>
-        <p class="animate-fadeInUp">Выберите идеальную спутницу</p>
-    </div>
-    <div class="filters-bar" role="group" aria-label="Фильтр по городу">
-        <button class="filter-btn active" data-filter="all" aria-pressed="true">Все Города</button>
-        <button class="filter-btn" data-filter="pervomaisk" aria-pressed="false">Первомайск</button>
-        <button class="filter-btn" data-filter="lugansk" aria-pressed="false">Луганск</button>
-        <button class="filter-btn" data-filter="stakhanov" aria-pressed="false">Стаханов</button>
-    </div>
-    <div class="models-grid" id="modelsGrid"></div>
 </section>
 
 <section class="section" id="city" aria-label="Города присутствия" role="region">
@@ -1226,7 +1054,6 @@ function setupEventListeners() {
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } });
     });
-    document.getElementById('viewProfilesBtn')?.addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.nav-link[data-section="models"]').click(); });
     document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); });
     document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); });
     document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
@@ -1236,111 +1063,6 @@ function setupEventListeners() {
 }
 
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
-
-// Dancer canvas animation
-function initDancerAnimation() {
-    const canvas = document.getElementById('dancerCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let time = 0;
-    
-    function resizeCanvas() {
-        canvas.width = canvas.offsetWidth * 2;
-        canvas.height = canvas.offsetHeight * 2;
-        ctx.scale(2, 2);
-    }
-    
-    function drawDancer() {
-        const w = canvas.offsetWidth;
-        const h = canvas.offsetHeight;
-        ctx.clearRect(0, 0, w, h);
-        
-        time += 0.015;
-        
-        // Silhouette parameters
-        const cx = w / 2;
-        const baseY = h * 0.9;
-        const sway = Math.sin(time * 0.8) * 15;
-        const armSway = Math.sin(time * 1.2) * 20;
-        
-        ctx.save();
-        ctx.translate(sway * 0.3, 0);
-        
-        // Body
-        ctx.fillStyle = 'rgba(233, 30, 99, 0.08)';
-        ctx.strokeStyle = 'rgba(233, 30, 99, 0.15)';
-        ctx.lineWidth = 2;
-        
-        // Head
-        ctx.beginPath();
-        ctx.arc(cx, h * 0.15 + Math.sin(time) * 5, 25, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-        
-        // Neck
-        ctx.beginPath();
-        ctx.moveTo(cx, h * 0.15 + 25 + Math.sin(time) * 5);
-        ctx.lineTo(cx, h * 0.22 + Math.sin(time) * 5);
-        ctx.stroke();
-        
-        // Torso
-        ctx.beginPath();
-        ctx.moveTo(cx - 20, h * 0.22 + Math.sin(time) * 5);
-        ctx.quadraticCurveTo(cx - 30 + Math.sin(time * 0.5) * 5, h * 0.5, cx - 15, h * 0.65);
-        ctx.lineTo(cx + 15, h * 0.65);
-        ctx.quadraticCurveTo(cx + 30 - Math.sin(time * 0.5) * 5, h * 0.5, cx + 20, h * 0.22 + Math.sin(time) * 5);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        
-        // Left arm
-        ctx.beginPath();
-        ctx.moveTo(cx - 20, h * 0.25 + Math.sin(time) * 5);
-        ctx.quadraticCurveTo(cx - 60 + armSway, h * 0.35, cx - 80 + armSway * 1.5, h * 0.2 + Math.sin(time * 1.5) * 10);
-        ctx.stroke();
-        
-        // Right arm
-        ctx.beginPath();
-        ctx.moveTo(cx + 20, h * 0.25 + Math.sin(time) * 5);
-        ctx.quadraticCurveTo(cx + 60 - armSway, h * 0.35, cx + 80 - armSway * 1.5, h * 0.25 + Math.cos(time * 1.5) * 10);
-        ctx.stroke();
-        
-        // Left leg
-        ctx.beginPath();
-        ctx.moveTo(cx - 15, h * 0.65);
-        ctx.quadraticCurveTo(cx - 25, h * 0.78, cx - 20, h * 0.9);
-        ctx.lineTo(cx - 10, h * 0.9);
-        ctx.stroke();
-        
-        // Right leg
-        ctx.beginPath();
-        ctx.moveTo(cx + 15, h * 0.65);
-        ctx.quadraticCurveTo(cx + 25, h * 0.78, cx + 30 + Math.sin(time * 0.8) * 10, h * 0.9);
-        ctx.lineTo(cx + 20 + Math.sin(time * 0.8) * 10, h * 0.9);
-        ctx.stroke();
-        
-        // Skirt/flowing dress effect
-        ctx.beginPath();
-        ctx.moveTo(cx - 15, h * 0.55);
-        for (let i = 0; i <= 20; i++) {
-            const t = i / 20;
-            const x = cx - 15 + t * 30;
-            const y = h * 0.55 + Math.sin(time * 2 + i * 0.5) * 15 + t * h * 0.25;
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = 'rgba(156, 39, 176, 0.1)';
-        ctx.stroke();
-        
-        ctx.restore();
-        
-        requestAnimationFrame(drawDancer);
-    }
-    
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    drawDancer();
-}
 
 document.addEventListener('DOMContentLoaded', function() {
     DB.init();
@@ -1353,7 +1075,6 @@ document.addEventListener('DOMContentLoaded', function() {
     renderModels('all');
     if (currentUser) renderChatMessages();
     setupEventListeners();
-    initDancerAnimation();
     if (currentUser) {
         const chats = DB.get('chats');
         if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) {
