@@ -87,7 +87,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== HEADER (СТАТИЧНАЯ НА ТЕЛЕФОНЕ) ===== */
+/* ===== ШАПКА СТАТИЧЕСКАЯ (ВСЕГДА ФИКСИРОВАНА) ===== */
 .header { 
     position: fixed; 
     top: 0; 
@@ -102,10 +102,11 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
-    transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease; 
+    /* Убираем transition для padding и background, чтобы шапка не менялась при скролле */
+    transition: none;
     overflow: visible;
 }
-.header.scrolled { padding: 14px 40px; background: rgba(15,15,26,0.99); border-bottom: 1px solid rgba(233,30,99,0.3); box-shadow: 0 4px 30px rgba(233,30,99,0.15); }
+/* Удаляем класс .scrolled — шапка не меняет свой вид при прокрутке */
 .header.chat-active { background: rgba(15,15,26,0.99); }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
 .logo-animation-wrapper { display: flex; align-items: center; gap: 15px; min-height: 70px; padding: 5px 0; }
@@ -141,6 +142,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .section { padding: 80px 40px; max-width: 1400px; margin: 0 auto; display: none; }
 .section.active { display: block; animation: fadeInUp 0.4s ease; }
 
+/* Отступ для первой секции, чтобы контент не перекрывался фиксированной шапкой */
 #models.active { padding-top: calc(140px + 60px); }
 @media (max-width: 768px) { #models.active { padding-top: calc(120px + 40px); } }
 
@@ -347,8 +349,29 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 }
 
 @media (max-width: 768px) {
-    .header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 12px !important; flex-wrap: wrap !important; gap: 8px !important; align-items: center !important; justify-content: space-between !important; background: rgba(15,15,26,0.98) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(233,30,99,0.3) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; z-index: 1000 !important; transform: translateY(0) !important; opacity: 1 !important; display: flex !important; min-height: auto !important; will-change: auto !important; }
-    .header.scrolled { padding: 8px 12px !important; background: rgba(15,15,26,0.99) !important; }
+    .header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        padding: 10px 12px !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        background: rgba(15,15,26,0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-bottom: 1px solid rgba(233,30,99,0.3) !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+        z-index: 1000 !important;
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+        display: flex !important;
+        min-height: auto !important;
+        will-change: auto !important;
+    }
+    /* Убираем любые изменения при скролле на мобильных */
     .logo { order: 1; flex-shrink: 0; }
     .user-menu { order: 2; gap: 10px; flex-shrink: 0; }
     .nav-container { order: 3; width: 100%; justify-content: center; margin-top: 4px; padding-bottom: 2px; }
@@ -722,7 +745,6 @@ function initCookieBanner() { const accepted = localStorage.getItem('bg_cookiesA
 function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
 function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
 
-// === Управление текстами сайта (оглавление) ===
 const SITE_TEXTS_DEFAULT = {
     modelsTitle: 'Анкеты Девушек',
     modelsSubtitle: 'Выберите идеальную спутницу',
@@ -744,7 +766,6 @@ function loadSiteTexts() {
     document.getElementById('footerWarning').innerText = texts.footerWarning;
     document.getElementById('footerCopyright').innerText = texts.footerCopyright;
     document.getElementById('footerConfidentiality').innerText = texts.footerConfidentiality;
-    // Сохраняем приветствие бота для использования в чате
     window.botWelcomeMessage = texts.botWelcome;
     return texts;
 }
@@ -762,7 +783,7 @@ function saveSiteTexts() {
     };
     if (!newTexts.modelsTitle || !newTexts.modelsSubtitle) { Toast.show('Заполните заголовки разделов', 'error'); return; }
     DB.set('siteTexts', newTexts);
-    loadSiteTexts(); // обновить на странице
+    loadSiteTexts();
     Toast.show('Тексты обновлены', 'success');
 }
 
@@ -780,7 +801,6 @@ function saveSitePhone() {
     Toast.show('Номер телефона обновлён', 'success');
 }
 
-// Заполнение полей в админке при открытии вкладки настроек
 function populateSettingsForm() {
     const texts = DB.get('siteTexts') || SITE_TEXTS_DEFAULT;
     document.getElementById('textModelsTitle').value = texts.modelsTitle || '';
@@ -794,7 +814,6 @@ function populateSettingsForm() {
     loadSitePhone();
 }
 
-// === DB и прочее ===
 const DB = {
     get: function(key) { try { const item = localStorage.getItem('bg_' + key); return item ? JSON.parse(item) : null; } catch(e) { return null; } },
     set: function(key, val) { try { localStorage.setItem('bg_' + key, JSON.stringify(val)); } catch(e) { Toast.show('Ошибка сохранения', 'error'); } },
@@ -953,7 +972,7 @@ function getChatHistory() { if (!currentUser) return []; const chats = DB.get('c
 function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot' }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
 function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { Toast.show('Войдите в аккаунт', 'info'); openAuthModal(); return; } const history = getChatHistory(); history.push({ text: Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false }); saveChatHistory(history); renderChatMessages(); if (isUser && /(оператор|менеджер|человек|живой|связаться|хочу заказать|заказать встречу)/i.test(text)) { const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { chats[currentUser.username].status = 'operator'; DB.set('chats', chats); setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000); } } }
 function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
-function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const replies = ['Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?', 'Отличный выбор! 🎯 Сейчас переключу на оператора.', 'Здравствуйте! ✨ Подберу спутницу. Что вас интересует?', 'Спасибо за обращение! Оператор ответит в ближайшее время.', 'Хорошо! Напишите ваш город, и я покажу доступные анкеты.']; const reply = window.botWelcomeMessage || replies[0]; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
+function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const reply = window.botWelcomeMessage || 'Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?'; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
 
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
 function logoutOperator() { if (confirm('Выйти из панели оператора?')) logout(); }
@@ -1071,7 +1090,7 @@ function setupEventListeners() {
     document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
     document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); });
     document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } });
-    window.addEventListener('scroll', () => { const header = document.getElementById('header'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); });
+    // Удаляем обработчик, который добавлял класс .scrolled — шапка больше не меняется при скролле
 }
 
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
@@ -1082,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Security.csrf.generate();
     initAgeVerification();
     initCookieBanner();
-    loadSiteTexts(); // загружаем тексты в DOM
+    loadSiteTexts();
     checkAuth();
     updateCitiesCount();
     renderModels('all');
