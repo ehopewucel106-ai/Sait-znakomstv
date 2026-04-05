@@ -7,14 +7,10 @@
 <meta name="robots" content="index, follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<!-- Убрал X-Frame-Options и X-XSS-Protection из meta, так как это вызывает ошибки в современных браузерах (нужно настраивать на сервере) -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src 'self' https: data: blob:; connect-src 'self';">
-
-<!-- Мета-теги для мобильных -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
-
 <title>BABYGIRL_LNR - Элитные Услуги 18+</title>
 <link href="https://cdn.jsdelivr.net/npm/fontsource-great-vibes@5.0.0/index.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/fontsource-montserrat@5.0.0/index.css" rel="stylesheet">
@@ -42,7 +38,7 @@
     --cookie-border: #e91e63;
 }
 
-/* ===== ВИДЕО-ФОН (с поддержкой мобильных) ===== */
+/* ===== ВИДЕО-ФОН (улучшенная видимость) ===== */
 .video-bg {
     position: fixed;
     top: 0;
@@ -54,6 +50,8 @@
     pointer-events: none;
     transform: translateZ(0);
     will-change: transform;
+    /* Делаем видео ярче и насыщеннее */
+    filter: brightness(1.15) contrast(1.1) saturate(1.1);
 }
 
 .video-overlay {
@@ -62,16 +60,22 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(15,15,26,0.92) 0%, rgba(26,26,46,0.88) 100%);
+    /* Лёгкое затемнение для читаемости текста */
+    background: linear-gradient(135deg, rgba(15,15,26,0.35) 0%, rgba(26,26,46,0.3) 100%);
     z-index: -2;
     pointer-events: none;
 }
 
 /* Мобильная оптимизация */
 @media (max-width: 768px) {
-    .video-bg { object-position: center; }
+    .video-bg { 
+        object-position: center;
+        /* На мобильных видео ещё ярче */
+        filter: brightness(1.2) contrast(1.15);
+    }
     .video-overlay {
-        background: linear-gradient(135deg, rgba(15,15,26,0.95) 0%, rgba(26,26,46,0.92) 100%);
+        /* Ещё меньше затемнения на мобильных */
+        background: linear-gradient(135deg, rgba(15,15,26,0.25) 0%, rgba(26,26,46,0.2) 100%);
     }
 }
 
@@ -450,7 +454,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </head>
 <body>
 
-<!-- ===== ВИДЕО-ФОН ===== -->
+<!-- ===== ВИДЕО-ФОН (улучшенная видимость) ===== -->
 <video id="bgVideo" class="video-bg" autoplay muted loop playsinline webkit-playsinline aria-hidden="true" preload="auto">
     <source src="video/bg.mp4" type="video/mp4">
 </video>
