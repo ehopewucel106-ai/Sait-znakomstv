@@ -278,7 +278,7 @@ body {
 <!-- Toast Container -->
 <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-<!-- Age Verification Modal -->
+<!-- Age Verification Modal (всегда показывается при загрузке, не запоминается) -->
 <div class="age-modal" id="ageModal" role="dialog" aria-labelledby="ageTitle" aria-modal="true">
     <div class="age-content">
         <div class="age-icon"><span class="age-number">18</span><span class="age-plus">+</span></div>
@@ -581,7 +581,7 @@ body {
 </footer>
 
 <script>
-// ===== ПОЛНЫЙ JS КОД (без изменений логики, только адаптация стилей уже выполнена) =====
+// ===== ПОЛНЫЙ JS КОД с исправленным age-модалом (всегда показывается) =====
 const Security = {
     escapeHtml: function(text) { const div = document.createElement('div'); div.textContent = String(text); return div.innerHTML; },
     sanitizeInput: function(input) { return String(input).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').trim(); },
@@ -650,29 +650,26 @@ function saveSitePhone() {
     loadSitePhone();
     Toast.show('Номер телефона обновлён', 'success');
 }
+
+// Функция age-модала: всегда показываем, не запоминаем в localStorage
 function initAgeVerification() {
-    const isVerified = localStorage.getItem('bg_ageVerified');
     const modal = document.getElementById('ageModal');
     if (!modal) return;
-    if (isVerified === 'true') {
-        modal.classList.add('hidden');
-        document.body.style.overflow = '';
-    } else {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
+    // Всегда показываем модал при загрузке, блокируем прокрутку
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
 }
 function confirmAge() {
-    localStorage.setItem('bg_ageVerified', 'true');
     const modal = document.getElementById('ageModal');
     if (modal) {
         modal.classList.add('hidden');
         document.body.style.overflow = '';
     }
     Toast.show('Добро пожаловать!', 'success');
-    if (typeof checkAuth === 'function') checkAuth();
+    // Не сохраняем в localStorage — при следующем визите модал появится снова
 }
 function exitSite() { window.location.href = 'https://www.google.com'; }
+
 function checkAuth() {
     currentUser = DB.get('currentUser');
     const menu = document.getElementById('userMenu');
@@ -778,7 +775,8 @@ function setupEventListeners() {
 }
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
 document.addEventListener('DOMContentLoaded', function() {
-    DB.init(); Toast.init(); Security.csrf.generate(); initAgeVerification(); 
+    DB.init(); Toast.init(); Security.csrf.generate(); 
+    initAgeVerification();  // всегда показываем модал
     if (!localStorage.getItem('bg_cookiesAccepted')) document.getElementById('cookieBanner').classList.add('show');
     checkAuth(); updateCitiesCount(); renderModels('all'); setupEventListeners();
     if (currentUser) renderChatMessages();
