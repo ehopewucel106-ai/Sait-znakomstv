@@ -38,7 +38,7 @@
     --cookie-border: #e91e63;
 }
 
-/* ===== ВИДЕО-ФОН (улучшенная видимость) ===== */
+/* ===== ВИДЕО-ФОН ===== */
 .video-bg {
     position: fixed;
     top: 0;
@@ -50,49 +50,24 @@
     pointer-events: none;
     transform: translateZ(0);
     will-change: transform;
-    /* Делаем видео ярче и насыщеннее */
     filter: brightness(1.15) contrast(1.1) saturate(1.1);
 }
-
 .video-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Лёгкое затемнение для читаемости текста */
     background: linear-gradient(135deg, rgba(15,15,26,0.35) 0%, rgba(26,26,46,0.3) 100%);
     z-index: -2;
     pointer-events: none;
 }
-
-/* Мобильная оптимизация */
 @media (max-width: 768px) {
-    .video-bg { 
-        object-position: center;
-        /* На мобильных видео ещё ярче */
-        filter: brightness(1.2) contrast(1.15);
-    }
-    .video-overlay {
-        /* Ещё меньше затемнения на мобильных */
-        background: linear-gradient(135deg, rgba(15,15,26,0.25) 0%, rgba(26,26,46,0.2) 100%);
-    }
+    .video-bg { filter: brightness(1.2) contrast(1.15); }
+    .video-overlay { background: linear-gradient(135deg, rgba(15,15,26,0.25) 0%, rgba(26,26,46,0.2) 100%); }
 }
-
-@media (prefers-reduced-data: reduce) {
-    .video-bg { display: none; }
-}
-
-@supports (-webkit-touch-callout: none) {
-    .video-bg {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .video-bg { animation: none !important; }
-}
+@media (prefers-reduced-data: reduce) { .video-bg { display: none; } }
+@supports (-webkit-touch-callout: none) { .video-bg { -webkit-transform: translateZ(0); transform: translateZ(0); } }
 
 html { scroll-behavior: smooth; scroll-padding-top: 140px; }
 body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: var(--light); min-height: 100vh; overflow-x: hidden; font-size: 18px; line-height: 1.6; }
@@ -108,7 +83,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 @keyframes drawHeart { 0% { stroke-dashoffset: var(--heart-len, 350); opacity: 0; } 10% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
 @keyframes heartPulseFinal { 0%,100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(233,30,99,0.5)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(233,30,99,0.8)); } }
 @keyframes logoReveal { 0% { opacity: 0; transform: translateX(-10px); filter: blur(4px); } 100% { opacity: 1; transform: translateX(0); filter: blur(0); } }
-@keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px rgba(233,30,99,0.2); } 50% { box-shadow: 0 0 35px rgba(233,30,99,0.4); } }
 @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.2); opacity: 1; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
@@ -145,6 +119,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
+/* ===== СТАТИЧЕСКАЯ ФИКСИРОВАННАЯ ШАПКА ===== */
 .header { 
     position: fixed; top: 0; left: 0; right: 0; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; 
     background: rgba(15,15,26,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; 
@@ -390,16 +365,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 }
 
 @media (max-width: 768px) {
-    .header {
-        position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important;
-        padding: 10px 12px !important; flex-wrap: wrap !important; gap: 8px !important;
-        align-items: center !important; justify-content: space-between !important;
-        background: rgba(15,15,26,0.98) !important; backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(233,30,99,0.3) !important;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; z-index: 1000 !important;
-        transform: translateY(0) !important; opacity: 1 !important; display: flex !important;
-        min-height: auto !important; will-change: auto !important;
-    }
+    .header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 12px !important; flex-wrap: wrap !important; gap: 8px !important; align-items: center !important; justify-content: space-between !important; background: rgba(15,15,26,0.98) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(233,30,99,0.3) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; z-index: 1000 !important; transform: translateY(0) !important; opacity: 1 !important; display: flex !important; min-height: auto !important; }
     .logo { order: 1; flex-shrink: 0; }
     .user-menu { order: 2; gap: 10px; flex-shrink: 0; }
     .nav-container { order: 3; width: 100%; justify-content: center; margin-top: 4px; padding-bottom: 2px; }
@@ -435,7 +401,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     .city-dropdown { position: fixed; top: auto; left: 10px; right: 10px; transform: none; width: auto; min-width: auto; max-height: 60vh; overflow-y: auto; }
     .city-dropdown.active { transform: none; }
 }
-
 @media (max-width: 480px) {
     .header { padding: 8px 10px !important; }
     .btn { padding: 14px 28px; font-size: 15px; }
@@ -445,7 +410,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     .heart-svg { width: 32px; height: 32px; }
     .nav-links a { font-size: 12px; }
 }
-
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--darker); }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
@@ -454,7 +418,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </head>
 <body>
 
-<!-- ===== ВИДЕО-ФОН (улучшенная видимость) ===== -->
 <video id="bgVideo" class="video-bg" autoplay muted loop playsinline webkit-playsinline aria-hidden="true" preload="auto">
     <source src="video/bg.mp4" type="video/mp4">
 </video>
@@ -512,7 +475,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
             <button class="admin-tab-btn active" onclick="switchAdminTab('profiles')" aria-pressed="true">Анкеты</button>
             <button class="admin-tab-btn" onclick="switchAdminTab('chats')" aria-pressed="false">Чаты <span id="newChatBadge" style="background: var(--danger); padding: 2px 7px; border-radius: 10px; font-size: 11px; display: none;">!</span></button>
             <button class="admin-tab-btn" onclick="switchAdminTab('settings')" aria-pressed="false">Настройки</button>
-            <button class="admin-tab-btn btn-danger" onclick="logoutOperator()">Выход</button>
+            <button class="admin-tab-btn" onclick="closeAdminPanel()">✖️ Закрыть панель</button>
         </div>
     </div>
     <div class="admin-content">
@@ -733,9 +696,9 @@ function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { To
 function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
 function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const reply = window.botWelcomeMessage || 'Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?'; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
-function logoutOperator() { if (confirm('Выйти из панели оператора?')) logout(); }
+function closeAdminPanel() { document.getElementById('adminDashboard').classList.remove('active'); }
 function switchAdminTab(tab) { const btn = event.target; document.querySelectorAll('.admin-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }); btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active')); document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active'); if (tab === 'chats') renderOperatorChatList(); if (tab === 'settings') populateSettingsForm(); }
-function renderAdminProfiles() { const list = document.getElementById('adminProfileList'); const profileList = DB.get('profiles') || []; if (!profileList.length) { list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:20px;">Нет анкет.</p>'; return; } list.innerHTML = profileList.map(p => `<div class="profile-list-item"><img src="${p.images && p.images[0] ? Security.escapeHtml(p.images[0]) : 'image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2220%22%3E👤%3C/text%3E%3C/svg%3E'}" alt="${Security.escapeHtml(p.name)}" class="profile-thumb" loading="lazy"><div class="profile-info"><div class="profile-name-lg">${Security.escapeHtml(p.name)}</div><div class="profile-city-sm">${Security.escapeHtml(p.cityName)} • ${(p.price || 0).toLocaleString()} ₽</div></div><div class="profile-actions"><button class="btn btn-primary btn-small" onclick="openProfileEditor(${p.id})">✏️ Ред.</button></div></div>`).join(''); }
+function renderAdminProfiles() { const list = document.getElementById('adminProfileList'); const profileList = DB.get('profiles') || []; if (!profileList.length) { list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:20px;">Нет анкет.</p>'; return; } list.innerHTML = profileList.map(p => `<div class="profile-list-item"><img src="${p.images && p.images[0] ? Security.escapeHtml(p.images[0]) : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2220%22%3E👤%3C/text%3E%3C/svg%3E'}" alt="${Security.escapeHtml(p.name)}" class="profile-thumb" loading="lazy"><div class="profile-info"><div class="profile-name-lg">${Security.escapeHtml(p.name)}</div><div class="profile-city-sm">${Security.escapeHtml(p.cityName)} • ${(p.price || 0).toLocaleString()} ₽</div></div><div class="profile-actions"><button class="btn btn-primary btn-small" onclick="openProfileEditor(${p.id})">✏️ Ред.</button></div></div>`).join(''); }
 function openProfileEditor(id) { const profileList = DB.get('profiles') || []; const p = id ? profileList.find(x => x.id === id) : null; document.getElementById('editProfileId').value = p ? p.id : ''; document.getElementById('editName').value = p ? p.name : ''; document.getElementById('editCity').value = p ? p.city : 'pervomaisk'; document.getElementById('editDescription').value = p ? p.description : ''; document.getElementById('editImage').value = p && p.images ? p.images[0] : ''; document.getElementById('editPrice').value = p ? p.price : ''; const services = p && p.services ? p.services : []; document.getElementById('editPrice1h').value = services[0] ? services[0].price : 15000; document.getElementById('editPrice2h').value = services[1] ? services[1].price : 30000; document.getElementById('editPriceTrip').value = services[2] ? services[2].price : 40000; document.getElementById('editPriceNight').value = services[3] ? services[3].price : 100000; document.getElementById('editPriceTripNight').value = (services[4] && services[4].price) ? services[4].price : 100000; document.getElementById('editAdditionalServices').value = p && p.additionalServices ? p.additionalServices.join(', ') : ''; const preview = document.getElementById('editImagePreview'); if (p && p.images && p.images[0]) { preview.src = p.images[0]; preview.style.display = 'block'; } else preview.style.display = 'none'; document.getElementById('deleteProfileBtn').style.display = p ? 'inline-flex' : 'none'; document.getElementById('profileEditor').classList.add('active'); }
 function closeProfileEditor() { document.getElementById('profileEditor').classList.remove('active'); }
 function handleImageUpload(input) { if (input.files && input.files[0]) { const file = input.files[0]; if (file.size > 2 * 1024 * 1024) { Toast.show('Файл слишком большой (макс. 2 МБ)', 'error'); return; } if (!file.type.startsWith('image/')) { Toast.show('Можно загружать только изображения', 'error'); return; } const reader = new FileReader(); reader.onload = function(e) { document.getElementById('editImage').value = e.target.result; document.getElementById('editImagePreview').src = e.target.result; document.getElementById('editImagePreview').style.display = 'block'; }; reader.readAsDataURL(file); } }
@@ -748,7 +711,7 @@ function renderOperatorChatMessages(username) { const container = document.getEl
 function sendOperatorMessage() { if (!activeOperatorChatUser) return; const input = document.getElementById('opChatInput'); const text = input.value.trim(); if (!text) return; if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } const chats = DB.get('chats') || {}; if (!chats[activeOperatorChatUser]) return; chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString() }); DB.set('chats', chats); input.value = ''; renderOperatorChatMessages(activeOperatorChatUser); renderOperatorChatList(); }
 function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
 function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
-function renderModels(filter) { profiles = DB.get('profiles') || []; const grid = document.getElementById('modelsGrid'); let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p></div>'; return; } let html = ''; for (let p of filtered) { const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; } grid.innerHTML = html; document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); }
+function renderModels(filter) { profiles = DB.get('profiles') || []; const grid = document.getElementById('modelsGrid'); let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p></div>'; return; } let html = ''; for (let p of filtered) { const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; } grid.innerHTML = html; document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); }
 function openProfileByIdWithAuth(id) { if (!currentUser) { pendingOrderProfile = id; openAuthModal(); return; } openProfileById(id); }
 function openProfileById(id) { const idx = profiles.findIndex(p => p.id === id); if (idx >= 0) openProfile(idx); }
 function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год','года','лет']); document.getElementById('modalImage').src = (currentModalProfile.images && currentModalProfile.images[0]) ? currentModalProfile.images[0] : ''; document.getElementById('modalImage').alt = currentModalProfile.name; document.getElementById('modalName').textContent = currentModalProfile.name; document.getElementById('modalDescription').textContent = currentModalProfile.description; document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; document.getElementById('priceDay1').innerHTML = (currentModalProfile.services[0] ? currentModalProfile.services[0].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceDay2').innerHTML = (currentModalProfile.services[1] ? currentModalProfile.services[1].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceNight').innerHTML = (currentModalProfile.services[3] ? currentModalProfile.services[3].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTrip').innerHTML = (currentModalProfile.services[2] ? currentModalProfile.services[2].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services[4] ? currentModalProfile.services[4].price.toLocaleString() : '—') + ' ₽'; const addServDiv = document.getElementById('additionalServices'); if (currentModalProfile.additionalServices && currentModalProfile.additionalServices.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } document.getElementById('profileModal').classList.add('active'); }
@@ -756,10 +719,7 @@ document.getElementById('closeProfileModal')?.addEventListener('click', () => do
 document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
 function setupEventListeners() { document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } }); }); document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); }); document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); }); document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); }); document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); }); document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } }); }
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
-
-// ===== ИНИЦИАЛИЗАЦИЯ ВИДЕО-ФОНА =====
-function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { console.log('Экономия данных: видео-фон отключен'); video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => { console.log('Видео-фон воспроизводится'); video.removeAttribute('poster'); }).catch(error => { console.log('Автоплей заблокирован:', error); const enableVideo = () => { video.play().catch(() => {}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) { video.pause(); } else { video.play().catch(() => {}); } }); window.addEventListener('orientationchange', () => { setTimeout(() => { video.play().catch(() => {}); }, 500); }); }
-
+function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => { video.removeAttribute('poster'); }).catch(() => { const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else video.play().catch(()=>{}); }); window.addEventListener('orientationchange', () => { setTimeout(() => video.play().catch(()=>{}), 500); }); }
 document.addEventListener('DOMContentLoaded', function() { DB.init(); Toast.init(); Security.csrf.generate(); initAgeVerification(); initCookieBanner(); loadSiteTexts(); checkAuth(); updateCitiesCount(); renderModels('all'); if (currentUser) renderChatMessages(); setupEventListeners(); if (currentUser) { const chats = DB.get('chats'); const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { addMessageToHistory(welcomeMsg, false, true); } } setInterval(function() { if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { renderOperatorChatList(); if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser); } }, 10000); const confirmBtn = document.getElementById('confirmBtn'); const exitBtn = document.getElementById('exitBtn'); if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); if (exitBtn) exitBtn.addEventListener('click', exitSite); initVideoBackground(); });
 </script>
 </body>
