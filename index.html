@@ -119,11 +119,18 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== СТАТИЧЕСКАЯ ФИКСИРОВАННАЯ ШАПКА ===== */
+/* ===== ДИНАМИЧЕСКАЯ ШАПКА (скрывается при скролле) ===== */
 .header { 
     position: fixed; top: 0; left: 0; right: 0; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; 
     background: rgba(15,15,26,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; 
-    border-bottom: 1px solid rgba(255,255,255,0.05); transition: none; overflow: visible;
+    border-bottom: 1px solid rgba(255,255,255,0.05); 
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.2s ease;
+    will-change: transform;
+    overflow: visible;
+}
+/* Класс для скрытия шапки */
+.header.header-hidden {
+    transform: translateY(-100%);
 }
 .header.chat-active { background: rgba(15,15,26,0.99); }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
@@ -720,7 +727,96 @@ document.getElementById('modalOrderBtn')?.addEventListener('click', () => { docu
 function setupEventListeners() { document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } }); }); document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); }); document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); }); document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); }); document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); }); document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } }); }
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
 function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => { video.removeAttribute('poster'); }).catch(() => { const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else video.play().catch(()=>{}); }); window.addEventListener('orientationchange', () => { setTimeout(() => video.play().catch(()=>{}), 500); }); }
-document.addEventListener('DOMContentLoaded', function() { DB.init(); Toast.init(); Security.csrf.generate(); initAgeVerification(); initCookieBanner(); loadSiteTexts(); checkAuth(); updateCitiesCount(); renderModels('all'); if (currentUser) renderChatMessages(); setupEventListeners(); if (currentUser) { const chats = DB.get('chats'); const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { addMessageToHistory(welcomeMsg, false, true); } } setInterval(function() { if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { renderOperatorChatList(); if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser); } }, 10000); const confirmBtn = document.getElementById('confirmBtn'); const exitBtn = document.getElementById('exitBtn'); if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); if (exitBtn) exitBtn.addEventListener('click', exitSite); initVideoBackground(); });
+
+// ===== ДИНАМИЧЕСКОЕ СКРЫТИЕ ШАПКИ ПРИ СКРОЛЛЕ =====
+function initDynamicHeader() {
+    const header = document.getElementById('header');
+    if (!header) return;
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const SCROLL_THRESHOLD = 60; // пикселей, чтобы не реагировать на малейшие движения
+
+    function updateHeader() {
+        const currentScrollY = window.scrollY;
+        const isChatActive = document.getElementById('chat').classList.contains('active');
+        const isAdminActive = document.getElementById('adminDashboard').classList.contains('active');
+        
+        // Не прячем шапку, если открыт чат или админ-панель
+        if (isChatActive || isAdminActive) {
+            header.classList.remove('header-hidden');
+            lastScrollY = currentScrollY;
+            ticking = false;
+            return;
+        }
+
+        // Определяем направление скролла
+        if (currentScrollY > lastScrollY + SCROLL_THRESHOLD && currentScrollY > 100) {
+            // Скроллим вниз и не в самом верху → скрываем шапку
+            header.classList.add('header-hidden');
+        } else if (currentScrollY < lastScrollY - SCROLL_THRESHOLD || currentScrollY <= 50) {
+            // Скроллим вверх или достигли верха → показываем шапку
+            header.classList.remove('header-hidden');
+        }
+        
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // Также обновляем при изменении видимости чата или админки (чтобы сразу показать шапку)
+    const observer = new MutationObserver(() => {
+        const isChatActive = document.getElementById('chat').classList.contains('active');
+        const isAdminActive = document.getElementById('adminDashboard').classList.contains('active');
+        if (isChatActive || isAdminActive) {
+            header.classList.remove('header-hidden');
+        } else {
+            // Если вышли из чата/админки, можно сразу показать шапку
+            header.classList.remove('header-hidden');
+        }
+    });
+    observer.observe(document.getElementById('chat'), { attributes: true, attributeFilter: ['class'] });
+    observer.observe(document.getElementById('adminDashboard'), { attributes: true, attributeFilter: ['class'] });
+}
+
+document.addEventListener('DOMContentLoaded', function() { 
+    DB.init(); 
+    Toast.init(); 
+    Security.csrf.generate(); 
+    initAgeVerification(); 
+    initCookieBanner(); 
+    loadSiteTexts(); 
+    checkAuth(); 
+    updateCitiesCount(); 
+    renderModels('all'); 
+    if (currentUser) renderChatMessages(); 
+    setupEventListeners(); 
+    if (currentUser) { 
+        const chats = DB.get('chats'); 
+        const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; 
+        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { 
+            addMessageToHistory(welcomeMsg, false, true); 
+        } 
+    } 
+    setInterval(function() { 
+        if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { 
+            renderOperatorChatList(); 
+            if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser); 
+        } 
+    }, 10000); 
+    const confirmBtn = document.getElementById('confirmBtn'); 
+    const exitBtn = document.getElementById('exitBtn'); 
+    if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); 
+    if (exitBtn) exitBtn.addEventListener('click', exitSite); 
+    initVideoBackground(); 
+    initDynamicHeader(); // запускаем динамическое скрытие шапки
+});
 </script>
 </body>
 </html>
