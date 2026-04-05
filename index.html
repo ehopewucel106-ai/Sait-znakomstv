@@ -36,6 +36,41 @@
     --cookie-bg: #1a1a2e;
     --cookie-border: #e91e63;
 }
+
+/* ===== ВИДЕО-ФОН ===== */
+.video-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -3;
+    pointer-events: none;
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15,15,26,0.92) 0%, rgba(26,26,46,0.88) 100%);
+    z-index: -2;
+    pointer-events: none;
+}
+
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+    .video-bg { display: none; }
+    .video-overlay {
+        background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    .video-bg[playsinline] { -webkit-playsinline: true; }
+}
+
 html { scroll-behavior: smooth; scroll-padding-top: 140px; }
 body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: var(--light); min-height: 100vh; overflow-x: hidden; font-size: 18px; line-height: 1.6; }
 .font-cursive { font-family: 'Great Vibes', cursive; }
@@ -87,7 +122,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
 
-/* ===== ШАПКА СТАТИЧЕСКАЯ (ВСЕГДА ФИКСИРОВАНА) ===== */
+/* ===== ШАПКА СТАТИЧЕСКАЯ ===== */
 .header { 
     position: fixed; 
     top: 0; 
@@ -102,11 +137,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000; 
     border-bottom: 1px solid rgba(255,255,255,0.05); 
-    /* Убираем transition для padding и background, чтобы шапка не менялась при скролле */
     transition: none;
     overflow: visible;
 }
-/* Удаляем класс .scrolled — шапка не меняет свой вид при прокрутке */
 .header.chat-active { background: rgba(15,15,26,0.99); }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
 .logo-animation-wrapper { display: flex; align-items: center; gap: 15px; min-height: 70px; padding: 5px 0; }
@@ -142,7 +175,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .section { padding: 80px 40px; max-width: 1400px; margin: 0 auto; display: none; }
 .section.active { display: block; animation: fadeInUp 0.4s ease; }
 
-/* Отступ для первой секции, чтобы контент не перекрывался фиксированной шапкой */
 #models.active { padding-top: calc(140px + 60px); }
 @media (max-width: 768px) { #models.active { padding-top: calc(120px + 40px); } }
 
@@ -371,7 +403,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         min-height: auto !important;
         will-change: auto !important;
     }
-    /* Убираем любые изменения при скролле на мобильных */
     .logo { order: 1; flex-shrink: 0; }
     .user-menu { order: 2; gap: 10px; flex-shrink: 0; }
     .nav-container { order: 3; width: 100%; justify-content: center; margin-top: 4px; padding-bottom: 2px; }
@@ -425,6 +456,13 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </style>
 </head>
 <body>
+
+<!-- ===== ВИДЕО-ФОН ===== -->
+<video id="bgVideo" class="video-bg" autoplay muted loop playsinline poster="fallback.jpg" aria-hidden="true">
+    <source src="your-video.mp4" type="video/mp4">
+    <source src="your-video.webm" type="video/webm">
+</video>
+<div class="video-overlay" aria-hidden="true"></div>
 
 <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
@@ -1090,10 +1128,25 @@ function setupEventListeners() {
     document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); });
     document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); });
     document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } });
-    // Удаляем обработчик, который добавлял класс .scrolled — шапка больше не меняется при скролле
 }
 
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
+
+// ===== ИНИЦИАЛИЗАЦИЯ ВИДЕО-ФОНА =====
+function initVideoBackground() {
+    const video = document.getElementById('bgVideo');
+    if (!video) return;
+    
+    video.play().catch(e => {
+        console.log('Автоплей видео заблокирован:', e);
+        video.style.display = 'none';
+    });
+    
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) video.pause();
+        else video.play().catch(() => {});
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     DB.init();
@@ -1125,6 +1178,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const exitBtn = document.getElementById('exitBtn');
     if (confirmBtn) confirmBtn.addEventListener('click', confirmAge);
     if (exitBtn) exitBtn.addEventListener('click', exitSite);
+    
+    // Инициализация видео-фона
+    initVideoBackground();
 });
 </script>
 </body>
