@@ -18,15 +18,9 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-    --primary: #e91e63;
-    --primary-dark: #c2185b;
-    --secondary: #9c27b0;
-    --dark: #1a1a2e;
-    --darker: #0f0f1a;
-    --light: #ffffff;
-    --gray: #6b7280;
-    --success: #10b981;
-    --danger: #ef4444;
+    --primary: #e91e63; --primary-dark: #c2185b; --secondary: #9c27b0;
+    --dark: #1a1a2e; --darker: #0f0f1a; --light: #ffffff; --gray: #6b7280;
+    --success: #10b981; --danger: #ef4444;
     --gradient: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
     --day-bg: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.1) 100%);
     --day-border: rgba(255, 193, 7, 0.4);
@@ -34,46 +28,17 @@
     --night-border: rgba(33, 150, 243, 0.4);
     --trip-bg: linear-gradient(135deg, rgba(244, 67, 54, 0.15) 0%, rgba(229, 57, 53, 0.1) 100%);
     --trip-border: rgba(244, 67, 54, 0.4);
-    --cookie-bg: #1a1a2e;
-    --cookie-border: #e91e63;
+    --cookie-bg: #1a1a2e; --cookie-border: #e91e63;
 }
-
-/* ===== ВИДЕО-ФОН ===== */
-.video-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -3;
-    pointer-events: none;
-    transform: translateZ(0);
-    will-change: transform;
-    filter: brightness(1.15) contrast(1.1) saturate(1.1);
-}
-.video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(15,15,26,0.35) 0%, rgba(26,26,46,0.3) 100%);
-    z-index: -2;
-    pointer-events: none;
-}
-@media (max-width: 768px) {
-    .video-bg { filter: brightness(1.2) contrast(1.15); }
-    .video-overlay { background: linear-gradient(135deg, rgba(15,15,26,0.25) 0%, rgba(26,26,46,0.2) 100%); }
-}
+.video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; pointer-events: none; transform: translateZ(0); will-change: transform; filter: brightness(1.15) contrast(1.1) saturate(1.1); }
+.video-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(15,15,26,0.35) 0%, rgba(26,26,46,0.3) 100%); z-index: -2; pointer-events: none; }
+@media (max-width: 768px) { .video-bg { filter: brightness(1.2) contrast(1.15); } .video-overlay { background: linear-gradient(135deg, rgba(15,15,26,0.25) 0%, rgba(26,26,46,0.2) 100%); } }
 @media (prefers-reduced-data: reduce) { .video-bg { display: none; } }
 @supports (-webkit-touch-callout: none) { .video-bg { -webkit-transform: translateZ(0); transform: translateZ(0); } }
-
 html { scroll-behavior: smooth; scroll-padding-top: 140px; }
 body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: var(--light); min-height: 100vh; overflow-x: hidden; font-size: 18px; line-height: 1.6; }
 .font-cursive { font-family: 'Great Vibes', cursive; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulseGlow { 0%,100% { text-shadow: 0 0 10px rgba(233,30,99,0.3); } 50% { text-shadow: 0 0 20px rgba(233,30,99,0.6); } }
 @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
@@ -86,13 +51,11 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.2); opacity: 1; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
-
 .animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
 .animate-pulse { animation: pulseGlow 3s ease infinite; }
 .animate-slideInLeft { animation: slideInLeft 0.6s ease forwards; }
 .animate-float { animation: float 3s ease-in-out infinite; }
 .animate-shimmer { background: linear-gradient(90deg, var(--light) 0%, var(--primary) 50%, var(--light) 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 3s linear infinite; }
-
 .age-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); display: flex; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px); }
 .age-modal.hidden { display: none !important; }
 .age-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 50px 40px; border-radius: 24px; text-align: center; max-width: 500px; width: 90%; border: 1px solid rgba(233,30,99,0.3); box-shadow: 0 25px 60px rgba(233,30,99,0.3); }
@@ -103,7 +66,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .age-text { color: var(--gray); margin-bottom: 20px; line-height: 1.7; font-size: 16px; }
 .age-warning-text { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35); border-radius: 12px; padding: 14px 16px; margin-bottom: 25px; font-size: 15px; color: #ef4444; line-height: 1.5; }
 .age-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
 .btn { padding: 16px 36px; border-radius: 50px; font-size: 17px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
 .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 .btn-primary { background: var(--gradient); color: white; box-shadow: 0 4px 20px rgba(233,30,99,0.4); }
@@ -118,33 +80,19 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn.loading { pointer-events: none; position: relative; }
 .btn.loading::after { content: ''; position: absolute; width: 18px; height: 18px; border: 2px solid transparent; border-top-color: currentColor; border-radius: 50%; animation: spin 0.6s linear infinite; }
-
-/* ===== ДИНАМИЧЕСКАЯ ШАПКА (скрывается при скролле) ===== */
-.header { 
-    position: fixed; top: 0; left: 0; right: 0; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; 
-    background: rgba(15,15,26,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; 
-    border-bottom: 1px solid rgba(255,255,255,0.05); 
-    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.2s ease;
-    will-change: transform;
-    overflow: visible;
-}
-/* Класс для скрытия шапки */
-.header.header-hidden {
-    transform: translateY(-100%);
-}
+.header { position: fixed; top: 0; left: 0; right: 0; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(15,15,26,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.2s ease; will-change: transform; overflow: visible; }
+.header.header-hidden { transform: translateY(-100%); }
 .header.chat-active { background: rgba(15,15,26,0.99); }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
 .logo-animation-wrapper { display: flex; align-items: center; gap: 15px; min-height: 70px; padding: 5px 0; }
 .heart-svg { width: 60px; height: 60px; position: relative; flex-shrink: 0; overflow: visible; }
 .heart-path { fill: none; stroke: url(#ribbonGradient); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: var(--heart-len, 350); stroke-dashoffset: var(--heart-len, 350); animation: drawHeart 2.5s cubic-bezier(0.4,0,0.2,1) forwards, heartPulseFinal 2s ease-in-out 2.5s infinite; }
 .logo-text-reveal { font-family: 'Great Vibes', cursive; font-size: 52px; font-weight: 400; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; opacity: 0; line-height: 1; animation: logoReveal 0.8s cubic-bezier(0.4,0,0.2,1) 2.2s forwards; }
-
 .nav-container { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 40px; }
 .nav-links { display: flex; gap: 40px; position: relative; }
 .nav-links a { color: var(--gray); text-decoration: none; font-weight: 600; transition: all 0.3s ease; position: relative; padding: 8px 0; cursor: pointer; white-space: nowrap; font-size: 17px; }
 .nav-links a:hover, .nav-links a.active { color: var(--light); }
 .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gradient); border-radius: 2px; }
-
 .user-menu { display: flex; align-items: center; gap: 20px; position: relative; flex-shrink: 0; }
 .header-phone { background: rgba(233,30,99,0.12); padding: 5px 12px; border-radius: 30px; font-size: 14px; font-weight: 500; color: var(--light); display: flex; align-items: center; gap: 6px; border: 1px solid rgba(233,30,99,0.3); backdrop-filter: blur(4px); white-space: nowrap; }
 .user-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; cursor: pointer; transition: transform 0.2s; flex-shrink: 0; }
@@ -153,7 +101,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .user-dropdown.show { display: block; animation: fadeInUp 0.2s ease; }
 .user-dropdown-item { display: block; width: 100%; padding: 8px 0; font-size: 14px; background: none; border: none; color: var(--light); cursor: pointer; text-align: left; }
 .user-dropdown-item:hover { color: var(--primary); }
-
 .city-dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border: 1px solid rgba(233,30,99,0.3); border-radius: 16px; padding: 16px; min-width: 290px; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1001; }
 .city-dropdown.active { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(15px); }
 .city-dropdown-title { font-size: 15px; color: var(--gray); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; font-weight: 600; }
@@ -163,16 +110,13 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .city-dropdown-icon { font-size: 22px; }
 .city-dropdown-name { font-weight: 600; flex: 1; font-size: 16px; }
 .city-dropdown-count { font-size: 13px; color: var(--gray); background: rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 20px; }
-
 .section { padding: 80px 40px; max-width: 1400px; margin: 0 auto; display: none; }
 .section.active { display: block; animation: fadeInUp 0.4s ease; }
 #models.active { padding-top: calc(140px + 60px); }
 @media (max-width: 768px) { #models.active { padding-top: calc(120px + 40px); } }
-
 .section-header { text-align: center; margin-bottom: 60px; }
 .section-header h2 { font-family: 'Great Vibes', cursive; font-size: 64px; margin-bottom: 15px; }
 .section-header p { color: var(--gray); font-size: 18px; }
-
 .section#chat.active { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 2000; padding: 0; background: var(--darker); }
 .chat-section { max-width: 900px; margin: 0 auto; height: 100%; }
 .chat-container { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border-radius: 0; border: none; overflow: hidden; display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
@@ -190,6 +134,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .chat-message-item.user .message-avatar { background: rgba(255,255,255,0.2); }
 .message-content { display: flex; flex-direction: column; gap: 4px; }
 .chat-bubble { padding: 12px 18px; border-radius: 20px; font-size: 15px; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.chat-bubble a { color: var(--primary); text-decoration: none; font-weight: 600; }
+.chat-bubble a:hover { text-decoration: underline; }
 .chat-message-item.operator .chat-bubble { background: rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
 .chat-message-item.user .chat-bubble { background: var(--gradient); border-bottom-right-radius: 4px; }
 .chat-message-item.bot .chat-bubble { background: rgba(156, 39, 176, 0.2); border: 1px solid rgba(156, 39, 176, 0.3); }
@@ -210,7 +156,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .chat-back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 40px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; }
 .chat-back-btn:hover { background: rgba(233,30,99,0.2); border-color: var(--primary); }
 .chat-back-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-
 .filters-bar { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
 .filter-btn { padding: 12px 28px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; color: var(--gray); cursor: pointer; transition: all 0.3s ease; font-weight: 600; font-size: 16px; font-family: 'Montserrat', sans-serif; }
 .filter-btn:hover, .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
@@ -231,14 +176,12 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .model-price { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
 .price-label { font-size: 14px; color: var(--gray); }
 .price-value { font-family: 'Great Vibes', cursive; font-size: 32px; font-weight: 400; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
 .cities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; max-width: 900px; margin: 0 auto; }
 .city-card { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border-radius: 18px; padding: 35px 30px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: all 0.3s ease; text-align: center; }
 .city-card:hover { border-color: rgba(233,30,99,0.3); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(233,30,99,0.15); }
 .city-icon { font-size: 56px; margin-bottom: 18px; }
 .city-name { font-family: 'Great Vibes', cursive; font-size: 36px; font-weight: 400; margin-bottom: 8px; }
 .city-count { color: var(--gray); font-size: 16px; }
-
 .profile-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.93); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(12px); padding: 20px; }
 .profile-modal.active { display: flex; animation: fadeInUp 0.3s ease; }
 .profile-modal-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border-radius: 24px; max-width: 1000px; width: 100%; max-height: 92vh; overflow-y: auto; border: 1px solid rgba(233,30,99,0.3); position: relative; }
@@ -278,11 +221,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .pricing-label { font-size: 15px; color: var(--gray); }
 .pricing-amount { font-family: 'Great Vibes', cursive; font-size: 28px; font-weight: 400; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .pricing-note { font-size: 13px; color: var(--gray); text-align: center; margin-top: 15px; font-style: italic; }
-
 .footer { padding: 50px 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 80px; }
 .footer-text { color: var(--gray); font-size: 15px; margin-bottom: 15px; line-height: 1.6; }
 .age-warning { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; font-size: 14px; color: #ef4444; font-weight: 600; }
-
 .auth-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 10001; backdrop-filter: blur(10px); }
 .auth-modal.active { display: flex; animation: fadeInUp 0.3s ease; }
 .auth-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 40px; border-radius: 24px; width: 100%; max-width: 450px; border: 1px solid rgba(233,30,99,0.3); box-shadow: 0 25px 50px rgba(233,30,99,0.2); }
@@ -299,7 +240,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .auth-switch span { color: var(--primary); cursor: pointer; text-decoration: underline; }
 .auth-notice { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--success); text-align: center; margin-top: 10px; display: none; }
 .auth-notice.show { display: block; }
-
 .admin-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--darker); z-index: 3000; display: none; overflow-y: auto; }
 .admin-dashboard.active { display: block; }
 .admin-header { padding: 18px 40px; background: rgba(15,15,26,0.97); border-bottom: 1px solid rgba(233,30,99,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
@@ -337,86 +277,27 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .file-upload-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
 .btn-upload { background: rgba(255,255,255,0.1); color: var(--light); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; }
 .btn-upload:hover { background: rgba(255,255,255,0.18); }
-
 .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
 .toast { padding: 16px 24px; background: var(--dark); border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); animation: slideInRight 0.3s ease; display: flex; align-items: center; gap: 10px; max-width: 400px; border: 1px solid rgba(255,255,255,0.1); }
 .toast.success { border-color: rgba(16,185,129,0.3); background: linear-gradient(145deg, #1a1a2e, #1a3a2e); }
 .toast.error { border-color: rgba(239,68,68,0.3); background: linear-gradient(145deg, #1a1a2e, #3a1a1a); }
 .toast.info { border-color: rgba(59,130,246,0.3); background: linear-gradient(145deg, #1a1a2e, #1a2a3e); }
-
 .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: var(--cookie-bg); border-top: 1px solid var(--cookie-border); padding: 20px 30px; z-index: 9998; display: none; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .cookie-banner.show { display: flex; }
 .cookie-text { color: var(--gray); font-size: 14px; flex: 1; min-width: 200px; }
 .cookie-text a { color: var(--primary); text-decoration: underline; }
 .cookie-buttons { display: flex; gap: 12px; flex-shrink: 0; }
-
 .privacy-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.93); display: none; align-items: center; justify-content: center; z-index: 9000; padding: 20px; }
 .privacy-modal.active { display: flex; }
 .privacy-content { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); padding: 40px; border-radius: 20px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; border: 1px solid rgba(233,30,99,0.3); }
 .privacy-content h2 { font-family: 'Great Vibes', cursive; font-size: 40px; margin-bottom: 25px; text-align: center; }
 .privacy-content h3 { font-size: 20px; margin: 25px 0 12px; color: var(--primary); }
 .privacy-content p { color: var(--gray); margin-bottom: 14px; line-height: 1.7; font-size: 15px; }
-
 .rate-limit-msg { text-align: center; padding: 12px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; color: var(--danger); font-size: 14px; margin-top: 10px; display: none; }
 .rate-limit-msg.show { display: block; }
-
-@media (max-width: 1024px) {
-    .nav-container { position: static; transform: none; width: 100%; order: 3; justify-content: center; }
-    .header { flex-wrap: wrap; gap: 12px; padding: 12px 20px; }
-    .header.chat-active { display: flex !important; }
-    .logo { order: 1; }
-    .user-menu { order: 2; }
-    .operator-chat-view { grid-template-columns: 1fr; height: auto; }
-    .operator-chat-list { max-height: 200px; }
-    .admin-header { flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 768px) {
-    .header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 12px !important; flex-wrap: wrap !important; gap: 8px !important; align-items: center !important; justify-content: space-between !important; background: rgba(15,15,26,0.98) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(233,30,99,0.3) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; z-index: 1000 !important; transform: translateY(0) !important; opacity: 1 !important; display: flex !important; min-height: auto !important; }
-    .logo { order: 1; flex-shrink: 0; }
-    .user-menu { order: 2; gap: 10px; flex-shrink: 0; }
-    .nav-container { order: 3; width: 100%; justify-content: center; margin-top: 4px; padding-bottom: 2px; }
-    .nav-links { gap: 12px; overflow-x: auto; padding-bottom: 4px; justify-content: center; width: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-    .nav-links::-webkit-scrollbar { display: none; }
-    .nav-links a { font-size: 13px; padding: 4px 0; white-space: nowrap; }
-    .header-phone { font-size: 10px; padding: 3px 8px; }
-    .user-avatar { width: 34px; height: 34px; font-size: 14px; }
-    .logo-animation-wrapper { min-height: 42px; gap: 8px; padding: 2px 0; }
-    .heart-svg { width: 38px; height: 38px; }
-    .logo-text-reveal { font-size: 26px; }
-    .section { padding: 60px 20px; }
-    .models-grid, .cities-grid { grid-template-columns: 1fr; }
-    .profile-modal-body { grid-template-columns: 1fr; }
-    .modal-images { height: 350px; }
-    .modal-details { padding: 25px; }
-    .chat-container { height: 100vh; height: 100dvh; }
-    .chat-header-custom { padding: 12px 16px; }
-    .chat-messages { padding: 16px; }
-    .chat-input-container { padding: 12px; }
-    .chat-input-wrapper { gap: 10px; }
-    .chat-input { padding: 12px 16px; font-size: 15px; }
-    .chat-send { width: 48px; height: 48px; font-size: 20px; }
-    .chat-message-item { max-width: 90%; }
-    .chat-bubble { padding: 10px 14px; font-size: 14px; }
-    .message-avatar { width: 34px; height: 34px; font-size: 14px; }
-    .admin-content { padding: 20px; }
-    .age-content { padding: 35px 25px; }
-    .age-title { font-size: 32px; }
-    .auth-content { padding: 30px 20px; }
-    .cookie-banner { flex-direction: column; text-align: center; padding: 20px; }
-    .cookie-buttons { justify-content: center; width: 100%; }
-    .city-dropdown { position: fixed; top: auto; left: 10px; right: 10px; transform: none; width: auto; min-width: auto; max-height: 60vh; overflow-y: auto; }
-    .city-dropdown.active { transform: none; }
-}
-@media (max-width: 480px) {
-    .header { padding: 8px 10px !important; }
-    .btn { padding: 14px 28px; font-size: 15px; }
-    .model-info { padding: 18px; }
-    .modal-name { font-size: 36px; }
-    .logo-text-reveal { font-size: 22px; }
-    .heart-svg { width: 32px; height: 32px; }
-    .nav-links a { font-size: 12px; }
-}
+@media (max-width: 1024px) { .nav-container { position: static; transform: none; width: 100%; order: 3; justify-content: center; } .header { flex-wrap: wrap; gap: 12px; padding: 12px 20px; } .header.chat-active { display: flex !important; } .logo { order: 1; } .user-menu { order: 2; } .operator-chat-view { grid-template-columns: 1fr; height: auto; } .operator-chat-list { max-height: 200px; } .admin-header { flex-direction: column; align-items: flex-start; } }
+@media (max-width: 768px) { .header { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; padding: 10px 12px !important; flex-wrap: wrap !important; gap: 8px !important; align-items: center !important; justify-content: space-between !important; background: rgba(15,15,26,0.98) !important; backdrop-filter: blur(20px) !important; -webkit-backdrop-filter: blur(20px) !important; border-bottom: 1px solid rgba(233,30,99,0.3) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; z-index: 1000 !important; transform: translateY(0) !important; opacity: 1 !important; display: flex !important; min-height: auto !important; } .logo { order: 1; flex-shrink: 0; } .user-menu { order: 2; gap: 10px; flex-shrink: 0; } .nav-container { order: 3; width: 100%; justify-content: center; margin-top: 4px; padding-bottom: 2px; } .nav-links { gap: 12px; overflow-x: auto; padding-bottom: 4px; justify-content: center; width: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; } .nav-links::-webkit-scrollbar { display: none; } .nav-links a { font-size: 13px; padding: 4px 0; white-space: nowrap; } .header-phone { font-size: 10px; padding: 3px 8px; } .user-avatar { width: 34px; height: 34px; font-size: 14px; } .logo-animation-wrapper { min-height: 42px; gap: 8px; padding: 2px 0; } .heart-svg { width: 38px; height: 38px; } .logo-text-reveal { font-size: 26px; } .section { padding: 60px 20px; } .models-grid, .cities-grid { grid-template-columns: 1fr; } .profile-modal-body { grid-template-columns: 1fr; } .modal-images { height: 350px; } .modal-details { padding: 25px; } .chat-container { height: 100vh; height: 100dvh; } .chat-header-custom { padding: 12px 16px; } .chat-messages { padding: 16px; } .chat-input-container { padding: 12px; } .chat-input-wrapper { gap: 10px; } .chat-input { padding: 12px 16px; font-size: 15px; } .chat-send { width: 48px; height: 48px; font-size: 20px; } .chat-message-item { max-width: 90%; } .chat-bubble { padding: 10px 14px; font-size: 14px; } .message-avatar { width: 34px; height: 34px; font-size: 14px; } .admin-content { padding: 20px; } .age-content { padding: 35px 25px; } .age-title { font-size: 32px; } .auth-content { padding: 30px 20px; } .cookie-banner { flex-direction: column; text-align: center; padding: 20px; } .cookie-buttons { justify-content: center; width: 100%; } .city-dropdown { position: fixed; top: auto; left: 10px; right: 10px; transform: none; width: auto; min-width: auto; max-height: 60vh; overflow-y: auto; } .city-dropdown.active { transform: none; } }
+@media (max-width: 480px) { .header { padding: 8px 10px !important; } .btn { padding: 14px 28px; font-size: 15px; } .model-info { padding: 18px; } .modal-name { font-size: 36px; } .logo-text-reveal { font-size: 22px; } .heart-svg { width: 32px; height: 32px; } .nav-links a { font-size: 12px; } }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--darker); }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
@@ -661,6 +542,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 </footer>
 
 <script>
+/* ===== SECURITY MODULE ===== */
 const Security = {
     escapeHtml: function(text) { const div = document.createElement('div'); div.textContent = String(text); return div.innerHTML; },
     sanitizeInput: function(input) { return String(input).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;').trim(); },
@@ -670,21 +552,61 @@ const Security = {
     rateLimit: { _storage: {}, check: function(key, maxRequests, windowMs) { const now = Date.now(); if (!this._storage[key]) this._storage[key] = []; this._storage[key] = this._storage[key].filter(t => now - t < windowMs); if (this._storage[key].length >= maxRequests) return false; this._storage[key].push(now); return true; } },
     csrf: { token: null, generate: function() { const arr = new Uint8Array(16); crypto.getRandomValues(arr); this.token = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join(''); return this.token; }, getToken: function() { if (!this.token) this.generate(); return this.token; } }
 };
+
+/* ===== TOAST MODULE ===== */
 const Toast = { container: null, init: function() { this.container = document.getElementById('toastContainer'); }, show: function(message, type = 'info', duration = 4000) { if (!this.container) this.init(); const toast = document.createElement('div'); toast.className = `toast ${type}`; const icons = { success: '✅', error: '❌', info: 'ℹ️' }; toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${Security.escapeHtml(message)}</span>`; this.container.appendChild(toast); setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; toast.style.transition = 'all 0.3s ease'; setTimeout(() => toast.remove(), 300); }, duration); } };
-function acceptCookies() { localStorage.setItem('bg_cookiesAccepted', 'true'); document.getElementById('cookieBanner').classList.remove('show'); }
-function declineCookies() { localStorage.setItem('bg_cookiesAccepted', 'false'); document.getElementById('cookieBanner').classList.remove('show'); }
-function initCookieBanner() { const accepted = localStorage.getItem('bg_cookiesAccepted'); if (accepted !== 'true') { document.getElementById('cookieBanner').classList.add('show'); } }
-function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
-function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
+
+/* ===== DATABASE MODULE ===== */
+const DB = { get: function(key) { try { const item = localStorage.getItem('bg_' + key); return item ? JSON.parse(item) : null; } catch(e) { return null; } }, set: function(key, val) { try { localStorage.setItem('bg_' + key, JSON.stringify(val)); } catch(e) { Toast.show('Ошибка сохранения', 'error'); } }, init: function() { if (!DB.get('profiles')) { DB.set('profiles', [ { id:1, name:'Алина', age:22, height:172, weight:54, bust:'3', city:'pervomaisk', cityName:'Первомайск', description:'Элегантная и утонченная девушка с прекрасным чувством стиля.', price:15000, images:[''], services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}], additionalServices:['GFE (Girlfriend Experience)','Французский поцелуй','Массаж эротический'] }, { id:2, name:'Виктория', age:24, height:168, weight:52, bust:'2', city:'lugansk', cityName:'Луганск', description:'Яркая и энергичная натура. Обожаю активный отдых.', price:18000, images:[''], services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}], additionalServices:['Стриптиз','Глубокий минет','Окончание на лицо'] }, { id:3, name:'Екатерина', age:21, height:175, weight:56, bust:'3', city:'stakhanov', cityName:'Стаханов', description:'Нежная и романтичная особа. Ценю искренность.', price:20000, images:[''], services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}], additionalServices:['Ролевые игры','БДСМ (лёгкий)','Тантра'] } ]); } if (!DB.get('users')) DB.set('users', []); if (!DB.get('chats')) DB.set('chats', {}); if (!DB.get('currentUser')) DB.set('currentUser', null); if (!DB.get('sitePhone')) DB.set('sitePhone', '+7 (999) 123-45-67'); if (!DB.get('siteTexts')) DB.set('siteTexts', SITE_TEXTS_DEFAULT); } };
+
+/* ===== SITE TEXTS ===== */
 const SITE_TEXTS_DEFAULT = { modelsTitle: 'Анкеты Девушек', modelsSubtitle: 'Выберите идеальную спутницу', citiesTitle: 'Города Присутствия', citiesSubtitle: 'Наши девушки доступны в следующих городах', botWelcome: 'Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?', footerWarning: '🔞 18+ Только для совершеннолетних', footerCopyright: '© 2026 BABYGIRL_LNR. Все услуги предоставляются исключительно лицам старше 18 лет.', footerConfidentiality: 'Полная конфиденциальность гарантирована.' };
 function loadSiteTexts() { const saved = DB.get('siteTexts'); const texts = saved ? { ...SITE_TEXTS_DEFAULT, ...saved } : { ...SITE_TEXTS_DEFAULT }; document.getElementById('modelsTitle').innerText = texts.modelsTitle; document.getElementById('modelsSubtitle').innerText = texts.modelsSubtitle; document.getElementById('citiesTitle').innerText = texts.citiesTitle; document.getElementById('citiesSubtitle').innerText = texts.citiesSubtitle; document.getElementById('footerWarning').innerText = texts.footerWarning; document.getElementById('footerCopyright').innerText = texts.footerCopyright; document.getElementById('footerConfidentiality').innerText = texts.footerConfidentiality; window.botWelcomeMessage = texts.botWelcome; return texts; }
 function saveSiteTexts() { const newTexts = { modelsTitle: document.getElementById('textModelsTitle').value.trim(), modelsSubtitle: document.getElementById('textModelsSubtitle').value.trim(), citiesTitle: document.getElementById('textCitiesTitle').value.trim(), citiesSubtitle: document.getElementById('textCitiesSubtitle').value.trim(), botWelcome: document.getElementById('textBotWelcome').value.trim(), footerWarning: document.getElementById('textFooterWarning').value.trim(), footerCopyright: document.getElementById('textFooterCopyright').value.trim(), footerConfidentiality: document.getElementById('textFooterConfidentiality').value.trim() }; if (!newTexts.modelsTitle || !newTexts.modelsSubtitle) { Toast.show('Заполните заголовки разделов', 'error'); return; } DB.set('siteTexts', newTexts); loadSiteTexts(); Toast.show('Тексты обновлены', 'success'); }
 function loadSitePhone() { const phone = DB.get('sitePhone') || '+7 (999) 123-45-67'; document.getElementById('phoneNumberSpan').innerText = phone; document.getElementById('sitePhoneInput').value = phone; }
 function saveSitePhone() { const input = document.getElementById('sitePhoneInput'); let newPhone = input.value.trim(); if (!newPhone) { Toast.show('Введите номер телефона', 'error'); return; } DB.set('sitePhone', newPhone); loadSitePhone(); Toast.show('Номер телефона обновлён', 'success'); }
 function populateSettingsForm() { const texts = DB.get('siteTexts') || SITE_TEXTS_DEFAULT; document.getElementById('textModelsTitle').value = texts.modelsTitle || ''; document.getElementById('textModelsSubtitle').value = texts.modelsSubtitle || ''; document.getElementById('textCitiesTitle').value = texts.citiesTitle || ''; document.getElementById('textCitiesSubtitle').value = texts.citiesSubtitle || ''; document.getElementById('textBotWelcome').value = texts.botWelcome || ''; document.getElementById('textFooterWarning').value = texts.footerWarning || ''; document.getElementById('textFooterCopyright').value = texts.footerCopyright || ''; document.getElementById('textFooterConfidentiality').value = texts.footerConfidentiality || ''; loadSitePhone(); }
-const DB = { get: function(key) { try { const item = localStorage.getItem('bg_' + key); return item ? JSON.parse(item) : null; } catch(e) { return null; } }, set: function(key, val) { try { localStorage.setItem('bg_' + key, JSON.stringify(val)); } catch(e) { Toast.show('Ошибка сохранения', 'error'); } }, init: function() { if (!DB.get('profiles')) { DB.set('profiles', [ { id:1, name:'Алина', age:22, height:172, weight:54, bust:'3', city:'pervomaisk', cityName:'Первомайск', description:'Элегантная и утонченная девушка с прекрасным чувством стиля.', price:15000, images:[''], services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}], additionalServices:['GFE (Girlfriend Experience)','Французский поцелуй','Массаж эротический'] }, { id:2, name:'Виктория', age:24, height:168, weight:52, bust:'2', city:'lugansk', cityName:'Луганск', description:'Яркая и энергичная натура. Обожаю активный отдых.', price:18000, images:[''], services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}], additionalServices:['Стриптиз','Глубокий минет','Окончание на лицо'] }, { id:3, name:'Екатерина', age:21, height:175, weight:56, bust:'3', city:'stakhanov', cityName:'Стаханов', description:'Нежная и романтичная особа. Ценю искренность.', price:20000, images:[''], services:[{name:'Встреча (1 час)', time:'60 минут', price:15000},{name:'Свидание (2 часа)', time:'120 минут', price:30000},{name:'Выезд (от 2 часов)', time:'от 120 минут', price:40000},{name:'Ночь', time:'12 часов', price:100000},{name:'Выезд ночь', time:'12 часов', price:100000}], additionalServices:['Ролевые игры','БДСМ (лёгкий)','Тантра'] } ]); } if (!DB.get('users')) DB.set('users', []); if (!DB.get('chats')) DB.set('chats', {}); if (!DB.get('currentUser')) DB.set('currentUser', null); if (!DB.get('sitePhone')) DB.set('sitePhone', '+7 (999) 123-45-67'); if (!DB.get('siteTexts')) DB.set('siteTexts', SITE_TEXTS_DEFAULT); } };
+
+/* ===== OPERATOR CREDENTIALS ===== */
 const OPERATOR_CREDENTIALS = [ { username: "operator_master", hash: Security.simpleHash("B@byG1rl!2025#Secure") }, { username: "operator_elite", hash: Security.simpleHash("Elite$Pass2025%Admin") } ];
+
+/* ===== GLOBAL STATE ===== */
 let currentUser = DB.get('currentUser'); let profiles = DB.get('profiles') || []; let cities = [ { id:'pervomaisk', name:'Первомайск', icon:'🏙️', count:0 }, { id:'lugansk', name:'Луганск', icon:'🏛️', count:0 }, { id:'stakhanov', name:'Стаханов', icon:'⛏️', count:0 } ]; let currentModalProfile = null; let activeOperatorChatUser = null; let pendingChatAction = false; let pendingOrderProfile = null; let cityDropdownOpen = false;
+
+/* ===== SMART BOT ENGINE v2.0 ===== */
+const BotEngine = {
+    STATES: { IDLE: 'idle', ASKING_CITY: 'asking_city', ASKING_SERVICE: 'asking_service', SHOWING_RESULTS: 'showing_results', CONFIRMING: 'confirming', OPERATOR_TAKEN: 'operator' },
+    KEYWORDS: {
+        cities: { 'первомайск': 'pervomaisk', 'первомайска': 'pervomaisk', 'первомайске': 'pervomaisk', 'луганск': 'lugansk', 'луганска': 'lugansk', 'луганске': 'lugansk', 'стаханов': 'stakhanov', 'стаханова': 'stakhanov', 'стаханове': 'stakhanov', 'где': 'ask_city', 'куда': 'ask_city', 'город': 'ask_city', 'место': 'ask_city' },
+        services: { 'час': '1h', 'часа': '1h', 'встреча': '1h', 'свидание': '2h', 'два часа': '2h', 'выезд': 'trip', 'ночь': 'night', 'на ночь': 'night', 'услуга': 'ask_service', 'хочу': 'ask_service', 'заказать': 'ask_service', 'цена': 'ask_price', 'сколько': 'ask_price', 'прайс': 'ask_price' },
+        payment: ['оплата', 'платить', 'деньги', 'расчет', 'рассчёт', 'как оплатить'],
+        operator: ['оператор', 'менеджер', 'человек', 'живой', 'связаться', 'позвать']
+    },
+    REPLIES: {
+        welcome: () => (window.botWelcomeMessage || 'Привет! 👋 Я помощник BABYGIRL_LNR. Чем могу помочь?'),
+        askCity: '📍 В каком городе вас интересует встреча? (Первомайск / Луганск / Стаханов)',
+        askService: '💫 Какую услугу рассматриваете?\n• 1 час — знакомство\n• 2 часа — свидание\n• Выезд — за город/отель\n• Ночь — полное сопровождение',
+        noResults: (city, service) => `😔 К сожалению, по запросу "${service || 'все услуги'}" в городе ${city || 'указанном'} пока нет свободных анкет.\nМогу показать все доступные варианты?`,
+        paymentInfo: '💰 Оплата производится **по факту встречи, наличными в руки**. Никаких предоплат и скрытых комиссий.',
+        operatorConnecting: '🔄 Соединяю с живым оператором... Ожидайте, пожалуйста. 😊',
+        error: 'Произошла ошибка. Попробуйте переформулировать запрос или позовите оператора.'
+    },
+    userSessions: {},
+    initSession(username) { if (!this.userSessions[username]) { this.userSessions[username] = { state: this.STATES.IDLE, city: null, service: null, lastMessage: null, shownProfiles: [] }; } return this.userSessions[username]; },
+    parseIntent(text) { const lower = text.toLowerCase().trim(); const intent = { city: null, service: null, isPayment: false, isOperator: false, raw: text }; for (const [key, value] of Object.entries(this.KEYWORDS.cities)) { if (lower.includes(key)) { intent.city = value !== 'ask_city' ? value : null; if (value === 'ask_city') intent.askCity = true; break; } } for (const [key, value] of Object.entries(this.KEYWORDS.services)) { if (lower.includes(key)) { intent.service = value !== 'ask_service' && value !== 'ask_price' ? value : null; if (['ask_service', 'ask_price'].includes(value)) intent.askService = true; break; } } intent.isPayment = this.KEYWORDS.payment.some(k => lower.includes(k)); intent.isOperator = this.KEYWORDS.operator.some(k => lower.includes(k)); return intent; },
+    filterProfiles(city, service) { let profiles = DB.get('profiles') || []; if (city) profiles = profiles.filter(p => p.city === city); if (service && service !== 'ask_service') { profiles = profiles.filter(p => p.services && p.services.length > 0); } return profiles.sort((a, b) => (a.price || 999999) - (b.price || 999999)); },
+    formatProfileCard(profile, service) { const serviceName = service === '1h' ? '1 час' : service === '2h' ? '2 часа' : service === 'trip' ? 'Выезд' : service === 'night' ? 'Ночь' : 'Услуги'; const price = profile.services?.find(s => (service === '1h' && s.time.includes('60')) || (service === '2h' && s.time.includes('120')) || (service === 'trip' && s.name.includes('Выезд')) || (service === 'night' && s.name.includes('Ночь')) )?.price || profile.price; return `\n🌸 *${Security.escapeHtml(profile.name)}* — ${Security.escapeHtml(profile.cityName)}\n${Security.escapeHtml(profile.description?.substring(0, 100) + '...')}\n\n💎 ${serviceName}: *${(price || profile.price).toLocaleString()} ₽*\n📏 ${profile.height}см • ⚖️ ${profile.weight}кг • 👙 ${profile.bust}\n\n[👉 Подробнее и заказать](#profile-${profile.id})\n─────────────────\n`.trim(); },
+    processMessage(username, text) { const session = this.initSession(username); const intent = this.parseIntent(text); let replies = []; if (intent.isOperator) { session.state = this.STATES.OPERATOR_TAKEN; return { replies: [this.REPLIES.operatorConnecting], transferToOperator: true }; } if (intent.isPayment) { return { replies: [this.REPLIES.paymentInfo], keepState: true }; } switch (session.state) { case this.STATES.IDLE: if (intent.city && intent.service) { session.city = intent.city; session.service = intent.service; const results = this.filterProfiles(intent.city, intent.service); replies = this.buildResultsReply(results, intent.city, intent.service); session.state = results.length ? this.STATES.SHOWING_RESULTS : this.STATES.ASKING_SERVICE; } else if (intent.city) { session.city = intent.city; if (intent.askService) { replies = [this.REPLIES.askService]; session.state = this.STATES.ASKING_SERVICE; } else { const results = this.filterProfiles(intent.city, null); replies = this.buildResultsReply(results, intent.city, null); session.state = this.STATES.SHOWING_RESULTS; } } else if (intent.service) { session.service = intent.service; replies = [this.REPLIES.askCity]; session.state = this.STATES.ASKING_CITY; } else if (intent.askCity) { replies = [this.REPLIES.askCity]; session.state = this.STATES.ASKING_CITY; } else if (intent.askService) { replies = [this.REPLIES.askService]; session.state = this.STATES.ASKING_SERVICE; } else { replies = [this.REPLIES.welcome(), this.REPLIES.askCity]; session.state = this.STATES.ASKING_CITY; } break; case this.STATES.ASKING_CITY: if (intent.city) { session.city = intent.city; if (session.service) { const results = this.filterProfiles(session.city, session.service); replies = this.buildResultsReply(results, session.city, session.service); session.state = this.STATES.SHOWING_RESULTS; } else { replies = [this.REPLIES.askService]; session.state = this.STATES.ASKING_SERVICE; } } else { replies = [this.REPLIES.askCity, '💡 Напишите название города или выберите из меню "Города"']; } break; case this.STATES.ASKING_SERVICE: if (intent.service) { session.service = intent.service; const results = this.filterProfiles(session.city, session.service); replies = this.buildResultsReply(results, session.city, session.service); session.state = this.STATES.SHOWING_RESULTS; } else if (intent.city) { session.city = intent.city; replies = [this.REPLIES.askService]; } else { replies = [this.REPLIES.askService]; } break; case this.STATES.SHOWING_RESULTS: if (intent.city || intent.service) { session.city = intent.city || session.city; session.service = intent.service || session.service; const results = this.filterProfiles(session.city, session.service); replies = this.buildResultsReply(results, session.city, session.service); } else if (intent.isPayment) { replies = [this.REPLIES.paymentInfo]; } else { replies = ['✅ Выбор за вами! Нажмите на анкету для деталей или напишите "заказать [имя]"']; } break; } if (session.state === this.STATES.SHOWING_RESULTS && replies.length > 0 && !replies.includes(this.REPLIES.paymentInfo)) { replies.push(this.REPLIES.paymentInfo); } return { replies, nextState: session.state }; },
+    buildResultsReply(profiles, city, service) { if (!profiles.length) { return [this.REPLIES.noResults(city, service)]; } const limit = 3; const cards = profiles.slice(0, limit).map(p => this.formatProfileCard(p, service)); const cityName = cities.find(c => c.id === city)?.name || city; const header = `🔍 Найдено: ${profiles.length} анкет${city ? ` в ${cityName}` : ''}${service ? ` • ${service}` : ''}\n\n`; const footer = profiles.length > limit ? `\n📋 Всего: ${profiles.length}. Уточните запрос или позовите оператора для полного списка.` : ''; return [header + cards.join('\n') + footer]; },
+    resetSession(username) { if (this.userSessions[username]) { this.userSessions[username] = { state: this.STATES.IDLE, city: null, service: null, shownProfiles: [] }; } }
+};
+
+/* ===== HELPER FUNCTIONS ===== */
+function acceptCookies() { localStorage.setItem('bg_cookiesAccepted', 'true'); document.getElementById('cookieBanner').classList.remove('show'); }
+function declineCookies() { localStorage.setItem('bg_cookiesAccepted', 'false'); document.getElementById('cookieBanner').classList.remove('show'); }
+function initCookieBanner() { const accepted = localStorage.getItem('bg_cookiesAccepted'); if (accepted !== 'true') { document.getElementById('cookieBanner').classList.add('show'); } }
+function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
+function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
 function initAgeVerification() { const modal = document.getElementById('ageModal'); if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
 function confirmAge() { const modal = document.getElementById('ageModal'); if (modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; } Toast.show('Добро пожаловать!', 'success'); checkAuth(); }
 function exitSite() { window.location.href = 'https://www.google.com'; }
@@ -699,9 +621,17 @@ function openChatSection() { if (!currentUser) { pendingChatAction = true; openA
 function closeChat() { document.getElementById('chat').classList.remove('active'); document.getElementById('header').classList.remove('chat-active'); document.querySelector('.nav-link[data-section="models"]').click(); }
 function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username] ? chats[currentUser.username].messages : []; }
 function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot' }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
+
+/* ===== UPDATED CHAT FUNCTIONS WITH BOT ENGINE ===== */
 function addMessageToHistory(text, isUser, isBotSystem) { if (!currentUser) { Toast.show('Войдите в аккаунт', 'info'); openAuthModal(); return; } const history = getChatHistory(); history.push({ text: Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false }); saveChatHistory(history); renderChatMessages(); if (isUser && /(оператор|менеджер|человек|живой|связаться|хочу заказать|заказать встречу)/i.test(text)) { const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { chats[currentUser.username].status = 'operator'; DB.set('chats', chats); setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000); } } }
-function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
-function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') { const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); const reply = window.botWelcomeMessage || 'Понял вас! 😊 Уточните, пожалуйста, какой город вас интересует?'; addMessageToHistory(reply, false, true); }, 1200 + Math.random() * 800); } }
+
+function renderChatMessages() { const chatMessages = document.getElementById('chatMessages'); const history = getChatHistory(); if (history.length === 0) { chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; return; } chatMessages.innerHTML = history.map((msg, idx) => { let bubbleText = Security.escapeHtml(msg.text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\[(.+?)\]\(#profile-(\d+)\)/g, '<a href="#" onclick="openProfileByIdWithAuth($2); return false;" style="color:var(--primary);text-decoration:none;font-weight:600;">$1 👉</a>'); return `<div class="chat-message-item ${msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator')}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s"><div class="message-avatar">${msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼')}</div><div class="message-content"><div class="chat-bubble">${bubbleText}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`; }).join(''); setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); }
+
+function sendChatMessage() { const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; if (!Security.rateLimit.check('chat_' + (currentUser ? currentUser.username : 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } document.getElementById('rateLimitMsg').classList.remove('show'); addMessageToHistory(msg, true); input.value = ''; const chats = DB.get('chats') || {}; const userChat = chats[currentUser.username]; if (userChat?.status === 'operator') { if (msg.toLowerCase().match(/оператор|менеджер|человек|живой/)) { setTimeout(() => addMessageToHistory('🔄 Оператор уведомлён. Ожидайте подключения...', false, true), 800); } return; } const chatEl = document.getElementById('chatMessages'); const typing = document.createElement('div'); typing.className = 'chat-message-item bot'; typing.innerHTML = '<div class="message-avatar">🤖</div><div class="message-content"><div class="chat-bubble" style="font-style:italic;color:var(--gray);">печатает...</div></div>'; chatEl.appendChild(typing); chatEl.scrollTop = chatEl.scrollHeight; setTimeout(() => { typing.remove(); try { const result = BotEngine.processMessage(currentUser.username, msg); if (result.transferToOperator) { userChat.status = 'operator'; DB.set('chats', chats); if (currentUser.role === 'operator') renderOperatorChatList(); } if (result.replies?.length) { result.replies.forEach((reply, idx) => { setTimeout(() => { addMessageToHistory(reply, false, true); }, idx * 600); }); } if (result.nextState && BotEngine.userSessions[currentUser.username]) { BotEngine.userSessions[currentUser.username].state = result.nextState; } } catch(e) { console.error('Bot error:', e); addMessageToHistory(BotEngine.REPLIES.error, false, true); } }, 800 + Math.random() * 700); }
+
+function resetBotSession() { if (!currentUser) return; BotEngine.resetSession(currentUser.username); addMessageToHistory('🔄 Сессия сброшена. Начнём заново! ' + BotEngine.REPLIES.askCity, false, true); }
+
+/* ===== ADMIN PANEL FUNCTIONS ===== */
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
 function closeAdminPanel() { document.getElementById('adminDashboard').classList.remove('active'); }
 function switchAdminTab(tab) { const btn = event.target; document.querySelectorAll('.admin-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }); btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active')); document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active'); if (tab === 'chats') renderOperatorChatList(); if (tab === 'settings') populateSettingsForm(); }
@@ -716,6 +646,8 @@ function openOperatorChat(username) { activeOperatorChatUser = username; documen
 function closeOperatorChat() { activeOperatorChatUser = null; document.getElementById('operatorChatWindow').classList.remove('show'); renderOperatorChatList(); }
 function renderOperatorChatMessages(username) { const container = document.getElementById('opChatMessages'); const chats = DB.get('chats') || {}; const chat = chats[username]; if (!chat) return; container.innerHTML = chat.messages.map(msg => `<div class="chat-message-item ${msg.isUser ? 'user' : 'operator'}"><div class="message-avatar">${msg.isUser ? '👤' : '👨‍💼'}</div><div class="message-content"><div class="chat-bubble">${Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div></div>`).join(''); container.scrollTop = container.scrollHeight; }
 function sendOperatorMessage() { if (!activeOperatorChatUser) return; const input = document.getElementById('opChatInput'); const text = input.value.trim(); if (!text) return; if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } const chats = DB.get('chats') || {}; if (!chats[activeOperatorChatUser]) return; chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString() }); DB.set('chats', chats); input.value = ''; renderOperatorChatMessages(activeOperatorChatUser); renderOperatorChatList(); }
+
+/* ===== PROFILE & MODELS FUNCTIONS ===== */
 function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
 function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
 function renderModels(filter) { profiles = DB.get('profiles') || []; const grid = document.getElementById('modelsGrid'); let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p></div>'; return; } let html = ''; for (let p of filtered) { const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; } grid.innerHTML = html; document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); }
@@ -724,98 +656,26 @@ function openProfileById(id) { const idx = profiles.findIndex(p => p.id === id);
 function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год','года','лет']); document.getElementById('modalImage').src = (currentModalProfile.images && currentModalProfile.images[0]) ? currentModalProfile.images[0] : ''; document.getElementById('modalImage').alt = currentModalProfile.name; document.getElementById('modalName').textContent = currentModalProfile.name; document.getElementById('modalDescription').textContent = currentModalProfile.description; document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; document.getElementById('priceDay1').innerHTML = (currentModalProfile.services[0] ? currentModalProfile.services[0].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceDay2').innerHTML = (currentModalProfile.services[1] ? currentModalProfile.services[1].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceNight').innerHTML = (currentModalProfile.services[3] ? currentModalProfile.services[3].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTrip').innerHTML = (currentModalProfile.services[2] ? currentModalProfile.services[2].price.toLocaleString() : '—') + ' ₽'; document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services[4] ? currentModalProfile.services[4].price.toLocaleString() : '—') + ' ₽'; const addServDiv = document.getElementById('additionalServices'); if (currentModalProfile.additionalServices && currentModalProfile.additionalServices.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } document.getElementById('profileModal').classList.add('active'); }
 document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
 document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
+
+/* ===== EVENT LISTENERS ===== */
 function setupEventListeners() { document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } }); }); document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); }); document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); }); document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); }); document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); }); document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } }); }
-document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
+
+/* ===== VIDEO & HEADER INIT ===== */
 function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => { video.removeAttribute('poster'); }).catch(() => { const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else video.play().catch(()=>{}); }); window.addEventListener('orientationchange', () => { setTimeout(() => video.play().catch(()=>{}), 500); }); }
+function initDynamicHeader() { const header = document.getElementById('header'); if (!header) return; let lastScrollY = window.scrollY; let ticking = false; const SCROLL_THRESHOLD = 60; function updateHeader() { const currentScrollY = window.scrollY; const isChatActive = document.getElementById('chat').classList.contains('active'); const isAdminActive = document.getElementById('adminDashboard').classList.contains('active'); if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); lastScrollY = currentScrollY; ticking = false; return; } if (currentScrollY > lastScrollY + SCROLL_THRESHOLD && currentScrollY > 100) { header.classList.add('header-hidden'); } else if (currentScrollY < lastScrollY - SCROLL_THRESHOLD || currentScrollY <= 50) { header.classList.remove('header-hidden'); } lastScrollY = currentScrollY; ticking = false; } function onScroll() { if (!ticking) { requestAnimationFrame(updateHeader); ticking = true; } } window.addEventListener('scroll', onScroll, { passive: true }); const observer = new MutationObserver(() => { const isChatActive = document.getElementById('chat').classList.contains('active'); const isAdminActive = document.getElementById('adminDashboard').classList.contains('active'); if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); } else { header.classList.remove('header-hidden'); } }); observer.observe(document.getElementById('chat'), { attributes: true, attributeFilter: ['class'] }); observer.observe(document.getElementById('adminDashboard'), { attributes: true, attributeFilter: ['class'] }); }
 
-// ===== ДИНАМИЧЕСКОЕ СКРЫТИЕ ШАПКИ ПРИ СКРОЛЛЕ =====
-function initDynamicHeader() {
-    const header = document.getElementById('header');
-    if (!header) return;
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-    const SCROLL_THRESHOLD = 60; // пикселей, чтобы не реагировать на малейшие движения
-
-    function updateHeader() {
-        const currentScrollY = window.scrollY;
-        const isChatActive = document.getElementById('chat').classList.contains('active');
-        const isAdminActive = document.getElementById('adminDashboard').classList.contains('active');
-        
-        // Не прячем шапку, если открыт чат или админ-панель
-        if (isChatActive || isAdminActive) {
-            header.classList.remove('header-hidden');
-            lastScrollY = currentScrollY;
-            ticking = false;
-            return;
-        }
-
-        // Определяем направление скролла
-        if (currentScrollY > lastScrollY + SCROLL_THRESHOLD && currentScrollY > 100) {
-            // Скроллим вниз и не в самом верху → скрываем шапку
-            header.classList.add('header-hidden');
-        } else if (currentScrollY < lastScrollY - SCROLL_THRESHOLD || currentScrollY <= 50) {
-            // Скроллим вверх или достигли верха → показываем шапку
-            header.classList.remove('header-hidden');
-        }
-        
-        lastScrollY = currentScrollY;
-        ticking = false;
-    }
-
-    function onScroll() {
-        if (!ticking) {
-            requestAnimationFrame(updateHeader);
-            ticking = true;
-        }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Также обновляем при изменении видимости чата или админки (чтобы сразу показать шапку)
-    const observer = new MutationObserver(() => {
-        const isChatActive = document.getElementById('chat').classList.contains('active');
-        const isAdminActive = document.getElementById('adminDashboard').classList.contains('active');
-        if (isChatActive || isAdminActive) {
-            header.classList.remove('header-hidden');
-        } else {
-            // Если вышли из чата/админки, можно сразу показать шапку
-            header.classList.remove('header-hidden');
-        }
-    });
-    observer.observe(document.getElementById('chat'), { attributes: true, attributeFilter: ['class'] });
-    observer.observe(document.getElementById('adminDashboard'), { attributes: true, attributeFilter: ['class'] });
-}
-
+/* ===== DOM READY ===== */
 document.addEventListener('DOMContentLoaded', function() { 
-    DB.init(); 
-    Toast.init(); 
-    Security.csrf.generate(); 
-    initAgeVerification(); 
-    initCookieBanner(); 
-    loadSiteTexts(); 
-    checkAuth(); 
-    updateCitiesCount(); 
-    renderModels('all'); 
-    if (currentUser) renderChatMessages(); 
+    DB.init(); Toast.init(); Security.csrf.generate(); 
+    initAgeVerification(); initCookieBanner(); loadSiteTexts(); checkAuth(); 
+    updateCitiesCount(); renderModels('all'); if (currentUser) renderChatMessages(); 
     setupEventListeners(); 
-    if (currentUser) { 
-        const chats = DB.get('chats'); 
-        const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; 
-        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { 
-            addMessageToHistory(welcomeMsg, false, true); 
-        } 
-    } 
-    setInterval(function() { 
-        if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { 
-            renderOperatorChatList(); 
-            if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser); 
-        } 
-    }, 10000); 
-    const confirmBtn = document.getElementById('confirmBtn'); 
-    const exitBtn = document.getElementById('exitBtn'); 
-    if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); 
-    if (exitBtn) exitBtn.addEventListener('click', exitSite); 
-    initVideoBackground(); 
-    initDynamicHeader(); // запускаем динамическое скрытие шапки
+    if (currentUser) { const chats = DB.get('chats'); const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { addMessageToHistory(welcomeMsg, false, true); } } 
+    setInterval(function() { if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { renderOperatorChatList(); if (activeOperatorChatUser) renderOperatorChatMessages(activeOperatorChatUser); } }, 10000); 
+    const confirmBtn = document.getElementById('confirmBtn'); const exitBtn = document.getElementById('exitBtn'); 
+    if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); if (exitBtn) exitBtn.addEventListener('click', exitSite); 
+    initVideoBackground(); initDynamicHeader(); 
+    document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
 });
 </script>
 </body>
