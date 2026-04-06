@@ -117,8 +117,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .section-header { text-align: center; margin-bottom: 60px; }
 .section-header h2 { font-family: 'Great Vibes', cursive; font-size: 64px; margin-bottom: 15px; }
 .section-header p { color: var(--gray); font-size: 18px; }
-
-/* ===== ЧАТ НА ВСЮ СТРАНИЦУ ===== */
 .section#chat.active { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2000; padding: 0; background: var(--darker); display: flex; align-items: center; justify-content: center; }
 .chat-section { width: 100%; max-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
 .chat-container { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border-radius: 0; border: none; overflow: hidden; display: flex; flex-direction: column; width: 100%; max-width: 100%; height: 100vh; height: 100dvh; }
@@ -244,8 +242,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .auth-switch span { color: var(--primary); cursor: pointer; text-decoration: underline; }
 .auth-notice { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--success); text-align: center; margin-top: 10px; display: none; }
 .auth-notice.show { display: block; }
-
-/* ===== ADMIN PANEL ===== */
 .admin-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--darker); z-index: 3000; display: none; overflow-y: auto; }
 .admin-dashboard.active { display: block; }
 .admin-header { padding: 18px 40px; background: rgba(15,15,26,0.97); border-bottom: 1px solid rgba(233,30,99,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
@@ -266,8 +262,6 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .profile-name-lg { font-family: 'Great Vibes', cursive; font-size: 24px; color: var(--light); }
 .profile-city-sm { font-size: 14px; color: var(--gray); }
 .profile-actions { display: flex; gap: 10px; }
-
-/* ===== ОПЕРАТОРСКИЙ ЧАТ С УПРАВЛЕНИЕМ БОТОМ ===== */
 .chat-list-item { display: flex; flex-direction: column; gap: 10px; padding: 18px; background: rgba(255,255,255,0.03); border-radius: 12px; margin-bottom: 15px; border-left: 4px solid transparent; cursor: pointer; transition: all 0.3s; }
 .chat-list-item:hover { background: rgba(255,255,255,0.06); }
 .chat-list-item.active { border-left-color: var(--primary); background: rgba(233,30,99,0.1); }
@@ -331,6 +325,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 <div class="video-overlay" aria-hidden="true"></div>
 
 <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+<!-- 🔧 ИСПРАВЛЕННАЯ МОДАЛКА ВОЗРАСТА -->
 <div class="age-modal" id="ageModal" role="dialog" aria-labelledby="ageTitle" aria-modal="true">
     <div class="age-content">
         <div class="age-icon"><span class="age-number">18</span><span class="age-plus">+</span></div>
@@ -338,11 +334,12 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         <p class="age-text">Этот сайт содержит контент интимного характера, предназначенный исключительно для лиц старше 18 лет.</p>
         <div class="age-warning-text">⚠️ Все услуги предоставляются только совершеннолетним клиентам.</div>
         <div class="age-buttons">
-            <button class="btn btn-secondary" id="exitBtn">Мне нет 18</button>
-            <button class="btn btn-primary" id="confirmBtn">Мне есть 18 лет</button>
+            <button class="btn btn-secondary" id="exitBtn" onclick="exitSite()">Мне нет 18</button>
+            <button class="btn btn-primary" id="confirmBtn" onclick="confirmAge()">Мне есть 18 лет</button>
         </div>
     </div>
 </div>
+
 <div class="privacy-modal" id="privacyModal" role="dialog" aria-labelledby="privacyTitle" aria-modal="true">
     <div class="privacy-content">
         <button class="modal-close" onclick="closePrivacyModal()" aria-label="Закрыть">×</button>
@@ -636,9 +633,40 @@ function declineCookies() { localStorage.setItem('bg_cookiesAccepted', 'false');
 function initCookieBanner() { const accepted = localStorage.getItem('bg_cookiesAccepted'); if (accepted !== 'true') { document.getElementById('cookieBanner').classList.add('show'); } }
 function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
 function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
-function initAgeVerification() { const modal = document.getElementById('ageModal'); if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
-function confirmAge() { const modal = document.getElementById('ageModal'); if (modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; } Toast.show('Добро пожаловать!', 'success'); checkAuth(); }
-function exitSite() { window.location.href = 'https://www.google.com'; }
+
+/* 🔧 ИСПРАВЛЕННАЯ ВЕРИФИКАЦИЯ ВОЗРАСТА */
+function initAgeVerification() { 
+    if (localStorage.getItem('bg_ageVerified') === 'true') {
+        const modal = document.getElementById('ageModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        return;
+    }
+    const modal = document.getElementById('ageModal'); 
+    if (modal) { 
+        modal.classList.remove('hidden'); 
+        document.body.style.overflow = 'hidden'; 
+    } 
+}
+
+function confirmAge() { 
+    console.log('✅ Age confirmed');
+    const modal = document.getElementById('ageModal'); 
+    if (modal) { 
+        modal.classList.add('hidden'); 
+        document.body.style.overflow = ''; 
+        localStorage.setItem('bg_ageVerified', 'true');
+    } 
+    Toast.show('Добро пожаловать!', 'success'); 
+    checkAuth(); 
+}
+
+function exitSite() { 
+    window.location.href = 'https://www.google.com'; 
+}
+
 function checkAuth() { currentUser = DB.get('currentUser'); const menu = document.getElementById('userMenu'); const phone = DB.get('sitePhone') || '+7 (999) 123-45-67'; if (currentUser) { const initial = currentUser.username.charAt(0).toUpperCase(); const isOp = currentUser.role === 'operator'; const phoneHtml = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div>`; menu.innerHTML = phoneHtml + ` <div class="user-avatar" onclick="toggleUserMenu()" title="${Security.escapeHtml(currentUser.username)}" tabindex="0" role="button" aria-label="Меню">${initial}</div> <div id="userDropdown" class="user-dropdown"> <div style="font-weight: 700; margin-bottom: 6px; font-size: 15px;">${Security.escapeHtml(currentUser.username)}</div> <div style="font-size: 12px; color: var(--gray); margin-bottom: 14px;">${isOp ? '👨‍💻 Оператор' : '👤 Клиент'}</div> ${isOp ? '<button class="user-dropdown-item" onclick="openAdminPanel()">📊 Панель оператора</button>' : ''} <button class="user-dropdown-item" style="color: var(--danger);" onclick="logout()">🚪 Выйти</button> </div> `; if (isOp) { document.getElementById('operatorBtn').style.display = 'inline-flex'; document.getElementById('adminDashboard').classList.add('active'); switchAdminTab('chats'); } else { document.getElementById('operatorBtn').style.display = 'none'; document.getElementById('adminDashboard').classList.remove('active'); } if (pendingChatAction) { pendingChatAction = false; openChatSection(); } if (pendingOrderProfile) { openProfileById(pendingOrderProfile); pendingOrderProfile = null; } } else { menu.innerHTML = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div><div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`; } loadSitePhone(); }
 function toggleUserMenu() { const dd = document.getElementById('userDropdown'); if (dd) { const isShown = dd.classList.contains('show'); document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); if (!isShown) dd.classList.add('show'); } }
 document.addEventListener('click', function(e) { if (!e.target.closest('.user-menu')) document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); });
@@ -695,17 +723,41 @@ function setupEventListeners() { document.querySelectorAll('.nav-link').forEach(
 function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => { video.removeAttribute('poster'); }).catch(() => { const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else video.play().catch(()=>{}); }); window.addEventListener('orientationchange', () => { setTimeout(() => video.play().catch(()=>{}), 500); }); }
 function initDynamicHeader() { const header = document.getElementById('header'); if (!header) return; let lastScrollY = window.scrollY; let ticking = false; const SCROLL_THRESHOLD = 60; function updateHeader() { const currentScrollY = window.scrollY; const isChatActive = document.getElementById('chat').classList.contains('active'); const isAdminActive = document.getElementById('adminDashboard').classList.contains('active'); if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); lastScrollY = currentScrollY; ticking = false; return; } if (currentScrollY > lastScrollY + SCROLL_THRESHOLD && currentScrollY > 100) { header.classList.add('header-hidden'); } else if (currentScrollY < lastScrollY - SCROLL_THRESHOLD || currentScrollY <= 50) { header.classList.remove('header-hidden'); } lastScrollY = currentScrollY; ticking = false; } function onScroll() { if (!ticking) { requestAnimationFrame(updateHeader); ticking = true; } } window.addEventListener('scroll', onScroll, { passive: true }); const observer = new MutationObserver(() => { const isChatActive = document.getElementById('chat').classList.contains('active'); const isAdminActive = document.getElementById('adminDashboard').classList.contains('active'); if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); } else { header.classList.remove('header-hidden'); } }); observer.observe(document.getElementById('chat'), { attributes: true, attributeFilter: ['class'] }); observer.observe(document.getElementById('adminDashboard'), { attributes: true, attributeFilter: ['class'] }); }
 
-/* ===== DOM READY ===== */
+/* 🔧 ОБНОВЛЁННЫЙ DOMContentLoaded */
 document.addEventListener('DOMContentLoaded', function() { 
     DB.init(); Toast.init(); Security.csrf.generate(); 
-    initAgeVerification(); initCookieBanner(); loadSiteTexts(); checkAuth(); 
-    updateCitiesCount(); renderModels('all'); if (currentUser) renderChatMessages(); 
+    initAgeVerification(); // 🔥 Сначала возраст
+    initCookieBanner(); 
+    loadSiteTexts(); 
+    checkAuth(); 
+    updateCitiesCount(); 
+    renderModels('all'); 
+    if (currentUser) renderChatMessages(); 
     setupEventListeners(); 
-    if (currentUser) { const chats = DB.get('chats'); const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { addMessageToHistory(welcomeMsg, false, true); } } 
-    setInterval(function() { if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { renderOperatorChatList(); if (activeOperatorChatUser) { renderOperatorChatMessages(activeOperatorChatUser); updateOperatorChatControls(); } } }, 5000); 
-    const confirmBtn = document.getElementById('confirmBtn'); const exitBtn = document.getElementById('exitBtn'); 
-    if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); if (exitBtn) exitBtn.addEventListener('click', exitSite); 
-    initVideoBackground(); initDynamicHeader(); 
+    if (currentUser) { 
+        const chats = DB.get('chats'); 
+        const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; 
+        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { 
+            addMessageToHistory(welcomeMsg, false, true); 
+        } 
+    } 
+    setInterval(function() { 
+        if (currentUser && currentUser.role === 'operator' && document.getElementById('adminDashboard').classList.contains('active')) { 
+            renderOperatorChatList(); 
+            if (activeOperatorChatUser) { 
+                renderOperatorChatMessages(activeOperatorChatUser); 
+                updateOperatorChatControls(); 
+            } 
+        } 
+    }, 5000); 
+    const confirmBtn = document.getElementById('confirmBtn'); 
+    const exitBtn = document.getElementById('exitBtn'); 
+    if (confirmBtn) { confirmBtn.removeEventListener('click', confirmAge); confirmBtn.addEventListener('click', confirmAge); }
+    if (exitBtn) { exitBtn.removeEventListener('click', exitSite); exitBtn.addEventListener('click', exitSite); }
+    const ageModal = document.getElementById('ageModal');
+    if (ageModal) { ageModal.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); confirmAge(); } }); }
+    initVideoBackground(); 
+    initDynamicHeader(); 
     document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
 });
 </script>
