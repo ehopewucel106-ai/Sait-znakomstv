@@ -58,6 +58,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.7; } 100% { transform: scale(1.2); opacity: 1; } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+@keyframes processingPulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 .animate-fadeInUp { animation: fadeInUp 0.8s ease forwards; }
 .animate-pulse { animation: pulseGlow 3s ease infinite; }
 .animate-slideInLeft { animation: slideInLeft 0.6s ease forwards; }
@@ -137,6 +138,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .chat-message-item.user { align-self: flex-end; flex-direction: row-reverse; }
 .chat-message-item.operator { align-self: flex-start; }
 .chat-message-item.bot { align-self: flex-start; opacity: 0.85; }
+.chat-message-item.processing { align-self: center; justify-content: center; }
 .message-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(233,30,99,0.3); }
 .chat-message-item.user .message-avatar { background: rgba(255,255,255,0.2); }
 .message-content { display: flex; flex-direction: column; gap: 4px; }
@@ -144,6 +146,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .chat-message-item.operator .chat-bubble { background: rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
 .chat-message-item.user .chat-bubble { background: var(--gradient); border-bottom-right-radius: 4px; }
 .chat-message-item.bot .chat-bubble { background: rgba(156, 39, 176, 0.2); border: 1px solid rgba(156, 39, 176, 0.3); }
+.chat-message-item.processing .chat-bubble { background: rgba(233,30,99,0.15); border: 1px solid rgba(233,30,99,0.4); text-align: center; font-style: italic; animation: processingPulse 1.5s ease-in-out infinite; }
 .message-time { font-size: 11px; color: var(--gray); padding: 0 5px; }
 .chat-message-item.user .message-time { text-align: right; }
 .chat-profile-card { background: linear-gradient(145deg, #2d2d44 0%, #1a1a2e 100%); border-radius: 16px; padding: 16px; border: 1px solid rgba(233,30,99,0.3); max-width: 320px; animation: fadeInUp 0.4s ease forwards; margin: 8px 0; }
@@ -686,7 +689,7 @@ function openChatSection() {
 }
 function closeChat() { document.getElementById('chat').classList.remove('active'); document.getElementById('header').classList.remove('chat-active'); document.querySelector('.nav-link[data-section="models"]').click(); }
 function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username] ? chats[currentUser.username].messages : []; }
-function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot', operatorHasReplied: false }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
+function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot', operatorHasReplied: false, awaitingOperator: false }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
 function parseUserIntent(text) {
     const lower = text.toLowerCase();
     const intent = { city: null, service: null, wantsOperator: false };
@@ -707,8 +710,7 @@ const BOT_PHRASES = {
     showingProfiles: ['✅ Отлично! Вот что удалось подобрать:','✨ Нашла подходящие варианты, смотрите:','🌸 Подобрала для вас лучших девушек:'],
     paymentInfo: ['💰 Оплата — только по факту, в руки модели. Никаких предоплат! 🤝','💳 Рассчитываетесь напрямую с девушкой при встрече. Безопасно и честно ✨','🔐 Оплата происходит лично в руки после встречи. Всё прозрачно!'],
     noResults: ['😔 Пока в этом городе нет свободных анкет. Посмотреть другие города?','🤔 В этом городе сейчас нет предложений. Может, рассмотрим соседние?','Пока пусто в этом городе 😕 Хотите посмотреть анкеты в другом месте?'],
-    transferToOperator: ['🔄 Соединяю с оператором... Он ответит в течение пары минут! ⏳','👨‍💼 Передаю ваш запрос менеджеру. Ожидайте, пожалуйста! ✨','📞 Сейчас подключу оператора для деталей. Не переключайтесь! 😊'],
-    askFormat: ['💬 Какой формат вас интересует: 1 час, 2 часа, ночь или выезд?','✨ Уточните, пожалуйста: встреча на 1ч, 2ч, ночь или выезд?','🌙 Выберите длительность: 1 час / 2 часа / Ночь / Выезд']
+    transferToOperator: ['🔄 Соединяю с оператором... Он ответит в течение пары минут! ⏳','👨‍💼 Передаю ваш запрос менеджеру. Ожидайте, пожалуйста! ✨','📞 Сейчас подключу оператора для деталей. Не переключайтесь! 😊']
 };
 function randomPhrase(category) { const phrases = BOT_PHRASES[category]; return phrases[Math.floor(Math.random() * phrases.length)]; }
 function sendBotSmartReply(userText) {
@@ -716,6 +718,8 @@ function sendBotSmartReply(userText) {
     const chats = DB.get('chats') || {};
     const chat = chats[currentUser.username];
     if (chat?.operatorHasReplied) return;
+    // 🔥 Если уже ждём оператора — бот молчит
+    if (chat?.awaitingOperator) return;
     const state = botConversationState[currentUser.username] || { step: 'greeting', city: null, service: null };
     const intent = parseUserIntent(userText);
     if (intent.city) state.city = intent.city;
@@ -727,16 +731,11 @@ function sendBotSmartReply(userText) {
     if (!state.city) { addMessageToHistory(randomPhrase('askingCity'), false, true); state.step = 'asking_city'; botConversationState[currentUser.username] = state; return; }
     if (!state.service) { addMessageToHistory(randomPhrase('askingService'), false, true); state.step = 'asking_service'; botConversationState[currentUser.username] = state; return; }
     showMatchingProfiles(state.city, state.service);
-    // 🔥 После показа анкеты спрашиваем формат
-    setTimeout(() => { addMessageToHistory(randomPhrase('askFormat'), false, true); }, 1500);
     botConversationState[currentUser.username] = { step: 'done', city: state.city, service: state.service };
 }
-// 🔥 ИСПРАВЛЕННАЯ ФУНКЦИЯ: показывает ВСЕ услуги с понятными названиями
 function renderProfileInChat(profile) {
     const services = profile.services || [];
     const imgSrc = (profile.images && profile.images[0]) ? profile.images[0] : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2230%22%3E👤%3C/text%3E%3C/svg%3E';
-    
-    // 🔥 Формируем список всех 5 услуг с понятными названиями
     const serviceLabels = ['1 час', '2 часа', 'Выезд', 'Ночь', 'Выезд + ночь'];
     let pricesHtml = '';
     for (let i = 0; i < 5; i++) {
@@ -744,7 +743,6 @@ function renderProfileInChat(profile) {
         const price = svc ? svc.price.toLocaleString().replace(/ /g, '.') : '—';
         pricesHtml += `<div class="chat-price-item"><span class="chat-price-label">${serviceLabels[i]}</span><span class="chat-price-value">${price} ₽</span></div>`;
     }
-    
     return `<div class="chat-profile-card animate-cardSlideIn">
         <div class="chat-profile-card-header">
             <img src="${imgSrc}" alt="${Security.escapeHtml(profile.name)}" class="chat-profile-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2230%22%3E👤%3C/text%3E%3C/svg%3E'">
@@ -768,13 +766,28 @@ function showMatchingProfiles(cityId, serviceType) {
         toShow.forEach((p, i) => {
             setTimeout(() => {
                 const history = getChatHistory();
-                // 🔥 ВАЖНО: isHtml=true, чтобы не экранировать карточку
                 history.push({ text: renderProfileInChat(p), isUser: false, timestamp: new Date().toISOString(), isBotSystem: true, isHtml: true });
                 saveChatHistory(history);
                 renderChatMessages();
             }, i * 400);
         });
-        setTimeout(() => { addMessageToHistory(randomPhrase('paymentInfo'), false, true); }, toShow.length * 400 + 300);
+        // 🔥 После показа анкет: показываем оплату + передаём оператору
+        setTimeout(() => {
+            addMessageToHistory(randomPhrase('paymentInfo'), false, true);
+            // 🔥 Переключаем чат на оператора и показываем "В обработке"
+            setTimeout(() => {
+                const chats = DB.get('chats') || {};
+                if (chats[currentUser.username]) {
+                    chats[currentUser.username].status = 'operator';
+                    chats[currentUser.username].awaitingOperator = true;
+                    DB.set('chats', chats);
+                }
+                // 🔥 Добавляем сообщение "В обработке" с анимацией
+                addMessageToHistory('🔄 <span style="animation:processingPulse 1.5s ease-in-out infinite">Ваш запрос в обработке, оператор скоро ответит...</span>', false, true, true);
+                // 🔥 Уведомляем оператора через localStorage
+                localStorage.setItem('bg_newChat_' + currentUser.username, Date.now().toString());
+            }, 1000);
+        }, toShow.length * 400 + 300);
     }, 300);
 }
 function orderFromChat(profileId) {
@@ -788,24 +801,27 @@ function orderFromChat(profileId) {
     addMessageToHistory(`✅ Ваш запрос принят! Оператор свяжется с вами в течение 2-3 минут для подтверждения деталей. 📞`, false, true);
     Toast.show('Заказ передан оператору', 'success');
 }
-// 🔥 ИСПРАВЛЕННАЯ ФУНКЦИЯ: не санитизим HTML-контент карточек
 function addMessageToHistory(text, isUser, isBotSystem, isHtml = false) { 
     if (!currentUser) { Toast.show('Войдите в аккаунт', 'info'); openAuthModal(); return; } 
     const history = getChatHistory(); 
-    history.push({ 
-        text: isHtml ? text : Security.sanitizeInput(text),
-        isUser: isUser, 
-        timestamp: new Date().toISOString(), 
-        isBotSystem: isBotSystem || false,
-        isHtml: isHtml || false
-    }); 
+    history.push({ text: isHtml ? text : Security.sanitizeInput(text), isUser: isUser, timestamp: new Date().toISOString(), isBotSystem: isBotSystem || false, isHtml: isHtml || false }); 
     saveChatHistory(history); 
     renderChatMessages(); 
 }
-// 🔥 ИСПРАВЛЕННЫЙ РЕНДЕР: корректно показываем текст и HTML
 function renderChatMessages() { 
     const chatMessages = document.getElementById('chatMessages'); 
     const history = getChatHistory(); 
+    const chats = DB.get('chats') || {};
+    const chat = chats[currentUser.username];
+    // 🔥 Если оператор ответил — удаляем сообщение "В обработке"
+    if (chat?.operatorHasReplied && chat?.awaitingOperator) {
+        const idx = history.findIndex(m => m.text && m.text.includes('Ваш запрос в обработке'));
+        if (idx !== -1) {
+            history.splice(idx, 1);
+            chat.awaitingOperator = false;
+            DB.set('chats', chats);
+        }
+    }
     if (history.length === 0) { 
         chatMessages.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><div class="empty-chat-text">Начните диалог</div><div class="empty-chat-subtext">Напишите город, услугу или вопрос — я помогу 😊</div></div>'; 
         return; 
@@ -813,10 +829,10 @@ function renderChatMessages() {
     chatMessages.innerHTML = history.map((msg, idx) => {
         const bubbleClass = msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator');
         const avatar = msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼');
-        // 🔥 Если isHtml — вставляем как есть, иначе экранируем
         const content = msg.isHtml ? msg.text : Security.escapeHtml(msg.text);
-        return `<div class="chat-message-item ${bubbleClass}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s">
-            <div class="message-avatar">${avatar}</div>
+        const isProcessing = msg.isHtml && msg.text.includes('Ваш запрос в обработке');
+        return `<div class="chat-message-item ${isProcessing ? 'processing' : bubbleClass}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s">
+            <div class="message-avatar">${isProcessing ? '⏳' : avatar}</div>
             <div class="message-content">
                 <div class="chat-bubble">${content}</div>
                 <div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
@@ -838,8 +854,9 @@ function sendChatMessage() {
     addMessageToHistory(msg, true); 
     input.value = ''; 
     const chats = DB.get('chats') || {};
-    const chatStatus = chats[currentUser.username]?.status || 'bot';
-    if (chatStatus === 'operator' && chats[currentUser.username]?.operatorHasReplied) return;
+    const chat = chats[currentUser.username];
+    // 🔥 Если оператор уже ответил ИЛИ ждём оператора — бот НЕ отвечает
+    if (chat?.operatorHasReplied || chat?.awaitingOperator) return;
     setTimeout(() => { sendBotSmartReply(msg); }, 600 + Math.random() * 600);
 }
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
@@ -927,7 +944,6 @@ function deleteProfile() {
     let profileList = DB.get('profiles').filter(p => p.id != id); 
     DB.set('profiles', profileList); profiles = profileList; closeProfileEditor(); renderAdminProfiles(); renderModels('all'); updateCitiesCount(); Toast.show('Анкета удалена', 'info'); 
 }
-// 🔥 ИСПРАВЛЕННЫЙ СПИСОК ЧАТОВ: показывает ВСЕ чаты с клиентами
 function renderOperatorChatList() { 
     const list = document.getElementById('operatorChatList'); 
     const chats = DB.get('chats') || {}; 
@@ -939,12 +955,13 @@ function renderOperatorChatList() {
         const needsAttn = chat.status === 'operator' && lastMsg && lastMsg.isUser && !chat.operatorHasReplied;
         const isActive = activeOperatorChatUser === u;
         const hasOperatorReply = chat.operatorHasReplied ? '🟢' : (needsAttn ? '🔴' : '');
+        const isAwaiting = chat.awaitingOperator ? ' ⏳' : '';
         return `<div class="chat-list-item ${needsAttn ? 'needs-attention' : ''} ${isActive ? 'active' : ''}" onclick="openOperatorChat('${Security.escapeHtml(u)}')" tabindex="0" role="button">
-            <div class="chat-user-name">${Security.escapeHtml(u)} ${hasOperatorReply}</div>
+            <div class="chat-user-name">${Security.escapeHtml(u)}${isAwaiting} ${hasOperatorReply}</div>
             <div class="chat-preview"><span class="chat-last-msg">${lastMsg ? (lastMsg.isUser ? 'Клиент: ' : 'Оператор: ') + Security.escapeHtml(lastMsg.text.substring(0, 40)) : 'Нет сообщений'}</span><span>${lastMsg ? new Date(lastMsg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : ''}</span></div>
         </div>`; 
     }).join(''); 
-    const hasUnread = users.some(u => chats[u].status === 'operator' && !chats[u].operatorHasReplied && chats[u].messages[chats[u].messages.length - 1]?.isUser); 
+    const hasUnread = users.some(u => chats[u].status === 'operator' && (!chats[u].operatorHasReplied || chats[u].awaitingOperator) && chats[u].messages[chats[u].messages.length - 1]?.isUser); 
     document.getElementById('newChatBadge').style.display = hasUnread ? 'inline-block' : 'none'; 
 }
 function openOperatorChat(username) { 
@@ -982,6 +999,7 @@ function sendOperatorMessage() {
     if (!chats[activeOperatorChatUser]) return; 
     chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString(), isBotSystem: false });
     chats[activeOperatorChatUser].operatorHasReplied = true;
+    chats[activeOperatorChatUser].awaitingOperator = false;
     DB.set('chats', chats); 
     input.value = ''; 
     renderOperatorChatMessages(activeOperatorChatUser); 
