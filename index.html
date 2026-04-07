@@ -590,6 +590,19 @@ let pendingOrderProfile = null;
 let cityDropdownOpen = false;
 let botConversationState = {};
 let chatUpdateInterval = null;
+let notificationAudio = null;
+function playOperatorNotification() {
+    if (!currentUser || currentUser.role !== 'operator') return;
+    try {
+        if (!notificationAudio) {
+            notificationAudio = new Audio('data:audio/wav;base64,U3RlYWx0aCB3YXZlIGZpbGUsIHBsZWFzZSB1c2UgdGhlIHN0YW5kYXJkIGJlZXAgc291bmQuIFRoaXMgaXMgYSBzaW1wbGUgdGVzdCB0byBlbnN1cmUgYXVkaW8gaXMgc3VwcG9ydGVkLg==');
+            notificationAudio.volume = 0.5;
+        }
+        notificationAudio.play().catch(e => console.log('Audio play blocked', e));
+    } catch(e) { console.log('Audio not supported'); }
+    if (navigator.vibrate) navigator.vibrate(200);
+    Toast.show('🔔 Новое сообщение в чате!', 'info', 3000);
+}
 function initAgeVerification() { 
     const modal = document.getElementById('ageModal');
     const confirmed = localStorage.getItem('bg_ageConfirmed');
@@ -677,6 +690,18 @@ function handleStorageChange(e) {
         }
     }
 }
+function deleteChat(username) {
+    if (!currentUser || currentUser.role !== 'operator') return;
+    const chats = DB.get('chats') || {};
+    if (chats[username]) {
+        delete chats[username];
+        DB.set('chats', chats);
+        delete botConversationState[username];
+        if (activeOperatorChatUser === username) closeOperatorChat();
+        renderOperatorChatList();
+        Toast.show(`Чат с ${username} удалён`, 'info');
+    }
+}
 function openChatSection() { 
     if (!initAgeVerification()) return;
     if (!currentUser) { pendingChatAction = true; openAuthModal(); return; } 
@@ -717,9 +742,7 @@ function sendBotSmartReply(userText) {
     if (!currentUser) return;
     const chats = DB.get('chats') || {};
     const chat = chats[currentUser.username];
-    if (chat?.operatorHasReplied) return;
-    // 🔥 Если уже ждём оператора — бот молчит
-    if (chat?.awaitingOperator) return;
+    if (chat?.operatorHasReplied || chat?.awaitingOperator) return;
     const state = botConversationState[currentUser.username] || { step: 'greeting', city: null, service: null };
     const intent = parseUserIntent(userText);
     if (intent.city) state.city = intent.city;
@@ -771,10 +794,8 @@ function showMatchingProfiles(cityId, serviceType) {
                 renderChatMessages();
             }, i * 400);
         });
-        // 🔥 После показа анкет: показываем оплату + передаём оператору
         setTimeout(() => {
             addMessageToHistory(randomPhrase('paymentInfo'), false, true);
-            // 🔥 Переключаем чат на оператора и показываем "В обработке"
             setTimeout(() => {
                 const chats = DB.get('chats') || {};
                 if (chats[currentUser.username]) {
@@ -782,9 +803,8 @@ function showMatchingProfiles(cityId, serviceType) {
                     chats[currentUser.username].awaitingOperator = true;
                     DB.set('chats', chats);
                 }
-                // 🔥 Добавляем сообщение "В обработке" с анимацией
                 addMessageToHistory('🔄 <span style="animation:processingPulse 1.5s ease-in-out infinite">Ваш запрос в обработке, оператор скоро ответит...</span>', false, true, true);
-                // 🔥 Уведомляем оператора через localStorage
+                playOperatorNotification();
                 localStorage.setItem('bg_newChat_' + currentUser.username, Date.now().toString());
             }, 1000);
         }, toShow.length * 400 + 300);
@@ -795,11 +815,13 @@ function orderFromChat(profileId) {
     const chats = DB.get('chats') || {};
     if (chats[currentUser.username]) {
         chats[currentUser.username].status = 'operator';
+        chats[currentUser.username].awaitingOperator = true;
         chats[currentUser.username].messages.push({ text: `🔔 Клиент хочет заказать анкету #${profileId}`, isUser: false, timestamp: new Date().toISOString(), isBotSystem: true });
         DB.set('chats', chats);
     }
-    addMessageToHistory(`✅ Ваш запрос принят! Оператор свяжется с вами в течение 2-3 минут для подтверждения деталей. 📞`, false, true);
-    Toast.show('Заказ передан оператору', 'success');
+    addMessageToHistory('🔄 <span style="animation:processingPulse 1.5s ease-in-out infinite">Ваш запрос в обработке, оператор свяжется с вами...</span>', false, true, true);
+    playOperatorNotification();
+    localStorage.setItem('bg_newChat_' + currentUser.username, Date.now().toString());
 }
 function addMessageToHistory(text, isUser, isBotSystem, isHtml = false) { 
     if (!currentUser) { Toast.show('Войдите в аккаунт', 'info'); openAuthModal(); return; } 
@@ -813,7 +835,6 @@ function renderChatMessages() {
     const history = getChatHistory(); 
     const chats = DB.get('chats') || {};
     const chat = chats[currentUser.username];
-    // 🔥 Если оператор ответил — удаляем сообщение "В обработке"
     if (chat?.operatorHasReplied && chat?.awaitingOperator) {
         const idx = history.findIndex(m => m.text && m.text.includes('Ваш запрос в обработке'));
         if (idx !== -1) {
@@ -830,7 +851,7 @@ function renderChatMessages() {
         const bubbleClass = msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator');
         const avatar = msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼');
         const content = msg.isHtml ? msg.text : Security.escapeHtml(msg.text);
-        const isProcessing = msg.isHtml && msg.text.includes('Ваш запрос в обработке');
+        const isProcessing = msg.isHtml && (msg.text.includes('Ваш запрос в обработке') || msg.text.includes('ваш запрос в обработке'));
         return `<div class="chat-message-item ${isProcessing ? 'processing' : bubbleClass}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s">
             <div class="message-avatar">${isProcessing ? '⏳' : avatar}</div>
             <div class="message-content">
@@ -855,8 +876,12 @@ function sendChatMessage() {
     input.value = ''; 
     const chats = DB.get('chats') || {};
     const chat = chats[currentUser.username];
-    // 🔥 Если оператор уже ответил ИЛИ ждём оператора — бот НЕ отвечает
-    if (chat?.operatorHasReplied || chat?.awaitingOperator) return;
+    if (chat?.operatorHasReplied) {
+        if (chat.status !== 'operator') chat.status = 'operator';
+        DB.set('chats', chats);
+        playOperatorNotification();
+        return;
+    }
     setTimeout(() => { sendBotSmartReply(msg); }, 600 + Math.random() * 600);
 }
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
@@ -928,213 +953,3 @@ function saveProfile() {
     if (id) { 
         const idx = profileList.findIndex(p => p.id == id); 
         if (idx !== -1) { 
-            profileList[idx] = { ...profileList[idx], name, city, cityName, description: desc, images: [img], price, services: [ { name:'Встреча (1 час)', time:'60 минут', price:price1h }, { name:'Свидание (2 часа)', time:'120 минут', price:price2h }, { name:'Выезд (от 2 часов)', time:'от 120 минут', price:priceTrip }, { name:'Ночь', time:'12 часов', price:priceNight }, { name:'Выезд ночь', time:'12 часов', price:priceTripNight } ], additionalServices: additional }; 
-            Toast.show('Анкета обновлена', 'success'); 
-        } 
-    } else { 
-        const newId = profileList.length ? Math.max(...profileList.map(p => p.id)) + 1 : 1; 
-        profileList.push({ id: newId, name, age: 20, height: 170, weight: 50, bust: '2', city, cityName, description: desc, price, images: [img], services: [ { name:'Встреча (1 час)', time:'60 минут', price:price1h }, { name:'Свидание (2 часа)', time:'120 минут', price:price2h }, { name:'Выезд (от 2 часов)', time:'от 120 минут', price:priceTrip }, { name:'Ночь', time:'12 часов', price:priceNight }, { name:'Выезд ночь', time:'12 часов', price:priceTripNight } ], additionalServices: additional }); 
-        Toast.show('Анкета создана', 'success'); 
-    } 
-    DB.set('profiles', profileList); profiles = profileList; closeProfileEditor(); renderAdminProfiles(); renderModels('all'); updateCitiesCount(); 
-}
-function deleteProfile() { 
-    const id = document.getElementById('editProfileId').value; 
-    if (!confirm('Удалить анкету?')) return; 
-    let profileList = DB.get('profiles').filter(p => p.id != id); 
-    DB.set('profiles', profileList); profiles = profileList; closeProfileEditor(); renderAdminProfiles(); renderModels('all'); updateCitiesCount(); Toast.show('Анкета удалена', 'info'); 
-}
-function renderOperatorChatList() { 
-    const list = document.getElementById('operatorChatList'); 
-    const chats = DB.get('chats') || {}; 
-    const users = Object.keys(chats); 
-    if (!users.length) { list.innerHTML = '<div style="padding:20px;color:var(--gray);text-align:center;">Нет активных чатов</div>'; return; } 
-    list.innerHTML = users.map(u => { 
-        const chat = chats[u]; 
-        const lastMsg = chat.messages.length ? chat.messages[chat.messages.length - 1] : null; 
-        const needsAttn = chat.status === 'operator' && lastMsg && lastMsg.isUser && !chat.operatorHasReplied;
-        const isActive = activeOperatorChatUser === u;
-        const hasOperatorReply = chat.operatorHasReplied ? '🟢' : (needsAttn ? '🔴' : '');
-        const isAwaiting = chat.awaitingOperator ? ' ⏳' : '';
-        return `<div class="chat-list-item ${needsAttn ? 'needs-attention' : ''} ${isActive ? 'active' : ''}" onclick="openOperatorChat('${Security.escapeHtml(u)}')" tabindex="0" role="button">
-            <div class="chat-user-name">${Security.escapeHtml(u)}${isAwaiting} ${hasOperatorReply}</div>
-            <div class="chat-preview"><span class="chat-last-msg">${lastMsg ? (lastMsg.isUser ? 'Клиент: ' : 'Оператор: ') + Security.escapeHtml(lastMsg.text.substring(0, 40)) : 'Нет сообщений'}</span><span>${lastMsg ? new Date(lastMsg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : ''}</span></div>
-        </div>`; 
-    }).join(''); 
-    const hasUnread = users.some(u => chats[u].status === 'operator' && (!chats[u].operatorHasReplied || chats[u].awaitingOperator) && chats[u].messages[chats[u].messages.length - 1]?.isUser); 
-    document.getElementById('newChatBadge').style.display = hasUnread ? 'inline-block' : 'none'; 
-}
-function openOperatorChat(username) { 
-    activeOperatorChatUser = username; 
-    document.getElementById('operatorChatWindow').classList.add('show'); 
-    document.getElementById('opChatUserName').textContent = username; 
-    const chats = DB.get('chats'); 
-    if (chats[username]) { chats[username].status = 'operator'; DB.set('chats', chats); } 
-    renderOperatorChatMessages(username); 
-    renderOperatorChatList(); 
-    document.getElementById('opChatInput').focus(); 
-}
-function closeOperatorChat() { activeOperatorChatUser = null; document.getElementById('operatorChatWindow').classList.remove('show'); renderOperatorChatList(); }
-function renderOperatorChatMessages(username) { 
-    const container = document.getElementById('opChatMessages'); 
-    const chats = DB.get('chats') || {}; 
-    const chat = chats[username]; 
-    if (!chat) return; 
-    container.innerHTML = chat.messages.map(msg => {
-        const isOp = !msg.isUser && !msg.isBotSystem;
-        return `<div class="chat-message-item ${msg.isUser ? 'user' : (isOp ? 'operator' : 'bot')}">
-            <div class="message-avatar">${msg.isUser ? '👤' : (isOp ? '👨‍💼' : '🤖')}</div>
-            <div class="message-content"><div class="chat-bubble">${msg.isHtml ? msg.text : Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div>
-        </div>`;
-    }).join(''); 
-    container.scrollTop = container.scrollHeight; 
-}
-function sendOperatorMessage() { 
-    if (!activeOperatorChatUser) return; 
-    const input = document.getElementById('opChatInput'); 
-    const text = input.value.trim(); 
-    if (!text) return; 
-    if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } 
-    const chats = DB.get('chats') || {}; 
-    if (!chats[activeOperatorChatUser]) return; 
-    chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString(), isBotSystem: false });
-    chats[activeOperatorChatUser].operatorHasReplied = true;
-    chats[activeOperatorChatUser].awaitingOperator = false;
-    DB.set('chats', chats); 
-    input.value = ''; 
-    renderOperatorChatMessages(activeOperatorChatUser); 
-    renderOperatorChatList();
-    localStorage.setItem('bg_chatUpdate_' + activeOperatorChatUser, Date.now().toString());
-}
-function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
-function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
-function renderModels(filter) { 
-    profiles = DB.get('profiles') || []; 
-    const grid = document.getElementById('modelsGrid'); 
-    let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); 
-    if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p></div>'; return; } 
-    let html = ''; 
-    for (let p of filtered) { 
-        const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); 
-        const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; 
-        const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; 
-        const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; 
-        html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22%3E👤%3C/text%3E%3C/svg%3E'"></div><div class="model-info"><div class="model-name">${Security.escapeHtml(p.name)}</div><div class="model-stats"><div class="stat-item"><span class="stat-icon">🎂</span>${ageText}</div><div class="stat-item"><span class="stat-icon">📏</span>${p.height || '—'} см</div><div class="stat-item"><span class="stat-icon">⚖️</span>${p.weight || '—'} кг</div><div class="stat-item"><span class="stat-icon">👙</span>${p.bust || '—'} размер</div></div><p class="model-description">${Security.escapeHtml(descPreview)}</p><div class="model-price"><span class="price-label">Услуги от:</span><span class="price-value">${minPrice} ₽</span></div><button class="btn btn-order" onclick="event.stopPropagation(); openProfileByIdWithAuth(${p.id})">Заказать</button></div></div>`; 
-    } 
-    grid.innerHTML = html; 
-    document.querySelectorAll('.model-card').forEach(card => { card.addEventListener('click', function() { openProfileByIdWithAuth(parseInt(this.dataset.id)); }); }); 
-}
-function openProfileByIdWithAuth(id) { if (!currentUser) { pendingOrderProfile = id; openAuthModal(); return; } openProfileById(id); }
-function openProfileById(id) { const idx = profiles.findIndex(p => p.id === id); if (idx >= 0) openProfile(idx); }
-function openProfile(idx) { 
-    currentModalProfile = profiles[idx]; 
-    const ageText = currentModalProfile.age + ' ' + declension(currentModalProfile.age, ['год','года','лет']); 
-    document.getElementById('modalImage').src = (currentModalProfile.images && currentModalProfile.images[0]) ? currentModalProfile.images[0] : ''; 
-    document.getElementById('modalImage').alt = currentModalProfile.name; 
-    document.getElementById('modalName').textContent = currentModalProfile.name; 
-    document.getElementById('modalDescription').textContent = currentModalProfile.description; 
-    document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; 
-    document.getElementById('priceDay1').innerHTML = (currentModalProfile.services[0] ? currentModalProfile.services[0].price.toLocaleString() : '—') + ' ₽'; 
-    document.getElementById('priceDay2').innerHTML = (currentModalProfile.services[1] ? currentModalProfile.services[1].price.toLocaleString() : '—') + ' ₽'; 
-    document.getElementById('priceNight').innerHTML = (currentModalProfile.services[3] ? currentModalProfile.services[3].price.toLocaleString() : '—') + ' ₽'; 
-    document.getElementById('priceTrip').innerHTML = (currentModalProfile.services[2] ? currentModalProfile.services[2].price.toLocaleString() : '—') + ' ₽'; 
-    document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services[4] ? currentModalProfile.services[4].price.toLocaleString() : '—') + ' ₽'; 
-    const addServDiv = document.getElementById('additionalServices'); 
-    if (currentModalProfile.additionalServices && currentModalProfile.additionalServices.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } 
-    document.getElementById('profileModal').classList.add('active'); 
-}
-document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
-document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
-function setupEventListeners() { 
-    document.querySelectorAll('.nav-link').forEach(link => { 
-        link.addEventListener('click', function(e) { 
-            e.preventDefault(); 
-            const section = this.dataset.section; 
-            if (section === 'chat') openChatSection(); 
-            else { 
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
-                document.getElementById(section).classList.add('active'); 
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); 
-                this.classList.add('active'); 
-                if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); 
-                else if (section === 'city') updateCitiesCount(); 
-                document.getElementById('header').classList.remove('chat-active'); 
-            } 
-        }); 
-    }); 
-    document.querySelectorAll('.filter-btn').forEach(btn => { 
-        btn.addEventListener('click', function() { 
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); 
-            this.classList.add('active'); 
-            renderModels(this.dataset.filter); 
-        }); 
-    }); 
-    document.querySelectorAll('.city-card').forEach(card => { 
-        card.addEventListener('click', () => { 
-            const city = card.dataset.city; 
-            document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); 
-            document.querySelector('.nav-link[data-section="models"]').click(); 
-        }); 
-    }); 
-    document.getElementById('cityNavLink')?.addEventListener('click', (e) => { 
-        e.preventDefault(); 
-        cityDropdownOpen = !cityDropdownOpen; 
-        document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); 
-    }); 
-    document.querySelectorAll('.city-dropdown-item').forEach(item => { 
-        item.addEventListener('click', () => { 
-            const city = item.dataset.city; 
-            document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); 
-            document.querySelector('.nav-link[data-section="models"]').click(); 
-            document.getElementById('cityDropdown').classList.remove('active'); 
-            cityDropdownOpen = false; 
-        }); 
-    }); 
-    document.addEventListener('click', (e) => { 
-        if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { 
-            document.getElementById('cityDropdown')?.classList.remove('active'); 
-            cityDropdownOpen = false; 
-        } 
-    }); 
-}
-document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
-function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => { video.removeAttribute('poster'); }).catch(() => { const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else video.play().catch(()=>{}); }); window.addEventListener('orientationchange', () => { setTimeout(() => video.play().catch(()=>{}), 500); }); }
-function initDynamicHeader() {
-    const header = document.getElementById('header');
-    if (!header) return;
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-    const SCROLL_THRESHOLD = 60;
-    function updateHeader() {
-        const currentScrollY = window.scrollY;
-        const isChatActive = document.getElementById('chat').classList.contains('active');
-        const isAdminActive = document.getElementById('adminDashboard').classList.contains('active');
-        if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); lastScrollY = currentScrollY; ticking = false; return; }
-        if (currentScrollY > lastScrollY + SCROLL_THRESHOLD && currentScrollY > 100) { header.classList.add('header-hidden'); } 
-        else if (currentScrollY < lastScrollY - SCROLL_THRESHOLD || currentScrollY <= 50) { header.classList.remove('header-hidden'); }
-        lastScrollY = currentScrollY; ticking = false;
-    }
-    function onScroll() { if (!ticking) { requestAnimationFrame(updateHeader); ticking = true; } }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    const observer = new MutationObserver(() => {
-        const isChatActive = document.getElementById('chat').classList.contains('active');
-        const isAdminActive = document.getElementById('adminDashboard').classList.contains('active');
-        if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); } else { header.classList.remove('header-hidden'); }
-    });
-    observer.observe(document.getElementById('chat'), { attributes: true, attributeFilter: ['class'] });
-    observer.observe(document.getElementById('adminDashboard'), { attributes: true, attributeFilter: ['class'] });
-}
-document.addEventListener('DOMContentLoaded', function() { 
-    DB.init(); Toast.init(); Security.csrf.generate(); initAgeVerification(); initCookieBanner(); loadSiteTexts(); checkAuth(); updateCitiesCount(); renderModels('all'); if (currentUser) renderChatMessages(); setupEventListeners(); 
-    if (currentUser) { 
-        const chats = DB.get('chats'); 
-        if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { addMessageToHistory(randomPhrase('greeting'), false, true); } 
-    } 
-    if (currentUser?.role === 'operator') { startOperatorRealtime(); }
-    const confirmBtn = document.getElementById('confirmBtn'); const exitBtn = document.getElementById('exitBtn'); 
-    if (confirmBtn) confirmBtn.addEventListener('click', confirmAge); if (exitBtn) exitBtn.addEventListener('click', exitSite); 
-    initVideoBackground(); initDynamicHeader();
-});
-</script>
-</body>
-</html>
