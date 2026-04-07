@@ -987,7 +987,7 @@ let activeOperatorChatUser = null;
 let pendingChatAction = false; 
 let pendingOrderProfile = null; 
 let cityDropdownOpen = false;
-let botConversationState = {}; // Состояние диалога бота для каждого пользователя
+let botConversationState = {};
 
 // ===== ВЕРИФИКАЦИЯ ВОЗРАСТА =====
 function initAgeVerification() { const modal = document.getElementById('ageModal'); if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; } }
@@ -1087,6 +1087,50 @@ function parseUserIntent(text) {
     return intent;
 }
 
+// ===== БОТ: ЖИВЫЕ ФРАЗЫ =====
+const BOT_PHRASES = {
+    greeting: [
+        'Привет! 👋 Я менеджер сервиса. Чем могу быть полезен?',
+        'Здравствуйте! 😊 Расскажите, что вас интересует?',
+        'Добрый день! 🌸 Чем могу помочь сегодня?'
+    ],
+    askingCity: [
+        '📍 Подскажите, в каком городе вы находитесь?',
+        'В каком городе ищем? У нас есть Первомайск, Луганск и Стаханов ✨',
+        'Где планируете встречу? Доступные города: Первомайск, Луганск, Стаханов'
+    ],
+    askingService: [
+        '⏱️ На какое время рассматриваете? 1 час, 2 часа, ночь или выезд?',
+        'Какой формат вам интересен? 💫 Короткая встреча, свидание, ночь или выезд на дом?',
+        'Уточните длительность: 1ч / 2ч / ночь / выезд 🌙'
+    ],
+    showingProfiles: [
+        '✅ Отлично! Вот что удалось подобрать:',
+        '✨ Нашла подходящие варианты, смотрите:',
+        '🌸 Подобрала для вас лучших девушек:'
+    ],
+    paymentInfo: [
+        '💰 Оплата — только по факту, в руки модели. Никаких предоплат! 🤝',
+        '💳 Рассчитываетесь напрямую с девушкой при встрече. Безопасно и честно ✨',
+        '🔐 Оплата происходит лично в руки после встречи. Всё прозрачно!'
+    ],
+    noResults: [
+        '😔 Пока в этом городе нет свободных анкет. Посмотреть другие города?',
+        '🤔 В этом городе сейчас нет предложений. Может, рассмотрим соседние?',
+        'Пока пусто в этом городе 😕 Хотите посмотреть анкеты в другом месте?'
+    ],
+    transferToOperator: [
+        '🔄 Соединяю с оператором... Он ответит в течение пары минут! ⏳',
+        '👨‍💼 Передаю ваш запрос менеджеру. Ожидайте, пожалуйста! ✨',
+        '📞 Сейчас подключу оператора для деталей. Не переключайтесь! 😊'
+    ]
+};
+
+function randomPhrase(category) {
+    const phrases = BOT_PHRASES[category];
+    return phrases[Math.floor(Math.random() * phrases.length)];
+}
+
 // ===== БОТ: ОТВЕТЫ =====
 function sendBotSmartReply(userText) {
     if (!currentUser) return;
@@ -1105,7 +1149,7 @@ function sendBotSmartReply(userText) {
         if (chats[currentUser.username] && chats[currentUser.username].status === 'bot') {
             chats[currentUser.username].status = 'operator';
             DB.set('chats', chats);
-            setTimeout(() => addMessageToHistory('Соединяю с оператором... Ожидайте, пожалуйста. 😊', false, true), 1000);
+            setTimeout(() => addMessageToHistory(randomPhrase('transferToOperator'), false, true), 1000);
         }
         botConversationState[currentUser.username] = state;
         return;
@@ -1113,8 +1157,7 @@ function sendBotSmartReply(userText) {
     
     // Шаг 1: Если нет города — спрашиваем
     if (!state.city) {
-        const citiesList = cities.map(c => c.name).join(', ');
-        addMessageToHistory(`📍 В каком городе вас интересует услуга? Доступны: ${citiesList}`, false, true);
+        addMessageToHistory(randomPhrase('askingCity'), false, true);
         state.step = 'asking_city';
         botConversationState[currentUser.username] = state;
         return;
@@ -1122,7 +1165,7 @@ function sendBotSmartReply(userText) {
     
     // Шаг 2: Если нет услуги — спрашиваем
     if (!state.service) {
-        addMessageToHistory(`⏱️ На какое время рассматриваете? Варианты: 1 час, 2 часа, ночь, выезд (на дом/гостиницу)`, false, true);
+        addMessageToHistory(randomPhrase('askingService'), false, true);
         state.step = 'asking_service';
         botConversationState[currentUser.username] = state;
         return;
@@ -1147,7 +1190,7 @@ function renderProfileInChat(profile, serviceType) {
     return `
     <div class="chat-profile-card animate-cardSlideIn">
         <div class="chat-profile-card-header">
-            <img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(profile.name)}" class="chat-profile-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2230%22%3E👤%3C/text%3E%3C/svg%3E'">
+            <img src="${imgSrc}" alt="${Security.escapeHtml(profile.name)}" class="chat-profile-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23222%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2230%22%3E👤%3C/text%3E%3C/svg%3E'">
             <div>
                 <div class="chat-profile-name">${Security.escapeHtml(profile.name)}</div>
                 <div class="chat-profile-city">📍 ${Security.escapeHtml(profile.cityName)}</div>
@@ -1172,35 +1215,34 @@ function renderProfileInChat(profile, serviceType) {
 function showMatchingProfiles(cityId, serviceType) {
     const matching = profiles.filter(p => p.city === cityId);
     if (!matching.length) {
-        addMessageToHistory(`😔 В этом городе пока нет свободных анкет. Хотите посмотреть другие города?`, false, true);
+        addMessageToHistory(randomPhrase('noResults'), false, true);
         return;
     }
     
-    // Показываем до 3 анкет
     const toShow = matching.slice(0, 3);
     const serviceLabels = { '1h': '1 час', '2h': '2 часа', 'night': 'Ночь', 'trip': 'Выезд', 'tripNight': 'Выезд + ночь' };
     
-    addMessageToHistory(`✅ Нашла ${matching.length} анкет в ${cities.find(c => c.id === cityId)?.name} на "${serviceLabels[serviceType] || serviceType}". Вот лучшие варианты:`, false, true);
+    addMessageToHistory(`${randomPhrase('showingProfiles')} ${matching.length} анкет в ${cities.find(c => c.id === cityId)?.name} на "${serviceLabels[serviceType] || serviceType}":`, false, true);
     
     setTimeout(() => {
         toShow.forEach((p, i) => {
             setTimeout(() => {
                 const history = getChatHistory();
+                // 🔥 ВАЖНО: для HTML-карточек НЕ санитизим текст!
                 history.push({ 
                     text: renderProfileInChat(p, serviceType), 
                     isUser: false, 
                     timestamp: new Date().toISOString(), 
                     isBotSystem: true,
-                    isHtml: true
+                    isHtml: true  // 🔥 Флаг: это безопасный HTML, не экранировать
                 });
                 saveChatHistory(history);
                 renderChatMessages();
             }, i * 400);
         });
         
-        // Финальное сообщение об оплате
         setTimeout(() => {
-            addMessageToHistory(`💰 <strong>Оплата производится по факту — в руки модели.</strong> Никаких предоплат и скрытых комиссий. 🤝`, false, true);
+            addMessageToHistory(randomPhrase('paymentInfo'), false, true);
         }, toShow.length * 400 + 300);
         
     }, 300);
@@ -1210,7 +1252,6 @@ function showMatchingProfiles(cityId, serviceType) {
 function orderFromChat(profileId, serviceType) {
     if (!currentUser) { pendingOrderProfile = profileId; openAuthModal(); return; }
     
-    // Переключаем чат на оператора
     const chats = DB.get('chats') || {};
     if (chats[currentUser.username]) {
         chats[currentUser.username].status = 'operator';
@@ -1225,23 +1266,25 @@ function orderFromChat(profileId, serviceType) {
     
     addMessageToHistory(`✅ Ваш запрос принят! Оператор свяжется с вами в течение 2-3 минут для подтверждения деталей. 📞`, false, true);
     
-    // Уведомление для оператора (в реальном проекте — WebSocket)
     Toast.show('Заказ передан оператору', 'success');
 }
 
-function addMessageToHistory(text, isUser, isBotSystem) { 
+// 🔥 ИСПРАВЛЕННАЯ ФУНКЦИЯ: не санитизим HTML-контент
+function addMessageToHistory(text, isUser, isBotSystem, isHtml = false) { 
     if (!currentUser) { Toast.show('Войдите в аккаунт', 'info'); openAuthModal(); return; } 
     const history = getChatHistory(); 
     history.push({ 
-        text: Security.sanitizeInput(text), 
+        text: isHtml ? text : Security.sanitizeInput(text), // 🔥 Только простой текст санитизим!
         isUser: isUser, 
         timestamp: new Date().toISOString(), 
-        isBotSystem: isBotSystem || false 
+        isBotSystem: isBotSystem || false,
+        isHtml: isHtml || false
     }); 
     saveChatHistory(history); 
     renderChatMessages(); 
 }
 
+// 🔥 ИСПРАВЛЕННЫЙ РЕНДЕР: корректно показываем HTML
 function renderChatMessages() { 
     const chatMessages = document.getElementById('chatMessages'); 
     const history = getChatHistory(); 
@@ -1252,6 +1295,7 @@ function renderChatMessages() {
     chatMessages.innerHTML = history.map((msg, idx) => {
         const bubbleClass = msg.isUser ? 'user' : (msg.isBotSystem ? 'bot' : 'operator');
         const avatar = msg.isUser ? '👤' : (msg.isBotSystem ? '🤖' : '👨‍💼');
+        // 🔥 Если isHtml — вставляем как есть, иначе экранируем
         const content = msg.isHtml ? msg.text : Security.escapeHtml(msg.text);
         return `<div class="chat-message-item ${bubbleClass}" style="animation-delay:${Math.min(idx * 0.1, 1.5)}s">
             <div class="message-avatar">${avatar}</div>
@@ -1280,10 +1324,8 @@ function sendChatMessage() {
     const chats = DB.get('chats') || {};
     const chatStatus = chats[currentUser.username]?.status || 'bot';
     
-    // Если уже оператор — не отвечаем ботом
     if (chatStatus === 'operator') return;
     
-    // Умный ответ бота
     setTimeout(() => {
         sendBotSmartReply(msg);
     }, 600 + Math.random() * 600);
@@ -1441,7 +1483,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const chats = DB.get('chats'); 
         const welcomeMsg = (DB.get('siteTexts') || SITE_TEXTS_DEFAULT).botWelcome; 
         if (!chats[currentUser.username] || !chats[currentUser.username].messages.length) { 
-            addMessageToHistory(welcomeMsg, false, true); 
+            addMessageToHistory(randomPhrase('greeting'), false, true); 
         } 
     } 
     setInterval(function() { 
