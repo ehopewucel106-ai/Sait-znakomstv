@@ -606,7 +606,7 @@ function playOperatorNotification() {
 // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ ПРОВЕРКИ ВОЗРАСТА ==========
 function initAgeVerification() { 
     const modal = document.getElementById('ageModal');
-    const confirmed = sessionStorage.getItem('bg_ageConfirmed'); // теперь sessionStorage, не localStorage
+    const confirmed = sessionStorage.getItem('bg_ageConfirmed');
     if (confirmed === 'true') { 
         if (modal) modal.classList.add('hidden'); 
         document.body.style.overflow = ''; 
@@ -620,7 +620,7 @@ function initAgeVerification() {
     }
 }
 function confirmAge() { 
-    sessionStorage.setItem('bg_ageConfirmed', 'true'); // sessionStorage вместо localStorage
+    sessionStorage.setItem('bg_ageConfirmed', 'true');
     const modal = document.getElementById('ageModal');
     if (modal) { 
         modal.classList.add('hidden'); 
@@ -997,4 +997,65 @@ function renderOperatorChatList() {
         return `<div class="chat-list-item ${needsAttn ? 'needs-attention' : ''} ${isActive ? 'active' : ''}" onclick="openOperatorChat('${Security.escapeHtml(u)}')" tabindex="0" role="button">
             <div class="chat-user-name">${Security.escapeHtml(u)}${isAwaiting} ${hasOperatorReply}</div>
             <div class="chat-preview"><span class="chat-last-msg">${lastMsg ? (lastMsg.isUser ? 'Клиент: ' : 'Оператор: ') + Security.escapeHtml(lastMsg.text.substring(0, 40)) : 'Нет сообщений'}</span><span>${lastMsg ? new Date(lastMsg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : ''}</span></div>
-            <div class="profile-actions" style="margin-top: 8px;"><button class="btn btn-danger btn-small" onclick="event.stopPropagation(); deleteChat('${Security.escapeHtml(u)}')">🗑 У
+            <div class="profile-actions" style="margin-top: 8px;"><button class="btn btn-danger btn-small" onclick="event.stopPropagation(); deleteChat('${Security.escapeHtml(u)}')">🗑 Удалить</button></div>
+        </div>`; 
+    }).join(''); 
+    const hasUnread = users.some(u => chats[u].status === 'operator' && (!chats[u].operatorHasReplied || chats[u].awaitingOperator) && chats[u].messages[chats[u].messages.length - 1]?.isUser); 
+    document.getElementById('newChatBadge').style.display = hasUnread ? 'inline-block' : 'none'; 
+}
+function openOperatorChat(username) { 
+    activeOperatorChatUser = username; 
+    document.getElementById('operatorChatWindow').classList.add('show'); 
+    document.getElementById('opChatUserName').textContent = username; 
+    const chats = DB.get('chats'); 
+    if (chats[username]) { chats[username].status = 'operator'; DB.set('chats', chats); } 
+    renderOperatorChatMessages(username); 
+    renderOperatorChatList(); 
+    document.getElementById('opChatInput').focus(); 
+}
+function closeOperatorChat() { activeOperatorChatUser = null; document.getElementById('operatorChatWindow').classList.remove('show'); renderOperatorChatList(); }
+function renderOperatorChatMessages(username) { 
+    const container = document.getElementById('opChatMessages'); 
+    const chats = DB.get('chats') || {}; 
+    const chat = chats[username]; 
+    if (!chat) return; 
+    container.innerHTML = chat.messages.map(msg => {
+        const isOp = !msg.isUser && !msg.isBotSystem;
+        return `<div class="chat-message-item ${msg.isUser ? 'user' : (isOp ? 'operator' : 'bot')}">
+            <div class="message-avatar">${msg.isUser ? '👤' : (isOp ? '👨‍💼' : '🤖')}</div>
+            <div class="message-content"><div class="chat-bubble">${msg.isHtml ? msg.text : Security.escapeHtml(msg.text)}</div><div class="message-time">${new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div></div>
+        </div>`;
+    }).join(''); 
+    container.scrollTop = container.scrollHeight; 
+}
+function sendOperatorMessage() { 
+    if (!activeOperatorChatUser) return; 
+    const input = document.getElementById('opChatInput'); 
+    const text = input.value.trim(); 
+    if (!text) return; 
+    if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } 
+    const chats = DB.get('chats') || {}; 
+    if (!chats[activeOperatorChatUser]) return; 
+    chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString(), isBotSystem: false });
+    chats[activeOperatorChatUser].operatorHasReplied = true;
+    chats[activeOperatorChatUser].awaitingOperator = false;
+    DB.set('chats', chats); 
+    input.value = ''; 
+    renderOperatorChatMessages(activeOperatorChatUser); 
+    renderOperatorChatList();
+    localStorage.setItem('bg_chatUpdate_' + activeOperatorChatUser, Date.now().toString());
+}
+function declension(n, forms) { const c = [2,0,1,1,1,2]; return forms[(n % 100 > 4 && n % 100 < 20) ? 2 : c[(n % 10 < 5) ? n % 10 : 5]]; }
+function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; let el = document.getElementById(c.id+'Count'); let card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + declension(c.count, ['девушка', 'девушки', 'девушек']); }); }
+function renderModels(filter) { 
+    profiles = DB.get('profiles') || []; 
+    const grid = document.getElementById('modelsGrid'); 
+    let filtered = filter === 'all' ? profiles : profiles.filter(p => p.city === filter); 
+    if (!filtered.length) { grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--gray);"><div style="font-size: 48px; margin-bottom: 16px;">😔</div><p style="font-size: 18px;">В этом городе пока нет анкет</p></div>'; return; } 
+    let html = ''; 
+    for (let p of filtered) { 
+        const ageText = p.age + ' ' + declension(p.age, ['год', 'года', 'лет']); 
+        const minPrice = (p.services && p.services[0]) ? p.services[0].price.toLocaleString().replace(/ /g, '.') : '—'; 
+        const descPreview = p.description ? p.description.substring(0,80)+'...' : ''; 
+        const imgSrc = (p.images && p.images[0]) ? p.images[0] : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect width="400" height="400" fill="%23222"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23666" font-size="40"%3E👤%3C/text%3E%3C/svg%3E'; 
+        html += `<div class="model-card" data-id="${p.id}" tabindex="0" role="button"><div class="model-image-container"><img src="${Security.escapeHtml(imgSrc)}" alt="${Security.escapeHtml(p.name)}" class="model-image" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect width=%22400%22 height=%22400%
