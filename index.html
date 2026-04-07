@@ -388,9 +388,10 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .auth-notice { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--success); text-align: center; margin-top: 10px; display: none; }
 .auth-notice.show { display: block; }
 
+/* ===== ADMIN PANEL & OPERATOR CHAT ===== */
 .admin-dashboard { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--darker); z-index: 3000; display: none; overflow-y: auto; }
 .admin-dashboard.active { display: block; }
-.admin-header { padding: 18px 40px; background: rgba(15,15,26,0.97); border-bottom: 1px solid rgba(233,30,99,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
+.admin-header { padding: 18px 40px; background: var(--darker); border-bottom: 1px solid rgba(233,30,99,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 15px; }
 .admin-nav { display: flex; gap: 12px; flex-wrap: wrap; }
 .admin-tab-btn { padding: 10px 20px; background: rgba(255,255,255,0.05); border: none; color: var(--gray); border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; font-family: 'Montserrat', sans-serif; font-size: 15px; }
 .admin-tab-btn:hover { background: rgba(255,255,255,0.1); color: var(--light); }
@@ -398,7 +399,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .admin-content { padding: 40px; max-width: 1200px; margin: 0 auto; }
 .admin-panel { display: none; }
 .admin-panel.active { display: block; animation: fadeInUp 0.3s ease; }
-.admin-card { background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); border-radius: 16px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+.admin-card { background: var(--darker); border-radius: 16px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
 .admin-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
 .admin-card-title { font-family: 'Great Vibes', cursive; font-size: 32px; color: var(--light); }
 .profile-list-item { display: flex; align-items: center; gap: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; margin-bottom: 10px; transition: all 0.3s; flex-wrap: wrap; }
@@ -408,19 +409,58 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .profile-name-lg { font-family: 'Great Vibes', cursive; font-size: 24px; color: var(--light); }
 .profile-city-sm { font-size: 14px; color: var(--gray); }
 .profile-actions { display: flex; gap: 10px; }
-.chat-list-item { display: flex; flex-direction: column; gap: 10px; padding: 18px; background: rgba(255,255,255,0.03); border-radius: 12px; margin-bottom: 15px; border-left: 4px solid transparent; cursor: pointer; transition: all 0.3s; }
-.chat-list-item:hover { background: rgba(255,255,255,0.06); }
-.chat-list-item.active { border-left-color: var(--primary); background: rgba(233,30,99,0.1); }
-.chat-list-item.needs-attention { border-left-color: var(--danger); }
-.chat-preview { display: flex; justify-content: space-between; font-size: 14px; color: var(--gray); flex-wrap: wrap; gap: 8px; }
-.chat-user-name { font-weight: 700; color: var(--light); }
-.chat-last-msg { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
-.operator-chat-view { display: grid; grid-template-columns: 350px 1fr; gap: 20px; height: 70vh; }
-.operator-chat-list { overflow-y: auto; padding-right: 10px; }
-.operator-chat-window { background: rgba(0,0,0,0.2); border-radius: 16px; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+
+/* ===== OPERATOR CHAT STYLES ===== */
+.operator-chat-view { 
+    display: grid; 
+    grid-template-columns: 320px 1fr; 
+    gap: 20px; 
+    height: calc(100vh - 200px);
+    min-height: 500px;
+}
+.operator-chat-list { 
+    overflow-y: auto; 
+    padding-right: 10px; 
+    background: var(--darker);
+    border-radius: 12px;
+    padding: 10px;
+}
+.operator-chat-window { 
+    background: var(--darker); 
+    border-radius: 16px; 
+    display: none; 
+    flex-direction: column; 
+    overflow: hidden; 
+    border: 1px solid rgba(255,255,255,0.1);
+    height: 100%;
+}
 .operator-chat-window.show { display: flex; }
-.op-chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-.op-chat-input { padding: 16px; background: rgba(255,255,255,0.05); display: flex; gap: 10px; }
+.op-chat-messages { 
+    flex: 1; 
+    padding: 20px 16px; 
+    overflow-y: auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px;
+    background: var(--darker);
+}
+.op-chat-input { 
+    padding: 16px; 
+    background: var(--darker); 
+    display: flex; 
+    gap: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.op-chat-input .chat-input {
+    padding: 14px 20px;
+    font-size: 15px;
+}
+.op-chat-input .chat-send {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+}
+
 .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; }
 .file-upload-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
 .btn-upload { background: rgba(255,255,255,0.1); color: var(--light); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; }
@@ -515,6 +555,27 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         min-width: 48px;
     }
     .chat-back-btn { padding: 6px 12px; font-size: 13px; }
+    
+    /* ===== ОПЕРАТОР ЧАТ МОБИЛЬНЫЙ ===== */
+    .operator-chat-view { 
+        grid-template-columns: 1fr; 
+        height: auto;
+        gap: 10px;
+    }
+    .operator-chat-list { 
+        max-height: 180px;
+        border-radius: 12px;
+    }
+    .operator-chat-window {
+        border-radius: 12px;
+        height: calc(100vh - 280px);
+        min-height: 400px;
+    }
+    .op-chat-messages { padding: 12px; }
+    .op-chat-input { 
+        padding: 12px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
     
     .admin-content { padding: 20px; }
     .age-content { padding: 35px 25px; }
@@ -619,7 +680,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                 <div class="operator-chat-view">
                     <div class="operator-chat-list" id="operatorChatList" aria-label="Список чатов"></div>
                     <div class="operator-chat-window" id="operatorChatWindow">
-                        <div class="chat-header-custom" style="background: rgba(0,0,0,0.3);">
+                        <div class="chat-header-custom" style="background: var(--darker);">
                             <div class="chat-header-info">
                                 <button class="chat-back-btn" onclick="closeOperatorChat()" aria-label="Назад">← Назад</button>
                                 <div class="chat-avatar" id="opChatAvatar">👤</div>
