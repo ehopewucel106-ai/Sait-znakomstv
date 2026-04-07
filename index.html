@@ -170,7 +170,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .section-header h2 { font-family: 'Great Vibes', cursive; font-size: 64px; margin-bottom: 15px; }
 .section-header p { color: var(--gray); font-size: 18px; }
 
-/* ===== УЛУЧШЕННЫЙ ЧАТ ===== */
+/* ===== УЛУЧШЕННЫЙ ЧАТ НА ВЕСЬ ЭКРАН ===== */
 .section#chat.active { 
     position: fixed; 
     top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh; 
@@ -191,7 +191,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 .chat-container { 
-    background: linear-gradient(145deg, #1a1a2e 0%, #2d2d44 100%); 
+    background: var(--darker); 
     border-radius: 0; 
     border: none; 
     overflow: hidden; 
@@ -205,7 +205,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 }
 .chat-header-custom { 
     padding: 16px 16px; 
-    background: linear-gradient(135deg, rgba(233,30,99,0.15) 0%, rgba(156,39,176,0.15) 100%); 
+    background: var(--darker); 
     border-bottom: 1px solid rgba(255,255,255,0.1); 
     display: flex; 
     justify-content: space-between; 
@@ -248,15 +248,51 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 .chat-input-container { 
     padding: 16px; 
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
-    background: rgba(0,0,0,0.3); 
-    border-top: 1px solid rgba(255,255,255,0.05); 
+    background: var(--darker); 
+    border-top: 1px solid rgba(255,255,255,0.1); 
     flex-shrink: 0; 
 }
-.chat-input-wrapper { display: flex; gap: 12px; align-items: center; }
-.chat-input { flex: 1; padding: 14px 20px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 30px; color: white; font-size: 16px; transition: all 0.3s ease; font-family: 'Montserrat', sans-serif; }
-.chat-input:focus { outline: none; border-color: var(--primary); background: rgba(255,255,255,0.12); box-shadow: 0 0 0 3px rgba(233,30,99,0.15); }
+.chat-input-wrapper { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center;
+    width: 100%;
+}
+.chat-input { 
+    flex: 1; 
+    padding: 16px 24px; 
+    background: rgba(255,255,255,0.08); 
+    border: 1px solid rgba(255,255,255,0.15); 
+    border-radius: 30px; 
+    color: white; 
+    font-size: 16px; 
+    transition: all 0.3s ease; 
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+}
+.chat-input:focus { 
+    outline: none; 
+    border-color: var(--primary); 
+    background: rgba(255,255,255,0.12); 
+    box-shadow: 0 0 0 3px rgba(233,30,99,0.15); 
+}
 .chat-input::placeholder { color: var(--gray); }
-.chat-send { width: 52px; height: 52px; border-radius: 50%; background: var(--gradient); border: none; color: white; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.chat-send { 
+    width: 56px; 
+    height: 56px; 
+    border-radius: 50%; 
+    background: var(--gradient); 
+    border: none; 
+    color: white; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 22px; 
+    flex-shrink: 0;
+    min-width: 56px;
+}
 .chat-send:hover { transform: scale(1.08); box-shadow: 0 4px 12px rgba(233,30,99,0.4); }
 .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
 .chat-back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 40px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; }
@@ -447,8 +483,9 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         height: 100vh; 
         height: 100dvh; 
         border-radius: 0;
+        background: var(--darker);
     }
-    .chat-header-custom { padding: 12px 12px; }
+    .chat-header-custom { padding: 12px 12px; background: var(--darker); }
     .chat-messages { 
         padding: 12px; 
         gap: 10px;
@@ -463,18 +500,19 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     .chat-input-container { 
         padding: 12px; 
         padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        background: var(--darker);
     }
     .chat-input-wrapper { gap: 8px; }
     .chat-input { 
-        padding: 12px 16px; 
+        padding: 14px 18px; 
         font-size: 15px; 
-        min-height: 44px;
+        min-height: 48px;
     }
     .chat-send { 
-        width: 44px; 
-        height: 44px; 
+        width: 48px; 
+        height: 48px; 
         font-size: 20px;
-        min-width: 44px;
+        min-width: 48px;
     }
     .chat-back-btn { padding: 6px 12px; font-size: 13px; }
     
