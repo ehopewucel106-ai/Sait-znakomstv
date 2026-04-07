@@ -326,8 +326,8 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         <p class="age-text">Этот сайт содержит контент интимного характера, предназначенный исключительно для лиц старше 18 лет.</p>
         <div class="age-warning-text">⚠️ Все услуги предоставляются только совершеннолетним клиентам.</div>
         <div class="age-buttons">
-            <button class="btn btn-secondary" onclick="exitSite()">Мне нет 18</button>
-            <button class="btn btn-primary" onclick="confirmAge()">Мне есть 18 лет</button>
+            <button class="btn btn-secondary" id="exitBtn">Мне нет 18</button>
+            <button class="btn btn-primary" id="confirmBtn">Мне есть 18 лет</button>
         </div>
     </div>
 </div>
@@ -335,22 +335,22 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
 <!-- Privacy Modal -->
 <div class="privacy-modal" id="privacyModal" role="dialog" aria-labelledby="privacyTitle" aria-modal="true">
     <div class="privacy-content">
-        <button class="modal-close" onclick="closePrivacyModal()" aria-label="Закрыть">×</button>
+        <button class="modal-close" id="closePrivacyModal" aria-label="Закрыть">×</button>
         <h2 id="privacyTitle">Политика Конфиденциальности</h2>
         <p><strong>Дата вступления в силу:</strong> 01.01.2026</p>
         <h3>1. Сбор данных</h3><p>Мы собираем минимально необходимые данные для работы сервиса.</p>
         <h3>2. Использование данных</h3><p>Данные используются исключительно для предоставления услуг.</p>
         <h3>3. Cookie</h3><p>Сайт использует технические cookie для работы авторизации.</p>
-        <div style="text-align: center; margin-top: 30px;"><button class="btn btn-primary" onclick="closePrivacyModal()">Понятно</button></div>
+        <div style="text-align: center; margin-top: 30px;"><button class="btn btn-primary" id="closePrivacyBtn">Понятно</button></div>
     </div>
 </div>
 
 <!-- Cookie Banner -->
 <div class="cookie-banner" id="cookieBanner">
-    <p class="cookie-text">🍪 Мы используем технические cookie для работы сайта. Продолжая использовать сайт, вы соглашаетесь с <a href="#" onclick="openPrivacyModal(); return false;">политикой конфиденциальности</a>.</p>
+    <p class="cookie-text">🍪 Мы используем технические cookie для работы сайта. Продолжая использовать сайт, вы соглашаетесь с <a href="#" id="openPrivacyLink">политикой конфиденциальности</a>.</p>
     <div class="cookie-buttons">
-        <button class="btn btn-primary btn-small" onclick="acceptCookies()">Принять</button>
-        <button class="btn btn-secondary btn-small" onclick="declineCookies()">Отклонить</button>
+        <button class="btn btn-primary btn-small" id="acceptCookiesBtn">Принять</button>
+        <button class="btn btn-secondary btn-small" id="declineCookiesBtn">Отклонить</button>
     </div>
 </div>
 
@@ -361,29 +361,29 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         <div id="authForm" class="auth-form">
             <div class="form-group"><label class="form-label" for="authUsername">Логин / Никнейм</label><input type="text" class="form-input" id="authUsername" placeholder="Придумайте ник" minlength="3" maxlength="30" autocomplete="username" required><span class="form-error" id="usernameError">Ник должен содержать 3-30 символов</span></div>
             <div class="form-group"><label class="form-label" for="authPassword">Пароль</label><input type="password" class="form-input" id="authPassword" placeholder="Минимум 6 символов" minlength="6" autocomplete="current-password" required><span class="form-error" id="passwordError">Пароль должен содержать минимум 6 символов</span></div>
-            <button class="btn btn-primary" id="authSubmitBtn" onclick="handleUnifiedAuth()">Войти / Зарегистрироваться</button>
+            <button class="btn btn-primary" id="authSubmitBtn">Войти / Зарегистрироваться</button>
             <div class="auth-notice" id="authNotice">✅ Успешно! Добро пожаловать!</div>
-            <div class="auth-switch">Нет аккаунта? Регистрация произойдёт автоматически при первом входе. <span onclick="openPrivacyModal()">Политика конфиденциальности</span></div>
+            <div class="auth-switch">Нет аккаунта? Регистрация произойдёт автоматически при первом входе. <a href="#" id="privacyLinkAuth">Политика конфиденциальности</a></div>
         </div>
-        <button class="btn btn-secondary" style="width: 100%; margin-top: 15px;" onclick="closeAuthModal()" aria-label="Закрыть">Закрыть</button>
+        <button class="btn btn-secondary" style="width: 100%; margin-top: 15px;" id="closeAuthBtn">Закрыть</button>
     </div>
 </div>
 
 <!-- Admin Dashboard -->
 <div class="admin-dashboard" id="adminDashboard" role="main">
     <div class="admin-header">
-        <div class="logo"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal" style="opacity: 1;">ADMIN PANEL</span></div></div>
+        <div class="logo"><div class="logo-animation-wrapper"><svg viewBox="0  0 100 100" class="heart-svg"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal" style="opacity: 1;">ADMIN PANEL</span></div></div>
         <div class="admin-nav">
-            <button class="admin-tab-btn active" onclick="switchAdminTab('profiles')" aria-pressed="true">Анкеты</button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('chats')" aria-pressed="false">Чаты <span id="newChatBadge" style="background: var(--danger); padding: 2px 7px; border-radius: 10px; font-size: 11px; display: none;">!</span></button>
-            <button class="admin-tab-btn" onclick="switchAdminTab('settings')" aria-pressed="false">Настройки</button>
-            <button class="admin-tab-btn" onclick="closeAdminPanel()">✖️ Закрыть панель</button>
+            <button class="admin-tab-btn active" data-tab="profiles">Анкеты</button>
+            <button class="admin-tab-btn" data-tab="chats">Чаты <span id="newChatBadge" style="background: var(--danger); padding: 2px 7px; border-radius: 10px; font-size: 11px; display: none;">!</span></button>
+            <button class="admin-tab-btn" data-tab="settings">Настройки</button>
+            <button class="admin-tab-btn" id="closeAdminBtn">✖️ Закрыть панель</button>
         </div>
     </div>
     <div class="admin-content">
         <div id="adminProfiles" class="admin-panel active">
             <div class="admin-card">
-                <div class="admin-card-header"><h2 class="admin-card-title">Управление Анкетами</h2><button class="btn btn-primary btn-small" onclick="openProfileEditor()">+ Добавить Модель</button></div>
+                <div class="admin-card-header"><h2 class="admin-card-title">Управление Анкетами</h2><button class="btn btn-primary btn-small" id="addProfileBtn">+ Добавить Модель</button></div>
                 <div id="adminProfileList" aria-label="Список анкет"></div>
             </div>
         </div>
@@ -395,19 +395,19 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                     <div class="operator-chat-window" id="operatorChatWindow">
                         <div class="chat-header-custom" style="background: var(--darker);">
                             <div class="chat-header-info">
-                                <button class="chat-back-btn" onclick="closeOperatorChat()" aria-label="Назад">← Назад</button>
+                                <button class="chat-back-btn" id="backToChatsBtn">← Назад</button>
                                 <div class="chat-avatar" id="opChatAvatar">👤</div>
                                 <div><div style="font-weight: 600;" id="opChatUserName">Client</div><div class="chat-status"><span class="status-dot"></span>Онлайн</div></div>
                             </div>
                             <div style="display: flex; gap: 8px; align-items: center;">
-                                <button class="btn-danger btn-small" id="deleteChatBtn" onclick="deleteOperatorChat()" style="display:none;">🗑</button>
-                                <button class="bot-toggle-btn disabled" id="botToggleBtn" onclick="toggleBotForChat()" title="Управление ботом">🤖 ВЫКЛ</button>
+                                <button class="btn-danger btn-small" id="deleteChatBtn" style="display:none;">🗑</button>
+                                <button class="bot-toggle-btn disabled" id="botToggleBtn" title="Управление ботом">🤖 ВЫКЛ</button>
                             </div>
                         </div>
                         <div class="op-chat-messages" id="opChatMessages"></div>
                         <div class="op-chat-input">
-                            <input type="text" class="chat-input" id="opChatInput" placeholder="Ответ оператора..." onkeypress="if(event.key === 'Enter') sendOperatorMessage()" maxlength="1000">
-                            <button class="chat-send" onclick="sendOperatorMessage()" style="width: 50px; height: 50px; font-size: 20px;" aria-label="Отправить">➤</button>
+                            <input type="text" class="chat-input" id="opChatInput" placeholder="Ответ оператора..." maxlength="1000">
+                            <button class="chat-send" id="opSendBtn" aria-label="Отправить">➤</button>
                         </div>
                     </div>
                 </div>
@@ -428,25 +428,25 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
                     <div class="form-group"><label class="form-label">Текст предупреждения 18+ в футере</label><input type="text" class="form-input" id="textFooterWarning" placeholder="🔞 18+ Только для совершеннолетних"></div>
                     <div class="form-group"><label class="form-label">Копирайт в футере</label><input type="text" class="form-input" id="textFooterCopyright" placeholder="© 2026 BABYGIRL_LNR. ..."></div>
                     <div class="form-group"><label class="form-label">Текст о конфиденциальности в футере</label><input type="text" class="form-input" id="textFooterConfidentiality" placeholder="Полная конфиденциальность гарантирована."></div>
-                    <button class="btn btn-primary" onclick="saveSiteTexts()">Сохранить все тексты</button>
+                    <button class="btn btn-primary" id="saveSettingsBtn">Сохранить все тексты</button>
                 </div>
             </div>
         </div>
         <div id="profileEditor" class="profile-modal" role="dialog" aria-labelledby="editorTitle" aria-modal="true">
             <div class="profile-modal-content" style="max-width: 900px; padding: 30px;">
-                <button class="modal-close" onclick="closeProfileEditor()" aria-label="Закрыть редактор">×</button>
+                <button class="modal-close" id="closeEditorBtn" aria-label="Закрыть редактор">×</button>
                 <h2 class="modal-name" style="text-align: center;" id="editorTitle">Редактор Анкеты</h2>
                 <div class="auth-form" style="max-width: 100%; margin: 0 auto;">
                     <input type="hidden" id="editProfileId">
                     <div class="form-group"><label class="form-label" for="editName">Имя</label><input type="text" class="form-input" id="editName" maxlength="50"></div>
                     <div class="form-group"><label class="form-label" for="editCity">Город</label><select class="form-input" id="editCity"><option value="pervomaisk">Первомайск</option><option value="lugansk">Луганск</option><option value="stakhanov">Стаханов</option></select></div>
                     <div class="form-group"><label class="form-label" for="editDescription">Описание</label><textarea class="form-input" id="editDescription" rows="3" maxlength="500"></textarea></div>
-                    <div class="form-group"><label class="form-label">Фото (URL или Загрузка)</label><div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;"><input type="text" class="form-input" id="editImage" placeholder="https://..." style="flex:1; min-width: 200px;"><div class="file-upload-wrapper"><button class="btn-upload" type="button">📷 Загрузить</button><input type="file" id="editImageUpload" accept="image/*" onchange="handleImageUpload(this)"></div></div><img id="editImagePreview" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: none;" alt="Превью"></div>
+                    <div class="form-group"><label class="form-label">Фото (URL или Загрузка)</label><div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;"><input type="text" class="form-input" id="editImage" placeholder="https://..." style="flex:1; min-width: 200px;"><div class="file-upload-wrapper"><button class="btn-upload" type="button" id="uploadBtn">📷 Загрузить</button><input type="file" id="editImageUpload" accept="image/*"></div></div><img id="editImagePreview" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-top: 10px; display: none;" alt="Превью"></div>
                     <div class="form-group"><label class="form-label">💰 Прайс-лист (₽)</label><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;"><input type="number" class="form-input" id="editPrice1h" placeholder="1 час" min="1000"><input type="number" class="form-input" id="editPrice2h" placeholder="2 часа" min="1000"><input type="number" class="form-input" id="editPriceTrip" placeholder="Выезд (2ч)" min="1000"><input type="number" class="form-input" id="editPriceNight" placeholder="Ночь" min="1000"><input type="number" class="form-input" id="editPriceTripNight" placeholder="Выезд ночь" min="1000"></div></div>
                     <div class="form-group"><label class="form-label" for="editAdditionalServices">✨ Дополнительные услуги (через запятую)</label><input type="text" class="form-input" id="editAdditionalServices" placeholder="GFE, Стриптиз, Массаж..." maxlength="300"></div>
                     <div class="form-group"><label class="form-label" for="editPrice">💰 Базовая цена</label><input type="number" class="form-input" id="editPrice" placeholder="от" min="1000"></div>
-                    <button class="btn btn-primary" onclick="saveProfile()">Сохранить</button>
-                    <button class="btn btn-danger" id="deleteProfileBtn" onclick="deleteProfile()" style="display: none;">🗑 Удалить анкету</button>
+                    <button class="btn btn-primary" id="saveProfileBtn">Сохранить</button>
+                    <button class="btn btn-danger" id="deleteProfileBtn" style="display: none;">🗑 Удалить анкету</button>
                 </div>
             </div>
         </div>
@@ -458,7 +458,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     <a href="#models" class="logo animate-slideInLeft" aria-label="На главную"><div class="logo-animation-wrapper"><svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true"><defs><linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs><path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" /></svg><span class="logo-text-reveal">BABYGIRL_LNR</span></div></a>
     <div class="user-menu" id="userMenu" aria-label="Меню пользователя">
         <div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">+7 (999) 123-45-67</span></div>
-        <div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>
+        <div class="user-avatar" id="userAvatarBtn" tabindex="0" role="button" aria-label="Войти">?</div>
     </div>
     <div class="nav-container">
         <nav class="nav-links" aria-label="Главная навигация">
@@ -495,17 +495,17 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
         <div class="chat-container">
             <div class="chat-header-custom">
                 <div class="chat-header-info">
-                    <button class="chat-back-btn" onclick="closeChat()" aria-label="Закрыть чат">← Назад</button>
+                    <button class="chat-back-btn" id="closeChatBtn" aria-label="Закрыть чат">← Назад</button>
                     <div class="chat-avatar" aria-hidden="true">👨‍💼</div>
                     <div><div style="font-weight: 600; font-size: 16px;">Менеджер BABYGIRL_LNR</div><div class="chat-status"><span class="status-dot"></span>Онлайн</div></div>
                 </div>
-                <button class="chat-back-btn" id="operatorBtn" style="background: rgba(233,30,99,0.2); display: none;" onclick="openAdminPanel()">👨‍💻 Оператор</button>
+                <button class="chat-back-btn" id="operatorBtn" style="background: rgba(233,30,99,0.2); display: none;">👨‍💻 Оператор</button>
             </div>
             <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
             <div class="chat-input-container">
                 <div class="chat-input-wrapper">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." onkeypress="if(event.key === 'Enter') sendChatMessage()" maxlength="1000" aria-label="Поле ввода">
-                    <button class="chat-send" id="chatSend" onclick="sendChatMessage()" aria-label="Отправить">➤</button>
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="1000" aria-label="Поле ввода">
+                    <button class="chat-send" id="chatSendBtn" aria-label="Отправить">➤</button>
                 </div>
                 <div class="rate-limit-msg" id="rateLimitMsg">⏳ Подождите перед отправкой</div>
             </div>
@@ -562,7 +562,7 @@ body { font-family: 'Montserrat', sans-serif; background: var(--darker); color: 
     <div class="age-warning" id="footerWarning">🔞 18+ Только для совершеннолетних</div>
     <p class="footer-text" style="margin-top: 25px;" id="footerCopyright">© 2026 BABYGIRL_LNR. Все услуги предоставляются исключительно лицам старше 18 лет.</p>
     <p class="footer-text" id="footerConfidentiality">Полная конфиденциальность гарантирована.</p>
-    <p class="footer-text" style="margin-top: 10px;"><a href="#" onclick="openPrivacyModal(); return false;" style="color: var(--primary); text-decoration: underline;">Политика конфиденциальности</a></p>
+    <p class="footer-text" style="margin-top: 10px;"><a href="#" id="footerPrivacyLink">Политика конфиденциальности</a></p>
 </footer>
 
 <script>
@@ -657,7 +657,7 @@ function parseUserIntent(text) {
 function getChatHistory() { if (!currentUser) return []; const chats = DB.get('chats') || {}; return chats[currentUser.username]?.messages || []; }
 function saveChatHistory(history) { if (!currentUser) return; const chats = DB.get('chats') || {}; if (!chats[currentUser.username]) chats[currentUser.username] = { messages: [], status: 'bot', operatorHasReplied: false, awaitingOperator: false, botEnabled: true }; chats[currentUser.username].messages = history; DB.set('chats', chats); }
 
-// 🔥 НОВАЯ: Управление ботом для каждого чата
+// 🔥 Управление ботом для каждого чата
 function toggleBotForChat(username) {
     if (!username) username = activeOperatorChatUser;
     if (!username) return;
@@ -667,7 +667,6 @@ function toggleBotForChat(username) {
     chats[username].botEnabled = !chats[username].botEnabled;
     DB.set('chats', chats);
     
-    // Обновляем кнопку
     const btn = document.getElementById('botToggleBtn');
     if (btn) {
         if (chats[username].botEnabled) {
@@ -691,7 +690,6 @@ function sendBotSmartReply(userText) {
     const chats = DB.get('chats') || {};
     const chat = chats[currentUser.username];
     
-    // 🔥 Проверка: бот включён И оператор не ответил И бот не приостановлен
     if (!chat?.botEnabled || chat?.operatorHasReplied || botPausedByOperator[currentUser.username]) return;
     
     const state = botConversationState[currentUser.username] || { step: 'greeting', city: null, service: null };
@@ -704,7 +702,6 @@ function sendBotSmartReply(userText) {
             chat.status = 'operator'; 
             DB.set('chats', chats); 
             setTimeout(() => addMessageToHistory(randomPhrase('transferToOperator'), false, true), 1000);
-            // 🔥 Специальное уведомление при передаче
             notifyBotTransfer(currentUser.username);
         }
         botConversationState[currentUser.username] = state; 
@@ -716,22 +713,15 @@ function sendBotSmartReply(userText) {
     botConversationState[currentUser.username] = { step: 'done', city: state.city, service: state.service };
 }
 
-// 🔥 НОВАЯ: Специальное уведомление при передаче чата от бота
+// 🔥 Специальное уведомление при передаче чата от бота
 function notifyBotTransfer(username) {
-    // Визуальный тост
     Toast.show(`🔔 Чат с ${username} передан оператору!`, 'bot-transfer', 5000);
-    
-    // 🔊 Звуковой сигнал (если поддерживается)
     try {
         const audio = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
         audio.volume = 0.3;
         audio.play().catch(() => {});
     } catch(e) {}
-    
-    // Вибрация на мобильных
     if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-    
-    // Обновляем бейдж
     document.getElementById('newChatBadge').style.display = 'inline-block';
 }
 
@@ -830,13 +820,32 @@ function renderChatMessages() {
     setTimeout(() => { chatMessages.scrollTop = chatMessages.scrollHeight; }, 100); 
 }
 
-function sendChatMessage() { 
-    const input = document.getElementById('chatInput'); const msg = input.value.trim(); if (!msg) return; 
-    if (!Security.rateLimit.check('chat_' + (currentUser?.username || 'anon'), 10, 30000)) { document.getElementById('rateLimitMsg').classList.add('show'); setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); return; } 
-    document.getElementById('rateLimitMsg').classList.remove('show'); 
-    addMessageToHistory(msg, true); input.value = ''; 
-    const chats = DB.get('chats') || {}; const chat = chats[currentUser.username];
+// 🔥 ИСПРАВЛЕНА: Отправка сообщения клиентом
+function sendChatMessage(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+    
+    if (!Security.rateLimit.check('chat_' + (currentUser?.username || 'anon'), 10, 30000)) { 
+        document.getElementById('rateLimitMsg').classList.add('show'); 
+        setTimeout(() => document.getElementById('rateLimitMsg').classList.remove('show'), 5000); 
+        return; 
+    }
+    document.getElementById('rateLimitMsg').classList.remove('show');
+    
+    // 🔥 Сначала добавляем сообщение пользователя — ГАРАНТИРОВАННО
+    addMessageToHistory(msg, true);
+    input.value = '';
+    
+    // 🔥 Проверяем, может ли бот ответить
+    const chats = DB.get('chats') || {};
+    const chat = chats[currentUser.username];
+    
+    // Если оператор уже ответил или бот приостановлен — не отвечаем, но сообщение пользователя УЖЕ отправлено
     if (chat?.operatorHasReplied || botPausedByOperator[currentUser.username]) return;
+    
+    // 🔥 Бот отвечает с задержкой
     setTimeout(() => { sendBotSmartReply(msg); }, 600 + Math.random() * 600);
 }
 
@@ -866,7 +875,6 @@ function renderOperatorChatList() {
         const isActive = activeOperatorChatUser === u; 
         const hasOperatorReply = chat.operatorHasReplied ? '🟢' : (needsAttn ? '🔴' : '');
         const isAwaiting = chat.awaitingOperator ? ' ⏳' : '';
-        // 🔥 Кнопка управления ботом
         const botState = chat.botEnabled !== false;
         const botBtn = `<button class="bot-toggle-btn ${botState ? 'enabled' : 'disabled'}" onclick="event.stopPropagation(); toggleBotForChat('${Security.escapeHtml(u)}')" title="${botState ? 'Бот активен' : 'Бот отключён'}">${botState ? '🤖' : '👤'}</button>`;
         return `<div class="chat-list-item ${needsAttn ? 'needs-attention' : ''} ${isActive ? 'active' : ''}" onclick="openOperatorChat('${Security.escapeHtml(u)}')" tabindex="0" role="button">
@@ -888,7 +896,6 @@ function openOperatorChat(username) {
     document.getElementById('opChatUserName').textContent = username; 
     document.getElementById('deleteChatBtn').style.display = 'inline-flex';
     
-    // 🔥 Обновляем кнопку управления ботом
     const chats = DB.get('chats') || {};
     const chat = chats[username];
     const botBtn = document.getElementById('botToggleBtn');
@@ -924,14 +931,33 @@ function renderOperatorChatMessages(username) {
     container.scrollTop = container.scrollHeight; 
 }
 
-function sendOperatorMessage() { 
-    if (!activeOperatorChatUser) return; const input = document.getElementById('opChatInput'); const text = input.value.trim(); if (!text) return; 
+// 🔥 ИСПРАВЛЕНА: Отправка сообщения оператором
+function sendOperatorMessage(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    if (!activeOperatorChatUser) return; 
+    const input = document.getElementById('opChatInput'); 
+    const text = input.value.trim(); 
+    if (!text) return; 
     if (!Security.rateLimit.check('op_' + activeOperatorChatUser, 20, 60000)) { Toast.show('Слишком много сообщений', 'error'); return; } 
-    const chats = DB.get('chats') || {}; if (!chats[activeOperatorChatUser]) return; 
+    const chats = DB.get('chats') || {}; 
+    if (!chats[activeOperatorChatUser]) return; 
+    
+    // 🔥 Добавляем сообщение оператора
     chats[activeOperatorChatUser].messages.push({ text, isUser: false, timestamp: new Date().toISOString(), isBotSystem: false });
-    chats[activeOperatorChatUser].operatorHasReplied = true; chats[activeOperatorChatUser].awaitingOperator = false; DB.set('chats', chats); 
-    input.value = ''; renderOperatorChatMessages(activeOperatorChatUser); renderOperatorChatList();
-    localStorage.setItem('bg_chatUpdate_' + activeOperatorChatUser, Date.now().toString()); botPausedByOperator[activeOperatorChatUser] = true;
+    chats[activeOperatorChatUser].operatorHasReplied = true; 
+    chats[activeOperatorChatUser].awaitingOperator = false; 
+    DB.set('chats', chats); 
+    
+    input.value = ''; 
+    renderOperatorChatMessages(activeOperatorChatUser); 
+    renderOperatorChatList();
+    
+    // 🔥 Уведомляем клиента через localStorage
+    localStorage.setItem('bg_chatUpdate_' + activeOperatorChatUser, Date.now().toString()); 
+    botPausedByOperator[activeOperatorChatUser] = true;
+    
+    // 🔥 Триггерим событие для клиента в другой вкладке
+    window.dispatchEvent(new StorageEvent('storage', { key: 'bg_chatUpdate_' + activeOperatorChatUser }));
 }
 
 // 🔐 AGE VERIFICATION
@@ -958,15 +984,14 @@ function checkAuth() {
     if (currentUser) { 
         const initial = currentUser.username.charAt(0).toUpperCase(); const isOp = currentUser.role === 'operator'; 
         const phoneHtml = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div>`; 
-        menu.innerHTML = phoneHtml + ` <div class="user-avatar" onclick="toggleUserMenu()" title="${Security.escapeHtml(currentUser.username)}" tabindex="0" role="button" aria-label="Меню">${initial}</div> <div id="userDropdown" class="user-dropdown"> <div style="font-weight: 700; margin-bottom: 6px; font-size: 15px;">${Security.escapeHtml(currentUser.username)}</div> <div style="font-size: 12px; color: var(--gray); margin-bottom: 14px;">${isOp ? '👨‍💻 Оператор' : '👤 Клиент'}</div> ${isOp ? '<button class="user-dropdown-item" onclick="openAdminPanel()">📊 Панель оператора</button>' : ''} <button class="user-dropdown-item" style="color: var(--danger);" onclick="logout()">🚪 Выйти</button> </div> `; 
+        menu.innerHTML = phoneHtml + ` <div class="user-avatar" id="userAvatarBtn" title="${Security.escapeHtml(currentUser.username)}" tabindex="0" role="button" aria-label="Меню">${initial}</div> <div id="userDropdown" class="user-dropdown"> <div style="font-weight: 700; margin-bottom: 6px; font-size: 15px;">${Security.escapeHtml(currentUser.username)}</div> <div style="font-size: 12px; color: var(--gray); margin-bottom: 14px;">${isOp ? '👨‍💻 Оператор' : '👤 Клиент'}</div> ${isOp ? '<button class="user-dropdown-item" id="openAdminFromMenu">📊 Панель оператора</button>' : ''} <button class="user-dropdown-item" style="color: var(--danger);" id="logoutBtn">🚪 Выйти</button> </div> `; 
         if (isOp) { document.getElementById('operatorBtn').style.display = 'inline-flex'; startOperatorRealtime(); } else document.getElementById('operatorBtn').style.display = 'none'; 
         if (pendingChatAction) { pendingChatAction = false; openChatSection(); } if (pendingOrderProfile) { openProfileById(pendingOrderProfile); pendingOrderProfile = null; } 
-    } else { menu.innerHTML = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div><div class="user-avatar" onclick="openAuthModal()" tabindex="0" role="button" aria-label="Войти">?</div>`; } 
+    } else { menu.innerHTML = `<div class="header-phone" id="headerPhoneDisplay">📞 <span id="phoneNumberSpan">${Security.escapeHtml(phone)}</span></div><div class="user-avatar" id="userAvatarBtn" tabindex="0" role="button" aria-label="Войти">?</div>`; } 
     loadSitePhone(); 
 }
 
 function toggleUserMenu() { const dd = document.getElementById('userDropdown'); if (dd) { const isShown = dd.classList.contains('show'); document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); if (!isShown) dd.classList.add('show'); } }
-document.addEventListener('click', e => { if (!e.target.closest('.user-menu')) document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); });
 
 function openAuthModal() { document.getElementById('authModal').classList.add('active'); document.getElementById('authUsername').focus(); }
 function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); document.getElementById('usernameError').classList.remove('show'); document.getElementById('passwordError').classList.remove('show'); document.getElementById('authUsername').classList.remove('invalid'); document.getElementById('authPassword').classList.remove('invalid'); document.getElementById('authNotice').classList.remove('show'); }
@@ -990,7 +1015,7 @@ function handleUnifiedAuth() {
 }
 function logout() { DB.set('currentUser', null); stopOperatorRealtime(); location.reload(); }
 
-function openChatSection() { if (!currentUser) { pendingChatAction = true; openAuthModal(); return; } document.getElementById('chat').classList.add('active'); document.getElementById('header').classList.add('chat-active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); document.querySelector('.nav-link[data-section="chat"]').classList.add('active'); renderChatMessages(); setTimeout(() => document.getElementById('chatInput').focus(), 300); }
+function openChatSection() { if (!currentUser) { pendingChatAction = true; openAuthModal(); return; } document.getElementById('chat').classList.add('active'); document.getElementById('header').classList.add('chat-active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); document.querySelector('.nav-link[data-section="chat"]').classList.add('active'); renderChatMessages(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.focus(); } }, 300); }
 function closeChat() { document.getElementById('chat').classList.remove('active'); document.getElementById('header').classList.remove('chat-active'); document.querySelector('.nav-link[data-section="models"]').click(); }
 
 function updateCitiesCount() { profiles = DB.get('profiles') || []; cities.forEach(c => { c.count = profiles.filter(p => p.city === c.id).length; const el = document.getElementById(c.id+'Count'), card = document.getElementById(c.id+'CountCard'); if (el) el.textContent = c.count; if (card) card.textContent = c.count + ' ' + (c.count === 1 ? 'девушка' : c.count < 5 ? 'девушки' : 'девушек'); }); }
@@ -999,13 +1024,11 @@ function renderModels(filter) { profiles = DB.get('profiles') || []; const grid 
 function openProfileByIdWithAuth(id) { if (!currentUser) { pendingOrderProfile = id; openAuthModal(); return; } openProfileById(id); }
 function openProfileById(id) { const idx = profiles.findIndex(p => p.id === id); if (idx >= 0) openProfile(idx); }
 function openProfile(idx) { currentModalProfile = profiles[idx]; const ageText = currentModalProfile.age + ' ' + (currentModalProfile.age === 1 ? 'год' : currentModalProfile.age < 5 ? 'года' : 'лет'); document.getElementById('modalImage').src = currentModalProfile.images?.[0] || ''; document.getElementById('modalImage').alt = currentModalProfile.name; document.getElementById('modalName').textContent = currentModalProfile.name; document.getElementById('modalDescription').textContent = currentModalProfile.description; document.getElementById('modalStats').innerHTML = `<div class="modal-stat"><div class="modal-stat-icon">🎂</div><div><div style="color:var(--gray);font-size:12px;">Возраст</div><div>${ageText}</div></div></div><div class="modal-stat"><div class="modal-stat-icon">📏</div><div><div style="color:var(--gray);font-size:12px;">Рост</div><div>${currentModalProfile.height} см</div></div></div><div class="modal-stat"><div class="modal-stat-icon">⚖️</div><div><div style="color:var(--gray);font-size:12px;">Вес</div><div>${currentModalProfile.weight} кг</div></div></div><div class="modal-stat"><div class="modal-stat-icon">👙</div><div><div style="color:var(--gray);font-size:12px;">Грудь</div><div>${currentModalProfile.bust} размер</div></div></div>`; document.getElementById('priceDay1').innerHTML = (currentModalProfile.services?.[0]?.price?.toLocaleString() || '—') + ' ₽'; document.getElementById('priceDay2').innerHTML = (currentModalProfile.services?.[1]?.price?.toLocaleString() || '—') + ' ₽'; document.getElementById('priceNight').innerHTML = (currentModalProfile.services?.[3]?.price?.toLocaleString() || '—') + ' ₽'; document.getElementById('priceTrip').innerHTML = (currentModalProfile.services?.[2]?.price?.toLocaleString() || '—') + ' ₽'; document.getElementById('priceTripNight').innerHTML = (currentModalProfile.services?.[4]?.price?.toLocaleString() || '—') + ' ₽'; const addServDiv = document.getElementById('additionalServices'); if (currentModalProfile.additionalServices?.length) { addServDiv.innerHTML = `<h4>✨ Дополнительные услуги</h4><div class="services-list">${currentModalProfile.additionalServices.map(s => `<div class="service-item"><span class="service-check">✓</span><span class="service-text">${Security.escapeHtml(s)}</span></div>`).join('')}</div>`; } else { addServDiv.innerHTML = '<h4>✨ Дополнительные услуги</h4><p style="color:var(--gray);">Уточняйте индивидуально</p>'; } document.getElementById('profileModal').classList.add('active'); }
-document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
-document.getElementById('modalOrderBtn')?.addEventListener('click', () => { document.getElementById('profileModal').classList.remove('active'); openChatSection(); setTimeout(() => { const input = document.getElementById('chatInput'); if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); } }, 300); });
 
 function openAdminPanel() { document.getElementById('adminDashboard').classList.add('active'); renderAdminProfiles(); renderOperatorChatList(); populateSettingsForm(); }
 function closeAdminPanel() { document.getElementById('adminDashboard').classList.remove('active'); }
-function switchAdminTab(tab) { document.querySelectorAll('.admin-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }); event.target.classList.add('active'); event.target.setAttribute('aria-pressed', 'true'); document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active')); document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active'); if (tab === 'chats') renderOperatorChatList(); if (tab === 'settings') populateSettingsForm(); }
-function renderAdminProfiles() { const list = document.getElementById('adminProfileList'); const profileList = DB.get('profiles') || []; if (!profileList.length) { list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:20px;">Нет анкет.</p>'; return; } list.innerHTML = profileList.map(p => `<div class="profile-list-item"><img src="${p.images?.[0] || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2220%22%3E👤%3C/text%3E%3C/svg%3E'}" alt="${Security.escapeHtml(p.name)}" class="profile-thumb" loading="lazy"><div class="profile-info"><div class="profile-name-lg">${Security.escapeHtml(p.name)}</div><div class="profile-city-sm">${Security.escapeHtml(p.cityName)} • ${(p.price || 0).toLocaleString()} ₽</div></div><div class="profile-actions"><button class="btn btn-primary btn-small" onclick="openProfileEditor(${p.id})">✏️ Ред.</button></div></div>`).join(''); }
+function switchAdminTab(tab) { document.querySelectorAll('.admin-tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }); document.querySelector(`.admin-tab-btn[data-tab="${tab}"]`).classList.add('active'); document.querySelector(`.admin-tab-btn[data-tab="${tab}"]`).setAttribute('aria-pressed', 'true'); document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active')); document.getElementById('admin' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active'); if (tab === 'chats') renderOperatorChatList(); if (tab === 'settings') populateSettingsForm(); }
+function renderAdminProfiles() { const list = document.getElementById('adminProfileList'); const profileList = DB.get('profiles') || []; if (!profileList.length) { list.innerHTML = '<p style="text-align:center;color:var(--gray);padding:20px;">Нет анкет.</p>'; return; } list.innerHTML = profileList.map(p => `<div class="profile-list-item"><img src="${p.images?.[0] || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22%3E%3Crect width=%2260%22 height=%2260%22 fill=%22%23333%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2220%22%3E👤%3C/text%3E%3C/svg%3E'}" alt="${Security.escapeHtml(p.name)}" class="profile-thumb" loading="lazy"><div class="profile-info"><div class="profile-name-lg">${Security.escapeHtml(p.name)}</div><div class="profile-city-sm">${Security.escapeHtml(p.cityName)} • ${(p.price || 0).toLocaleString()} ₽</div></div><div class="profile-actions"><button class="btn btn-primary btn-small edit-profile-btn" data-id="${p.id}">✏️ Ред.</button></div></div>`).join(''); document.querySelectorAll('.edit-profile-btn').forEach(btn => btn.addEventListener('click', () => openProfileEditor(parseInt(btn.dataset.id)))); }
 function openProfileEditor(id) { const profileList = DB.get('profiles') || []; const p = id ? profileList.find(x => x.id === id) : null; document.getElementById('editProfileId').value = p?.id || ''; document.getElementById('editName').value = p?.name || ''; document.getElementById('editCity').value = p?.city || 'pervomaisk'; document.getElementById('editDescription').value = p?.description || ''; document.getElementById('editImage').value = p?.images?.[0] || ''; document.getElementById('editPrice').value = p?.price || ''; const services = p?.services || []; document.getElementById('editPrice1h').value = services[0]?.price || 15000; document.getElementById('editPrice2h').value = services[1]?.price || 30000; document.getElementById('editPriceTrip').value = services[2]?.price || 40000; document.getElementById('editPriceNight').value = services[3]?.price || 100000; document.getElementById('editPriceTripNight').value = services[4]?.price || 100000; document.getElementById('editAdditionalServices').value = p?.additionalServices?.join(', ') || ''; const preview = document.getElementById('editImagePreview'); if (p?.images?.[0]) { preview.src = p.images[0]; preview.style.display = 'block'; } else preview.style.display = 'none'; document.getElementById('deleteProfileBtn').style.display = p ? 'inline-flex' : 'none'; document.getElementById('profileEditor').classList.add('active'); }
 function closeProfileEditor() { document.getElementById('profileEditor').classList.remove('active'); }
 function handleImageUpload(input) { if (input.files?.[0]) { const file = input.files[0]; if (file.size > 2 * 1024 * 1024) { Toast.show('Файл слишком большой (макс. 2 МБ)', 'error'); return; } if (!file.type.startsWith('image/')) { Toast.show('Можно загружать только изображения', 'error'); return; } const reader = new FileReader(); reader.onload = e => { document.getElementById('editImage').value = e.target.result; document.getElementById('editImagePreview').src = e.target.result; document.getElementById('editImagePreview').style.display = 'block'; }; reader.readAsDataURL(file); } }
@@ -1025,23 +1048,176 @@ function initCookieBanner() { if (localStorage.getItem('bg_cookiesAccepted') !==
 function openPrivacyModal() { document.getElementById('privacyModal').classList.add('active'); }
 function closePrivacyModal() { document.getElementById('privacyModal').classList.remove('active'); }
 
-function setupEventListeners() { 
-    document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', function(e) { e.preventDefault(); const section = this.dataset.section; if (section === 'chat') openChatSection(); else { document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); document.getElementById(section).classList.add('active'); document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); this.classList.add('active'); if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter); else if (section === 'city') updateCitiesCount(); document.getElementById('header').classList.remove('chat-active'); } }); }); 
-    document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', function() { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); renderModels(this.dataset.filter); }); }); 
-    document.querySelectorAll('.city-card').forEach(card => { card.addEventListener('click', () => { const city = card.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); }); }); 
-    document.getElementById('cityNavLink')?.addEventListener('click', (e) => { e.preventDefault(); cityDropdownOpen = !cityDropdownOpen; document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen); }); 
-    document.querySelectorAll('.city-dropdown-item').forEach(item => { item.addEventListener('click', () => { const city = item.dataset.city; document.querySelector('.filter-btn[data-filter="' + city + '"]').click(); document.querySelector('.nav-link[data-section="models"]').click(); document.getElementById('cityDropdown').classList.remove('active'); cityDropdownOpen = false; }); }); 
-    document.addEventListener('click', (e) => { if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) { document.getElementById('cityDropdown')?.classList.remove('active'); cityDropdownOpen = false; } }); 
+// 🔗 Event Listeners Setup
+function setupEventListeners() {
+    // Age modal buttons
+    document.getElementById('confirmBtn')?.addEventListener('click', confirmAge);
+    document.getElementById('exitBtn')?.addEventListener('click', exitSite);
+    
+    // Cookie banner
+    document.getElementById('acceptCookiesBtn')?.addEventListener('click', acceptCookies);
+    document.getElementById('declineCookiesBtn')?.addEventListener('click', declineCookies);
+    document.getElementById('openPrivacyLink')?.addEventListener('click', (e) => { e.preventDefault(); openPrivacyModal(); });
+    
+    // Privacy modal
+    document.getElementById('closePrivacyBtn')?.addEventListener('click', closePrivacyModal);
+    document.getElementById('privacyLinkAuth')?.addEventListener('click', (e) => { e.preventDefault(); openPrivacyModal(); });
+    document.getElementById('footerPrivacyLink')?.addEventListener('click', (e) => { e.preventDefault(); openPrivacyModal(); });
+    
+    // Auth modal
+    document.getElementById('userAvatarBtn')?.addEventListener('click', openAuthModal);
+    document.getElementById('closeAuthBtn')?.addEventListener('click', closeAuthModal);
+    document.getElementById('authSubmitBtn')?.addEventListener('click', handleUnifiedAuth);
+    document.getElementById('logoutBtn')?.addEventListener('click', logout);
+    
+    // User menu dropdown
+    document.getElementById('userAvatarBtn')?.addEventListener('click', toggleUserMenu);
+    document.getElementById('openAdminFromMenu')?.addEventListener('click', () => { closeAuthModal(); openAdminPanel(); });
+    document.addEventListener('click', e => { if (!e.target.closest('.user-menu')) document.querySelectorAll('.user-dropdown').forEach(el => el.classList.remove('show')); });
+    
+    // Navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const section = this.dataset.section;
+            if (section === 'chat') openChatSection();
+            else {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                if (section === 'models') renderModels(document.querySelector('.filter-btn.active').dataset.filter);
+                else if (section === 'city') updateCitiesCount();
+                document.getElementById('header').classList.remove('chat-active');
+            }
+        });
+    });
+    
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            renderModels(this.dataset.filter);
+        });
+    });
+    
+    // City cards
+    document.querySelectorAll('.city-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const city = card.dataset.city;
+            document.querySelector('.filter-btn[data-filter="' + city + '"]').click();
+            document.querySelector('.nav-link[data-section="models"]').click();
+        });
+    });
+    
+    // City dropdown
+    document.getElementById('cityNavLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        cityDropdownOpen = !cityDropdownOpen;
+        document.getElementById('cityDropdown').classList.toggle('active', cityDropdownOpen);
+    });
+    document.querySelectorAll('.city-dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const city = item.dataset.city;
+            document.querySelector('.filter-btn[data-filter="' + city + '"]').click();
+            document.querySelector('.nav-link[data-section="models"]').click();
+            document.getElementById('cityDropdown').classList.remove('active');
+            cityDropdownOpen = false;
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#cityNavLink') && !e.target.closest('.city-dropdown')) {
+            document.getElementById('cityDropdown')?.classList.remove('active');
+            cityDropdownOpen = false;
+        }
+    });
+    
+    // Chat input - 🔥 ИСПРАВЛЕНО: используем addEventListener
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendChatMessage(e);
+            }
+        });
+    }
+    if (chatSendBtn) {
+        chatSendBtn.addEventListener('click', (e) => sendChatMessage(e));
+    }
+    
+    // Close chat
+    document.getElementById('closeChatBtn')?.addEventListener('click', closeChat);
+    
+    // Profile modal
+    document.getElementById('closeProfileModal')?.addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
+    document.getElementById('modalOrderBtn')?.addEventListener('click', () => {
+        document.getElementById('profileModal').classList.remove('active');
+        openChatSection();
+        setTimeout(() => {
+            const input = document.getElementById('chatInput');
+            if (input) { input.value = 'Здравствуйте! Хочу заказать встречу с ' + currentModalProfile.name; sendChatMessage(); }
+        }, 300);
+    });
+    
+    // Admin panel
+    document.getElementById('operatorBtn')?.addEventListener('click', openAdminPanel);
+    document.getElementById('closeAdminBtn')?.addEventListener('click', closeAdminPanel);
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchAdminTab(btn.dataset.tab));
+    });
+    document.getElementById('addProfileBtn')?.addEventListener('click', () => openProfileEditor());
+    document.getElementById('saveProfileBtn')?.addEventListener('click', saveProfile);
+    document.getElementById('deleteProfileBtn')?.addEventListener('click', deleteProfile);
+    document.getElementById('closeEditorBtn')?.addEventListener('click', closeProfileEditor);
+    document.getElementById('uploadBtn')?.addEventListener('click', () => document.getElementById('editImageUpload').click());
+    document.getElementById('editImageUpload')?.addEventListener('change', (e) => handleImageUpload(e.target));
+    document.getElementById('saveSettingsBtn')?.addEventListener('click', saveSiteTexts);
+    
+    // Operator chat
+    document.getElementById('backToChatsBtn')?.addEventListener('click', closeOperatorChat);
+    document.getElementById('deleteChatBtn')?.addEventListener('click', deleteOperatorChat);
+    document.getElementById('botToggleBtn')?.addEventListener('click', () => toggleBotForChat());
+    
+    const opInput = document.getElementById('opChatInput');
+    const opSendBtn = document.getElementById('opSendBtn');
+    if (opInput) {
+        opInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendOperatorMessage(e);
+            }
+        });
+    }
+    if (opSendBtn) {
+        opSendBtn.addEventListener('click', (e) => sendOperatorMessage(e));
+    }
+    
+    // Listen for chat updates from operator (for client)
+    window.addEventListener('storage', (e) => {
+        if (e.key?.startsWith('bg_chatUpdate_') && currentUser) {
+            const username = e.key.replace('bg_chatUpdate_', '');
+            if (username === currentUser.username) {
+                renderChatMessages();
+            }
+        }
+    });
 }
 
+// 🎨 Init Animations & Video
 document.querySelectorAll('.heart-path').forEach(path => { try { const len = path.getTotalLength(); path.style.setProperty('--heart-len', len); path.style.strokeDasharray = len; path.style.strokeDashoffset = len; } catch(e) {} });
+
 function initVideoBackground() { const video = document.getElementById('bgVideo'); if (!video) return; const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection; const saveData = connection && (connection.saveData || /2g|slow/.test(connection.effectiveType)); if (saveData) { video.style.display = 'none'; return; } const playPromise = video.play(); if (playPromise !== undefined) { playPromise.then(() => video.removeAttribute('poster')).catch(() => { const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart', enableVideo); document.removeEventListener('click', enableVideo); document.removeEventListener('scroll', enableVideo); }; document.addEventListener('touchstart', enableVideo, { once: true, passive: true }); document.addEventListener('click', enableVideo, { once: true }); document.addEventListener('scroll', enableVideo, { once: true, passive: true }); }); } document.addEventListener('visibilitychange', () => { if (document.hidden) video.pause(); else video.play().catch(()=>{}); }); window.addEventListener('orientationchange', () => { setTimeout(() => video.play().catch(()=>{}), 500); }); }
+
 function initDynamicHeader() { const header = document.getElementById('header'); if (!header) return; let lastScrollY = window.scrollY, ticking = false; const SCROLL_THRESHOLD = 60; function updateHeader() { const currentScrollY = window.scrollY; const isChatActive = document.getElementById('chat').classList.contains('active'); const isAdminActive = document.getElementById('adminDashboard').classList.contains('active'); if (isChatActive || isAdminActive) { header.classList.remove('header-hidden'); lastScrollY = currentScrollY; ticking = false; return; } if (currentScrollY > lastScrollY + SCROLL_THRESHOLD && currentScrollY > 100) header.classList.add('header-hidden'); else if (currentScrollY < lastScrollY - SCROLL_THRESHOLD || currentScrollY <= 50) header.classList.remove('header-hidden'); lastScrollY = currentScrollY; ticking = false; } function onScroll() { if (!ticking) { requestAnimationFrame(updateHeader); ticking = true; } } window.addEventListener('scroll', onScroll, { passive: true }); const observer = new MutationObserver(() => { const isChatActive = document.getElementById('chat').classList.contains('active'); const isAdminActive = document.getElementById('adminDashboard').classList.contains('active'); if (isChatActive || isAdminActive) header.classList.remove('header-hidden'); else header.classList.remove('header-hidden'); }); observer.observe(document.getElementById('chat'), { attributes: true, attributeFilter: ['class'] }); observer.observe(document.getElementById('adminDashboard'), { attributes: true, attributeFilter: ['class'] }); }
 
 // 🚀 DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() { 
     DB.init(); Toast.init(); 
     loadSiteTexts(); updateCitiesCount(); renderModels('all'); setupEventListeners(); initVideoBackground(); initDynamicHeader(); initCookieBanner();
+    
     const confirmed = sessionStorage.getItem('bg_ageConfirmed');
     if (confirmed !== 'true') {
         const modal = document.getElementById('ageModal');
