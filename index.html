@@ -670,7 +670,8 @@ let currentUser = DB.get('currentUser'),
     cityDropdownOpen = false,
     botWelcomeMessage = (DB.get('siteTexts')||{}).botWelcome || 'Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?',
     operatorPollingInterval = null,
-    botContext = {};
+    botContext = {},
+    siteInitialized = false; // Флаг чтобы инициализировать сайт только один раз
 
 // ===== AGE VERIFICATION =====
 function isAgeConfirmed() {
@@ -691,11 +692,10 @@ function confirmAge() {
         document.body.style.overflow = '';
     }
     Toast.show('Добро пожаловать!','success');
-    // Показываем главную страницу (#models)
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById('models').classList.add('active');
-    // Инициализируем сайт
-    initSite();
+    // Инициализируем сайт (только если ещё не инициализирован)
+    if(!siteInitialized) {
+        initSite();
+    }
 }
 function exitSite() { window.location.href = 'https://www.google.com'; }
 
@@ -1085,6 +1085,9 @@ function setupNav() {
 
 // ===== INIT =====
 function initSite() {
+    if(siteInitialized) return; // Если уже инициализирован, выходим
+    siteInitialized = true;
+    
     checkAuth();
     // Гарантированно показываем главную страницу
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1188,10 +1191,10 @@ document.addEventListener('DOMContentLoaded',()=>{
         document.getElementById('confirmBtn').onclick = confirmAge;
         document.getElementById('exitBtn').onclick = exitSite;
     } else {
-        // Already confirmed - show main page and init site
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById('models').classList.add('active');
-        initSite();
+        // Already confirmed - init site (только если ещё не инициализирован)
+        if(!siteInitialized) {
+            initSite();
+        }
     }
     
     // Auth handlers
