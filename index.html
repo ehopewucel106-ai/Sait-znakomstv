@@ -661,6 +661,7 @@ const OPERATOR_CREDENTIALS = [
 
 // 🎯 ДОБАВЬТЕ ЭТУ КОНСТАНТУ:
 const SITE_TEXTS_DEFAULT = {
+   const SITE_TEXTS_DEFAULT = {
     modelsTitle: 'Анкеты Девушек',
     modelsSubtitle: 'Выберите идеальную спутницу',
     citiesTitle: 'Города Присутствия',
@@ -1176,42 +1177,55 @@ function saveProfile() {
 }
 
 // ===== DOMContentLoaded =====
-document.addEventListener('DOMContentLoaded',()=>{
-    DB.init(); Toast.init();
-    loadSiteTexts();
-    initCookieBanner();
-    
-    // 🎯 МОДАЛКА 18+ ПОКАЗЫВАЕТСЯ ВСЕГДА
-    // Показываем модалку и блокируем скролл
-    const modal = document.getElementById('ageModal');
-    if(modal) {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    // Привязываем обработчики кнопок
-    document.getElementById('confirmBtn').onclick = confirmAge;
-    document.getElementById('exitBtn').onclick = exitSite;
-    
-    // Auth handlers
-    document.getElementById('authSubmitBtn').onclick = handleUnifiedAuth;
-    
-    // Chat handlers
-    document.getElementById('chatSend').onclick = sendChatMessage;
-    document.getElementById('chatInput').onkeypress = e => { if(e.key==='Enter') sendChatMessage(); };
-    
-    // Video background
-    const video = document.getElementById('bgVideo');
-    if(video) {
-        const playPromise = video.play();
-        if(playPromise !== undefined) {
-            playPromise.catch(()=>{
-                const enableVideo = () => { video.play().catch(()=>{}); document.removeEventListener('touchstart',enableVideo); document.removeEventListener('click',enableVideo); };
-                document.addEventListener('touchstart',enableVideo,{once:true,passive:true});
-                document.addEventListener('click',enableVideo,{once:true});
-            });
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        DB.init(); 
+        Toast.init();
+        loadSiteTexts();
+        initCookieBanner();
+        
+        // 🎯 МОДАЛКА 18+ ПОКАЗЫВАЕТСЯ ВСЕГДА
+        const modal = document.getElementById('ageModal');
+        if(modal) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            console.log('✅ Модалка 18+ показана');
         }
+        
+        // Привязываем обработчики
+        document.getElementById('confirmBtn').onclick = confirmAge;
+        document.getElementById('exitBtn').onclick = exitSite;
+        
+        // Auth handlers
+        document.getElementById('authSubmitBtn').onclick = handleUnifiedAuth;
+        
+        // Chat handlers
+        document.getElementById('chatSend').onclick = sendChatMessage;
+        document.getElementById('chatInput').onkeypress = e => { 
+            if(e.key === 'Enter') sendChatMessage(); 
+        };
+        
+        // Video background
+        const video = document.getElementById('bgVideo');
+        if(video) {
+            const playPromise = video.play();
+            if(playPromise !== undefined) {
+                playPromise.catch(() => {
+                    const enableVideo = () => { 
+                        video.play().catch(() => {}); 
+                        document.removeEventListener('touchstart', enableVideo); 
+                        document.removeEventListener('click', enableVideo); 
+                    };
+                    document.addEventListener('touchstart', enableVideo, {once: true, passive: true});
+                    document.addEventListener('click', enableVideo, {once: true});
+                });
+            }
+        }
+        
+    } catch(error) {
+        console.error('❌ Ошибка при инициализации:', error);
     }
+});
     
     // 🚫 Сайт НЕ инициализируется автоматически - только после подтверждения 18+
 });
