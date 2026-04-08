@@ -655,13 +655,15 @@ const DB = {
 };
 
 // ===== CONSTANTS =====
+
+// ✅ ОСТАВЬТЕ ТОЛЬКО ОДИН БЛОК:
 const OPERATOR_CREDENTIALS = [
     {username:'operator_master',hash:Security.simpleHash('B@byG1rl!2025')},
     {username:'operator_elite',hash:Security.simpleHash('Elite$Pass2025')}
+];
 
-// 🎯 ДОБАВЬТЕ ЭТУ КОНСТАНТУ:
+// ✅ И СРАЗУ ПОСЛЕ НЕГО SITE_TEXTS_DEFAULT:
 const SITE_TEXTS_DEFAULT = {
-   const SITE_TEXTS_DEFAULT = {
     modelsTitle: 'Анкеты Девушек',
     modelsSubtitle: 'Выберите идеальную спутницу',
     citiesTitle: 'Города Присутствия',
@@ -671,6 +673,7 @@ const SITE_TEXTS_DEFAULT = {
     footerConfidentiality: 'Полная конфиденциальность гарантирована.',
     botWelcome: 'Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?'
 };
+
 // ===== STATE =====
 let currentUser = DB.get('currentUser'),
     profiles = DB.get('profiles') || [],
