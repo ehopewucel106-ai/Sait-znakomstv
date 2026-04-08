@@ -658,8 +658,18 @@ const DB = {
 const OPERATOR_CREDENTIALS = [
     {username:'operator_master',hash:Security.simpleHash('B@byG1rl!2025')},
     {username:'operator_elite',hash:Security.simpleHash('Elite$Pass2025')}
-];
 
+// 🎯 ДОБАВЬТЕ ЭТУ КОНСТАНТУ:
+const SITE_TEXTS_DEFAULT = {
+    modelsTitle: 'Анкеты Девушек',
+    modelsSubtitle: 'Выберите идеальную спутницу',
+    citiesTitle: 'Города Присутствия',
+    citiesSubtitle: 'Наши девушки доступны в следующих городах',
+    footerWarning: '🔞 18+ Только для совершеннолетних',
+    footerCopyright: '© 2026 BABYGIRL_LNR. Все услуги предоставляются исключительно лицам старше 18 лет.',
+    footerConfidentiality: 'Полная конфиденциальность гарантирована.',
+    botWelcome: 'Привет! 👋 Я менеджер BABYGIRL_LNR. Чем могу помочь?'
+};
 // ===== STATE =====
 let currentUser = DB.get('currentUser'),
     profiles = DB.get('profiles') || [],
