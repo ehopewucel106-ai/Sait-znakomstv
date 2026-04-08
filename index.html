@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src 'self' https: data: blob:; connect-src 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src 'self' https:  blob:; connect-src 'self';">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
@@ -672,9 +672,16 @@ let currentUser = DB.get('currentUser'),
     operatorPollingInterval = null,
     botContext = {};
 
-// ===== AGE VERIFICATION (FIXED) =====
+// ===== AGE VERIFICATION =====
 function isAgeConfirmed() {
     return localStorage.getItem('bg_ageConfirmed') === 'true';
+}
+function initAgeVerification() {
+    const modal = document.getElementById('ageModal');
+    if(modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
 }
 function confirmAge() {
     localStorage.setItem('bg_ageConfirmed', 'true');
@@ -684,6 +691,10 @@ function confirmAge() {
         document.body.style.overflow = '';
     }
     Toast.show('Добро пожаловать!','success');
+    // Показываем главную страницу (#models)
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('models').classList.add('active');
+    // Инициализируем сайт
     initSite();
 }
 function exitSite() { window.location.href = 'https://www.google.com'; }
@@ -1075,6 +1086,9 @@ function setupNav() {
 // ===== INIT =====
 function initSite() {
     checkAuth();
+    // Гарантированно показываем главную страницу
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('models').classList.add('active');
     renderModels('all');
     setupNav();
     if(currentUser) {
@@ -1168,13 +1182,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     loadSiteTexts();
     initCookieBanner();
     
-    // Age verification: show modal ONLY if not confirmed
+    // Age verification
     if(!isAgeConfirmed()) {
         initAgeVerification();
         document.getElementById('confirmBtn').onclick = confirmAge;
         document.getElementById('exitBtn').onclick = exitSite;
     } else {
-        // Already confirmed - init site immediately
+        // Already confirmed - show main page and init site
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('models').classList.add('active');
         initSite();
     }
     
