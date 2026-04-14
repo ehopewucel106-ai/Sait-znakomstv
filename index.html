@@ -2,247 +2,1407 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="description" content="Технические работы на сайте BABYGIRL_LNR">
-<title>Технические работы | BABYGIRL_LNR</title>
-<link href="https://cdn.jsdelivr.net/npm/fontsource-great-vibes@5.0.0/index.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/fontsource-montserrat@5.0.0/index.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BABYGIRL_LNR</title>
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@5.0.19/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@5.0.19/600.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@5.0.19/700.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@5.0.19/900.css" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-    --primary: #e91e63;
-    --primary-dark: #c2185b;
-    --secondary: #9c27b0;
-    --dark: #1a1a2e;
-    --darker: #0f0f1a;
-    --light: #ffffff;
-    --gray: #6b7280;
-    --gradient: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%);
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg-primary:#0a0a0f;--bg-secondary:#12121a;--glass:rgba(255,255,255,0.05);
+--glass-border:rgba(255,255,255,0.1);--accent:#e91e63;--accent2:#ff6090;
+--accent3:#c2185b;--text:#fff;--text-muted:rgba(255,255,255,0.6);
+--success:#4caf50;--warning:#ff9800;--danger:#f44336;
+--gradient:linear-gradient(135deg,#e91e63,#9c27b0,#673ab7);
+--gradient2:linear-gradient(135deg,#ff6090,#e91e63,#c2185b);
 }
-.video-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -3;
-    pointer-events: none;
-    transform: translateZ(0);
-    will-change: transform;
-    filter: brightness(1.15) contrast(1.1) saturate(1.1);
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--bg-primary);color:var(--text);min-height:100vh;overflow-x:hidden}
+.video-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden}
+.video-bg::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(45deg,rgba(10,10,15,0.92),rgba(18,18,26,0.88),rgba(10,10,15,0.95));z-index:1}
+.video-bg .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.3;animation:orbFloat 20s infinite ease-in-out}
+.video-bg .orb:nth-child(1){width:400px;height:400px;background:#e91e63;top:-100px;left:-100px;animation-delay:0s}
+.video-bg .orb:nth-child(2){width:300px;height:300px;background:#9c27b0;bottom:-50px;right:-50px;animation-delay:-7s}
+.video-bg .orb:nth-child(3){width:350px;height:350px;background:#673ab7;top:50%;left:50%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(50px,-80px) scale(1.2)}50%{transform:translate(-30px,60px) scale(0.8)}75%{transform:translate(80px,30px) scale(1.1)}}
+.app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+/* HEADER */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);padding:0 20px;height:70px;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s}
+.header.scrolled{background:rgba(10,10,15,0.95);box-shadow:0 4px 30px rgba(233,30,99,0.1)}
+.logo-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;min-width:200px}
+.logo-heart{width:36px;height:36px;animation:heartPulse 2s infinite}
+.logo-heart svg{width:100%;height:100%}
+.logo-text{font-size:1.1rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlow 3s infinite alternate;white-space:nowrap}
+@keyframes heartPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+@keyframes textGlow{0%{filter:brightness(1)}100%{filter:brightness(1.3)}}
+.nav{display:flex;gap:8px;align-items:center}
+.nav-btn{background:none;border:none;color:var(--text-muted);font-family:inherit;font-size:0.9rem;font-weight:600;padding:8px 16px;border-radius:10px;cursor:pointer;transition:all 0.3s;position:relative}
+.nav-btn:hover,.nav-btn.active{color:var(--text);background:var(--glass)}
+.nav-btn.active::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:20px;height:3px;background:var(--gradient);border-radius:2px}
+.profile-btn{background:var(--glass);border:1px solid var(--glass-border);color:var(--text);width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-size:1.2rem}
+.profile-btn:hover{background:var(--accent);border-color:var(--accent);transform:scale(1.05)}
+/* MAIN */
+.main{flex:1;padding-top:70px}
+.section{display:none;padding:20px;max-width:1200px;margin:0 auto;animation:fadeIn 0.4s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* GIRLS CATALOG */
+.catalog-header{text-align:center;margin-bottom:30px}
+.catalog-header h1{font-size:2rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.catalog-header p{color:var(--text-muted);font-size:0.95rem}
+.catalog-filters{display:flex;gap:10px;justify-content:center;margin-bottom:25px;flex-wrap:wrap}
+.filter-btn{background:var(--glass);border:1px solid var(--glass-border);color:var(--text-muted);padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:0.85rem;font-weight:600;transition:all 0.3s}
+.filter-btn:hover,.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.girls-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.girl-card{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.4s;position:relative}
+.girl-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(233,30,99,0.15);border-color:rgba(233,30,99,0.3)}
+.girl-card-img{width:100%;height:280px;object-fit:cover;display:block}
+.girl-card-img-placeholder{width:100%;height:280px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,0.1)}
+.girl-card-info{padding:16px}
+.girl-card-top{display:flex;justify-content:space-between;align-items:start;margin-bottom:10px}
+.girl-card-name{font-size:1.2rem;font-weight:700}
+.girl-card-city{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:0.8rem;font-weight:600}
+.girl-card-desc{color:var(--text-muted);font-size:0.85rem;line-height:1.4;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.girl-card-stats{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.stat-tag{background:rgba(233,30,99,0.15);color:var(--accent2);padding:4px 10px;border-radius:8px;font-size:0.75rem;font-weight:600}
+.girl-card-payment{background:rgba(76,175,80,0.15);color:var(--success);padding:8px;border-radius:10px;font-size:0.8rem;font-weight:600;text-align:center;margin-bottom:10px}
+.girl-card-actions{display:flex;gap:8px}
+.btn-order{flex:1;background:var(--gradient2);border:none;color:#fff;padding:10px;border-radius:12px;font-family:inherit;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all 0.3s}
+.btn-order:hover{transform:scale(1.02);box-shadow:0 5px 20px rgba(233,30,99,0.4)}
+.btn-open{flex:1;background:var(--glass);border:1px solid var(--glass-border);color:var(--text);padding:10px;border-radius:12px;font-family:inherit;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.3s}
+.btn-open:hover{border-color:var(--accent);color:var(--accent)}
+/* MODALS */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;animation:overlayIn 0.3s ease}
+.modal-overlay.show{display:flex}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--bg-secondary);border:1px solid var(--glass-border);border-radius:24px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:modalIn 0.4s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(0.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:15px;right:15px;width:36px;height:36px;background:var(--glass);border:1px solid var(--glass-border);border-radius:50%;color:var(--text);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:10}
+.modal-close:hover{background:var(--danger);border-color:var(--danger);transform:rotate(90deg)}
+.modal-header{padding:24px 24px 0;text-align:center}
+.modal-header h2{font-size:1.5rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-body{padding:24px}
+/* PROFILE DETAIL MODAL */
+.profile-modal{max-width:700px}
+.profile-modal-img{width:100%;height:350px;object-fit:cover;border-radius:24px 24px 0 0}
+.profile-modal-img-placeholder{width:100%;height:350px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:24px 24px 0 0;display:flex;align-items:center;justify-content:center;font-size:5rem;color:rgba(255,255,255,0.1)}
+.profile-detail{padding:24px}
+.profile-detail h2{font-size:1.8rem;font-weight:900;margin-bottom:4px}
+.profile-detail .city{color:var(--accent2);font-weight:600;margin-bottom:16px}
+.profile-detail .desc{color:var(--text-muted);line-height:1.6;margin-bottom:20px}
+.profile-detail .section-title{font-weight:700;margin-bottom:10px;color:var(--accent2)}
+.profile-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.profile-stat{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:12px;text-align:center}
+.profile-stat .label{font-size:0.75rem;color:var(--text-muted);margin-bottom:4px}
+.profile-stat .value{font-size:1rem;font-weight:700;color:var(--accent2)}
+.profile-services{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.profile-service{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.3s}
+.profile-service:hover{border-color:var(--accent);background:rgba(233,30,99,0.1)}
+.profile-service .name{font-weight:600}
+.profile-service .price{color:var(--accent2);font-weight:700}
+.profile-payment{background:rgba(76,175,80,0.15);color:var(--success);padding:12px;border-radius:12px;text-align:center;font-weight:600;margin-bottom:20px}
+.profile-order-btn{width:100%;background:var(--gradient2);border:none;color:#fff;padding:14px;border-radius:14px;font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s}
+.profile-order-btn:hover{transform:scale(1.02);box-shadow:0 5px 25px rgba(233,30,99,0.4)}
+/* AUTH MODAL */
+.auth-modal{max-width:420px}
+.auth-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--glass);border-radius:12px;padding:4px}
+.auth-tab{flex:1;padding:10px;border:none;background:none;color:var(--text-muted);font-family:inherit;font-weight:600;font-size:0.9rem;cursor:pointer;border-radius:10px;transition:all 0.3s}
+.auth-tab.active{background:var(--accent);color:#fff}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text-muted)}
+.form-input{width:100%;background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:12px 16px;color:var(--text);font-family:inherit;font-size:0.95rem;transition:all 0.3s;outline:none}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(233,30,99,0.2)}
+.form-btn{width:100%;background:var(--gradient2);border:none;color:#fff;padding:14px;border-radius:12px;font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s;margin-top:8px}
+.form-btn:hover{transform:scale(1.02);box-shadow:0 5px 20px rgba(233,30,99,0.4)}
+.policy-link{display:block;text-align:center;margin-top:12px;color:var(--accent2);font-size:0.8rem;cursor:pointer;text-decoration:underline}
+/* CHAT */
+.chat-container{display:flex;flex-direction:column;height:calc(100vh - 70px);max-width:800px;margin:0 auto}
+.chat-header{padding:16px 20px;background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);border-radius:16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.chat-header h3{font-weight:700}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;margin-bottom:12px;display:flex;flex-direction:column;gap:12px}
+.chat-msg{max-width:80%;padding:12px 16px;border-radius:16px;font-size:0.9rem;line-height:1.5;animation:msgIn 0.3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.chat-msg.bot{background:rgba(233,30,99,0.15);border:1px solid rgba(233,30,99,0.2);align-self:flex-start;border-bottom-left-radius:4px}
+.chat-msg.user{background:rgba(103,58,183,0.2);border:1px solid rgba(103,58,183,0.3);align-self:flex-end;border-bottom-right-radius:4px}
+.chat-msg.system{background:rgba(255,152,0,0.15);border:1px solid rgba(255,152,0,0.2);align-self:center;text-align:center;font-size:0.8rem;color:var(--warning)}
+.chat-msg .msg-profile{margin-top:10px;background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;overflow:hidden}
+.chat-msg .msg-profile-img{width:100%;height:150px;object-fit:cover}
+.chat-msg .msg-profile-img-placeholder{width:100%;height:150px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;font-size:2rem;color:rgba(255,255,255,0.1)}
+.chat-msg .msg-profile-info{padding:10px}
+.chat-msg .msg-profile-info h4{font-weight:700;margin-bottom:2px}
+.chat-msg .msg-profile-info .price{color:var(--accent2);font-size:0.85rem}
+.chat-msg .msg-profile-info .pay-note{font-size:0.75rem;color:var(--success);margin-top:4px}
+.chat-msg .msg-services{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.chat-msg .msg-service-btn{background:var(--glass);border:1px solid var(--glass-border);color:var(--text);padding:8px 12px;border-radius:10px;font-family:inherit;font-size:0.85rem;cursor:pointer;transition:all 0.3s;text-align:left}
+.chat-msg .msg-service-btn:hover{border-color:var(--accent);background:rgba(233,30,99,0.1)}
+.chat-input-wrap{display:flex;gap:10px}
+.chat-input{flex:1;background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:12px 16px;color:var(--text);font-family:inherit;font-size:0.95rem;outline:none;transition:all 0.3s}
+.chat-input:focus{border-color:var(--accent)}
+.chat-send{background:var(--gradient2);border:none;color:#fff;width:48px;height:48px;border-radius:14px;cursor:pointer;font-size:1.2rem;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+.chat-send:hover{transform:scale(1.05)}
+.chat-indicator{display:none;align-items:center;gap:8px;color:var(--warning);font-size:0.85rem;font-weight:600;padding:8px 16px;background:rgba(255,152,0,0.1);border-radius:10px;margin-bottom:10px}
+.chat-indicator.show{display:flex}
+.chat-indicator .dot{width:8px;height:8px;background:var(--warning);border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+/* CITIES MODAL */
+.cities-list{display:flex;flex-direction:column;gap:10px}
+.city-item{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:16px 20px;cursor:pointer;transition:all 0.3s;display:flex;justify-content:space-between;align-items:center}
+.city-item:hover{border-color:var(--accent);background:rgba(233,30,99,0.1);transform:translateX(5px)}
+.city-item .name{font-weight:700;font-size:1.1rem}
+.city-item .count{color:var(--accent2);font-weight:600;font-size:0.85rem}
+/* PROFILE DROPDOWN */
+.profile-dropdown{position:absolute;top:60px;right:20px;background:var(--bg-secondary);border:1px solid var(--glass-border);border-radius:16px;padding:8px;min-width:200px;display:none;z-index:100;animation:dropIn 0.3s ease}
+.profile-dropdown.show{display:block}
+@keyframes dropIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.profile-dropdown .pd-name{padding:12px 16px;font-weight:700;font-size:0.95rem;border-bottom:1px solid var(--glass-border)}
+.profile-dropdown .pd-btn{width:100%;padding:12px 16px;background:none;border:none;color:var(--text);font-family:inherit;font-size:0.9rem;cursor:pointer;text-align:left;border-radius:10px;transition:all 0.2s;display:flex;align-items:center;gap:10px}
+.profile-dropdown .pd-btn:hover{background:var(--glass)}
+.profile-dropdown .pd-btn.danger{color:var(--danger)}
+/* ADMIN PANEL */
+.admin-section{margin-bottom:24px}
+.admin-section h3{font-size:1.1rem;font-weight:700;margin-bottom:12px;color:var(--accent2);display:flex;align-items:center;gap:8px}
+.admin-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:20px;margin-bottom:12px}
+.admin-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:end}
+.admin-row .form-group{flex:1;min-width:150px;margin-bottom:0}
+.admin-btn{padding:10px 20px;border:none;border-radius:10px;font-family:inherit;font-weight:600;cursor:pointer;transition:all 0.3s;font-size:0.85rem}
+.admin-btn.primary{background:var(--gradient2);color:#fff}
+.admin-btn.secondary{background:var(--glass);border:1px solid var(--glass-border);color:var(--text)}
+.admin-btn.danger{background:rgba(244,67,54,0.2);border:1px solid var(--danger);color:var(--danger)}
+.admin-btn:hover{transform:scale(1.05)}
+.admin-list{display:flex;flex-direction:column;gap:8px}
+.admin-list-item{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
+.admin-list-item:hover{border-color:var(--accent)}
+.admin-list-item .info{flex:1}
+.admin-list-item .info h4{font-weight:700;font-size:0.95rem}
+.admin-list-item .info p{font-size:0.8rem;color:var(--text-muted)}
+.admin-list-item .actions{display:flex;gap:6px}
+.admin-list-item .actions button{width:32px;height:32px;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+.admin-list-item .actions .edit-btn{background:rgba(103,58,183,0.2);color:#a78bfa}
+.admin-list-item .actions .delete-btn{background:rgba(244,67,54,0.2);color:var(--danger)}
+.admin-list-item .actions button:hover{transform:scale(1.1)}
+.toggle-wrap{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.toggle{width:50px;height:26px;background:var(--glass);border:1px solid var(--glass-border);border-radius:13px;cursor:pointer;position:relative;transition:all 0.3s}
+.toggle.active{background:var(--accent);border-color:var(--accent)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:all 0.3s}
+.toggle.active::after{left:27px}
+.chat-list-item{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:14px 18px;margin-bottom:8px;cursor:pointer;transition:all 0.3s;display:flex;justify-content:space-between;align-items:center}
+.chat-list-item:hover{border-color:var(--accent)}
+.chat-list-item.has-waiting{border-color:var(--warning);box-shadow:0 0 15px rgba(255,152,0,0.2)}
+.chat-list-item .chat-info h4{font-weight:700;font-size:0.95rem}
+.chat-list-item .chat-info p{font-size:0.8rem;color:var(--text-muted)}
+.chat-list-item .chat-status{font-size:0.75rem;padding:4px 10px;border-radius:8px;font-weight:600}
+.chat-list-item .chat-status.waiting{background:rgba(255,152,0,0.2);color:var(--warning)}
+.chat-list-item .chat-status.active{background:rgba(76,175,80,0.2);color:var(--success)}
+.chat-list-item .chat-status.closed{background:var(--glass);color:var(--text-muted)}
+/* AGE VERIFICATION */
+.age-modal{max-width:480px;text-align:center}
+.age-modal .age-icon{font-size:4rem;margin-bottom:16px}
+.age-modal h2{margin-bottom:8px}
+.age-modal p{color:var(--text-muted);font-size:0.9rem;line-height:1.5;margin-bottom:24px}
+.age-buttons{display:flex;gap:12px}
+.age-btn{flex:1;padding:14px;border:none;border-radius:12px;font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s}
+.age-btn.yes{background:var(--gradient2);color:#fff}
+.age-btn.no{background:var(--glass);border:1px solid var(--glass-border);color:var(--text-muted)}
+.age-btn:hover{transform:scale(1.05)}
+/* PRIVACY POLICY */
+.policy-modal{max-width:600px;max-height:80vh}
+.policy-content{color:var(--text-muted);font-size:0.85rem;line-height:1.7;max-height:60vh;overflow-y:auto;padding-right:10px}
+.policy-content h3{color:var(--text);font-size:1rem;margin:16px 0 8px}
+.policy-content p{margin-bottom:10px}
+/* FOOTER */
+.footer{background:rgba(10,10,15,0.9);border-top:1px solid var(--glass-border);padding:30px 20px;text-align:center;margin-top:auto}
+.footer .warning{background:rgba(244,67,54,0.15);border:1px solid rgba(244,67,54,0.3);border-radius:12px;padding:12px 20px;display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;font-size:0.85rem;font-weight:600;color:var(--danger)}
+.footer .info{color:var(--text-muted);font-size:0.8rem;line-height:1.6;max-width:600px;margin:0 auto}
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg-secondary);border:1px solid var(--glass-border);border-radius:12px;padding:14px 20px;font-size:0.9rem;z-index:3000;animation:toastIn 0.4s ease;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.toast.success{border-color:var(--success)}
+.toast.error{border-color:var(--danger)}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--glass-border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+/* RESPONSIVE */
+@media(max-width:768px){
+.header{padding:0 12px;height:60px}
+.logo-text{font-size:0.85rem}
+.nav-btn{padding:6px 10px;font-size:0.8rem}
+.profile-btn{width:36px;height:36px;font-size:1rem}
+.main{padding-top:60px}
+.girls-grid{grid-template-columns:1fr}
+.girl-card-img,.girl-card-img-placeholder{height:220px}
+.profile-modal-img,.profile-modal-img-placeholder{height:250px}
+.profile-stats-grid{grid-template-columns:repeat(2,1fr)}
+.chat-container{height:calc(100vh - 60px)}
+.chat-msg{max-width:90%}
+.modal{border-radius:20px;margin:10px}
+.admin-row{flex-direction:column}
+.admin-row .form-group{min-width:100%}
 }
-.video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(15,15,26,0.35) 0%, rgba(26,26,46,0.3) 100%);
-    z-index: -2;
-    pointer-events: none;
+@media(max-width:480px){
+.logo-wrap{min-width:auto}
+.logo-text{font-size:0.75rem}
+.nav-btn{padding:6px 8px;font-size:0.75rem}
+.age-buttons{flex-direction:column}
+.profile-dropdown{right:10px}
 }
-@media (max-width: 768px) {
-    .video-bg { filter: brightness(1.2) contrast(1.15); }
-    .video-overlay { background: linear-gradient(135deg, rgba(15,15,26,0.25) 0%, rgba(26,26,46,0.2) 100%); }
-}
-@media (prefers-reduced-data: reduce) { .video-bg { display: none; } }
-@supports (-webkit-touch-callout: none) { .video-bg { -webkit-transform: translateZ(0); transform: translateZ(0); } }
-html { height: 100%; }
-body {
-    font-family: 'Montserrat', sans-serif;
-    background: var(--darker);
-    color: var(--light);
-    min-height: 100vh;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    line-height: 1.6;
-}
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    margin-bottom: 40px;
-}
-.logo-animation-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-.heart-svg {
-    width: 60px;
-    height: 60px;
-    position: relative;
-    flex-shrink: 0;
-    overflow: visible;
-}
-.heart-path {
-    fill: none;
-    stroke: url(#ribbonGradient);
-    stroke-width: 6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 350;
-    stroke-dashoffset: 0;
-    animation: heartPulseFinal 2s ease-in-out infinite;
-}
-@keyframes heartPulseFinal {
-    0%,100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(233,30,99,0.5)); }
-    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(233,30,99,0.8)); }
-}
-.logo-text {
-    font-family: 'Great Vibes', cursive;
-    font-size: 52px;
-    font-weight: 400;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    white-space: nowrap;
-}
-.main-card {
-    background: rgba(26,26,46,0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 32px;
-    padding: 50px 40px;
-    text-align: center;
-    max-width: 650px;
-    width: 90%;
-    margin: 20px auto;
-    border: 1px solid rgba(233,30,99,0.3);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-    animation: fadeInUp 0.8s ease forwards;
-}
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.construction-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
-    display: inline-block;
-    animation: float 3s ease-in-out infinite;
-}
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 64px;
-    margin-bottom: 20px;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-.message {
-    font-size: 20px;
-    color: var(--gray);
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-.btn {
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    background: var(--gradient);
-    color: white;
-    margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(233,30,99,0.5);
-}
-.footer {
-    margin-top: 60px;
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    color: var(--gray);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    width: 100%;
-}
-@media (max-width: 768px) {
-    .logo-text { font-size: 32px; }
-    .heart-svg { width: 45px; height: 45px; }
-    h1 { font-size: 48px; }
-    .message { font-size: 18px; }
-    .main-card { padding: 30px 20px; }
-}
+.empty-state{text-align:center;padding:40px;color:var(--text-muted)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px}
+.img-upload{width:100%;height:120px;background:var(--glass);border:2px dashed var(--glass-border);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;color:var(--text-muted);font-size:0.85rem}
+.img-upload:hover{border-color:var(--accent);color:var(--accent)}
+.img-upload img{max-width:100%;max-height:100%;object-fit:cover;border-radius:10px}
+.img-preview{width:100px;height:100px;border-radius:12px;object-fit:cover;border:2px solid var(--glass-border)}
 </style>
 </head>
 <body>
+<div class="video-bg">
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="orb"></div>
+</div>
 
-<video id="bgVideo" class="video-bg" autoplay muted loop playsinline webkit-playsinline aria-hidden="true" preload="auto">
-    <source src="video/bg.mp4" type="video/mp4">
-</video>
-<div class="video-overlay" aria-hidden="true"></div>
+<div class="app">
+<!-- AGE VERIFICATION MODAL -->
+<div class="modal-overlay show" id="ageModal">
+<div class="modal age-modal">
+<button class="modal-close" onclick="closeAgeModal()">✕</button>
+<div class="modal-header">
+<div class="age-icon">🔞</div>
+<h2>Подтверждение возраста</h2>
+</div>
+<div class="modal-body">
+<p>Данный сайт содержит материалы, предназначенные исключительно для лиц старше 18 лет. Продолжая, вы подтверждаете, что вам исполнилось 18 лет, и соглашаетесь с <span class="policy-link" onclick="openPrivacyPolicy()">политикой конфиденциальности</span>.</p>
+<div class="age-buttons">
+<button class="age-btn yes" onclick="confirmAge()">Мне есть 18</button>
+<button class="age-btn no" onclick="denyAge()">Мне нет 18</button>
+</div>
+</div>
+</div>
+</div>
 
-<svg style="position: absolute; width: 0; height: 0;">
-    <defs>
-        <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#e91e63"/>
-            <stop offset="100%" stop-color="#9c27b0"/>
-        </linearGradient>
-    </defs>
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+<div class="modal auth-modal">
+<button class="modal-close" onclick="closeAuthModal()">✕</button>
+<div class="modal-header">
+<h2>Вход / Регистрация</h2>
+</div>
+<div class="modal-body">
+<div class="auth-tabs">
+<button class="auth-tab active" onclick="switchAuthTab('login')">Вход</button>
+<button class="auth-tab" onclick="switchAuthTab('register')">Регистрация</button>
+</div>
+<div id="loginForm">
+<div class="form-group">
+<label>Никнейм</label>
+<input type="text" class="form-input" id="loginNick" placeholder="Введите никнейм">
+</div>
+<div class="form-group">
+<label>Пароль</label>
+<input type="password" class="form-input" id="loginPass" placeholder="Введите пароль">
+</div>
+<button class="form-btn" onclick="login()">Войти</button>
+</div>
+<div id="registerForm" style="display:none">
+<div class="form-group">
+<label>Никнейм</label>
+<input type="text" class="form-input" id="regNick" placeholder="Придумайте никнейм">
+</div>
+<div class="form-group">
+<label>Пароль</label>
+<input type="password" class="form-input" id="regPass" placeholder="Придумайте пароль">
+</div>
+<button class="form-btn" onclick="register()">Зарегистрироваться</button>
+</div>
+<span class="policy-link" onclick="openPrivacyPolicy()">Политика конфиденциальности</span>
+</div>
+</div>
+</div>
+
+<!-- PROFILE DETAIL MODAL -->
+<div class="modal-overlay" id="profileModal">
+<div class="modal profile-modal">
+<button class="modal-close" onclick="closeProfileModal()">✕</button>
+<div id="profileContent"></div>
+</div>
+</div>
+
+<!-- CITIES MODAL -->
+<div class="modal-overlay" id="citiesModal">
+<div class="modal">
+<button class="modal-close" onclick="closeCitiesModal()">✕</button>
+<div class="modal-header">
+<h2>Выберите город</h2>
+</div>
+<div class="modal-body">
+<div class="cities-list" id="citiesList"></div>
+</div>
+</div>
+</div>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="modal-overlay" id="privacyModal">
+<div class="modal policy-modal">
+<button class="modal-close" onclick="closePrivacyPolicy()">✕</button>
+<div class="modal-header">
+<h2>Политика конфиденциальности</h2>
+</div>
+<div class="modal-body">
+<div class="policy-content">
+<h3>1. Общие положения</h3>
+<p>Настоящая Политика конфиденциальности регулирует порядок обработки и использования персональных данных пользователей сайта BABYGIRL_LNR. Используя данный сайт, вы соглашаетесь с условиями настоящей Политики.</p>
+<h3>2. Сбор информации</h3>
+<p>Мы собираем минимально необходимую информацию: никнейм и пароль для создания учётной записи. Мы не собираем реальные имена, адреса электронной почты или телефонные номера.</p>
+<h3>3. Использование информации</h3>
+<p>Собранные данные используются исключительно для предоставления услуг на сайте: идентификация пользователя, обеспечение работы чата с оператором, персонализация контента.</p>
+<h3>4. Защита данных</h3>
+<p>Мы применяем современные меры безопасности для защиты ваших данных от несанкционированного доступа, изменения, раскрытия или уничтожения. Пароли хранятся в зашифрованном виде.</p>
+<h3>5. Передача данных третьим лицам</h3>
+<p>Мы не передаём, не продаём и не раскрываем персональные данные пользователей третьим лицам, за исключением случаев, предусмотренных законодательством.</p>
+<h3>6. Файлы cookie</h3>
+<p>Сайт может использовать файлы cookie для обеспечения корректной работы, сохранения сессии пользователя и улучшения качества обслуживания.</p>
+<h3>7. Возрастные ограничения</h3>
+<p>Сайт предназначен исключительно для лиц старше 18 лет. Регистрируясь, вы подтверждаете, что достигли совершеннолетия.</p>
+<h3>8. Изменение политики</h3>
+<p>Мы оставляем за собой право вносить изменения в настоящую Политику. Продолжение использования сайта после внесения изменений означает ваше согласие с новой редакцией.</p>
+<h3>9. Контактная информация</h3>
+<p>По вопросам, связанным с обработкой персональных данных, вы можете обратиться через раздел поддержки на сайте.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- PROFILE DROPDOWN -->
+<div class="profile-dropdown" id="profileDropdown">
+<div class="pd-name" id="pdName">Профиль</div>
+<button class="pd-btn" onclick="openSupport()">💬 Поддержка</button>
+<button class="pd-btn" onclick="openAdmin()" id="adminBtn" style="display:none">⚙️ Панель управления</button>
+<button class="pd-btn danger" onclick="logout()">🚪 Выйти</button>
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+<div class="logo-wrap" onclick="navigateTo('girls')">
+<div class="logo-heart">
+<svg viewBox="0 0 40 40" fill="none">
+<path d="M20 35C10 28 2 22 2 14C2 8 7 3 13 3C16 3 18.5 4.5 20 7C21.5 4.5 24 3 27 3C33 3 38 8 38 14C38 22 30 28 20 35Z" stroke="url(#hg)" stroke-width="2" fill="none">
+<animate attributeName="stroke-dashoffset" from="100" to="0" dur="2s" fill="freeze"/>
+<animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="2s" fill="freeze"/>
+</path>
+<defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e91e63"/><stop offset="100%" stop-color="#9c27b0"/></linearGradient></defs>
 </svg>
+</div>
+<span class="logo-text">BABYGIRL_LNR</span>
+</div>
+<nav class="nav">
+<button class="nav-btn active" data-section="girls" onclick="navigateTo('girls')">👩 Девушки</button>
+<button class="nav-btn" data-section="chat" onclick="navigateTo('chat')">💬 Чат</button>
+<button class="nav-btn" data-section="cities" onclick="navigateTo('cities')">🏙️ Города</button>
+</nav>
+<button class="profile-btn" onclick="toggleProfileDropdown()">👤</button>
+</header>
 
-<div class="logo">
-    <div class="logo-animation-wrapper">
-        <svg viewBox="0 0 100 100" class="heart-svg" aria-hidden="true">
-            <path class="heart-path" d="M50 88 C20 62 0 42 0 26 A16 16 0 0 1 26 10 C36 10 46 16 50 26 C54 16 64 10 74 10 A16 16 0 0 1 100 26 C100 42 80 62 50 88 Z" />
-        </svg>
-        <span class="logo-text">BABYGIRL_LNR</span>
-    </div>
+<!-- MAIN CONTENT -->
+<main class="main">
+<!-- GIRLS SECTION -->
+<section class="section active" id="sec-girls">
+<div class="catalog-header">
+<h1>Анкеты девушек</h1>
+<p>Выберите идеальную компанию для незабываемого вечера</p>
+</div>
+<div class="catalog-filters" id="catalogFilters"></div>
+<div class="girls-grid" id="girlsGrid"></div>
+</section>
+
+<!-- CHAT SECTION -->
+<section class="section" id="sec-chat">
+<div class="chat-container">
+<div class="chat-header">
+<h3>💬 Чат с оператором</h3>
+<div class="chat-indicator" id="chatIndicator">
+<span class="dot"></span>
+<span>Ожидание оператора...</span>
+</div>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-wrap">
+<input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
+<button class="chat-send" onclick="sendMessage()">➤</button>
+</div>
+</div>
+</section>
+
+<!-- CITIES SECTION -->
+<section class="section" id="sec-cities">
+<div class="catalog-header">
+<h1>Города</h1>
+<p>Выберите город для просмотра анкет</p>
+</div>
+<div class="girls-grid" id="citiesGirlsGrid"></div>
+</section>
+
+<!-- ADMIN SECTION -->
+<section class="section" id="sec-admin">
+<div class="catalog-header">
+<h1>Панель управления</h1>
+<p>Управление контентом и чатами</p>
 </div>
 
-<div class="main-card">
-    <div class="construction-icon">🚧🔧</div>
-    <h1>Технические работы</h1>
-    <p class="message">
-        Сайт временно недоступен.<br>
-        Мы проводим плановое обновление сервиса.<br>
-        Приносим извинения за временные неудобства.
-    </p>
-    <button class="btn" onclick="location.reload()">🔄 Обновить страницу</button>
-    <p style="margin-top: 20px; font-size: 14px; color: var(--gray);">Ориентировочное время завершения работ: через 2–3 часа</p>
+<div class="admin-section">
+<h3>👩 Управление анкетами</h3>
+<div class="admin-card">
+<div class="admin-row">
+<div class="form-group">
+<label>Имя</label>
+<input type="text" class="form-input" id="admGirlName" placeholder="Имя">
+</div>
+<div class="form-group">
+<label>Город</label>
+<select class="form-input" id="admGirlCity">
+<option value="Луганск">Луганск</option>
+<option value="Стаханов">Стаханов</option>
+<option value="Первомайск">Первомайск</option>
+</select>
+</div>
+</div>
+<div class="admin-row">
+<div class="form-group">
+<label>Рост (см)</label>
+<input type="number" class="form-input" id="admGirlHeight" placeholder="170">
+</div>
+<div class="form-group">
+<label>Вес (кг)</label>
+<input type="number" class="form-input" id="admGirlWeight" placeholder="55">
+</div>
+<div class="form-group">
+<label>Размер груди</label>
+<input type="text" class="form-input" id="admGirlBreast" placeholder="3">
+</div>
+<div class="form-group">
+<label>Возраст</label>
+<input type="number" class="form-input" id="admGirlAge" placeholder="22">
+</div>
+</div>
+<div class="form-group">
+<label>Описание</label>
+<textarea class="form-input" id="admGirlDesc" rows="3" placeholder="Описание девушки..."></textarea>
+</div>
+<div class="form-group">
+<label>Предпочтения</label>
+<input type="text" class="form-input" id="admGirlPrefs" placeholder="Предпочтения...">
+</div>
+<div class="form-group">
+<label>Услуги (название:цена, через запятую)</label>
+<input type="text" class="form-input" id="admGirlServices" placeholder="Встреча:3000, Свидание:5000, Ночь:10000">
+</div>
+<div class="form-group">
+<label>Фото</label>
+<div class="img-upload" id="admImgUpload" onclick="document.getElementById('admImgInput').click()">
+<span>📷 Нажмите для загрузки фото</span>
+<input type="file" id="admImgInput" accept="image/*" style="display:none" onchange="handleImgUpload(this)">
+</div>
+</div>
+<div class="admin-row" style="margin-top:12px">
+<button class="admin-btn primary" onclick="saveGirl()">💾 Сохранить</button>
+<button class="admin-btn secondary" onclick="clearAdmForm()">🗑️ Очистить</button>
+</div>
+</div>
+<div class="admin-list" id="adminGirlsList"></div>
 </div>
 
+<div class="admin-section">
+<h3>💬 Управление чатами</h3>
+<div class="admin-card">
+<div class="toggle-wrap">
+<div class="toggle" id="botToggle" onclick="toggleBot()"></div>
+<span>Бот авто-ответов</span>
+</div>
+</div>
+<div id="adminChatList"></div>
+</div>
+
+<div class="admin-section">
+<h3>⚙️ Настройки сайта</h3>
+<div class="admin-card">
+<div class="form-group">
+<label>Название сайта</label>
+<input type="text" class="form-input" id="admSiteTitle" value="BABYGIRL_LNR">
+</div>
+<div class="form-group">
+<label>Описание сайта</label>
+<textarea class="form-input" id="admSiteDesc" rows="2" placeholder="Описание..."></textarea>
+</div>
+<div class="form-group">
+<label>Номер для связи</label>
+<input type="text" class="form-input" id="admSitePhone" placeholder="+380...">
+</div>
+<button class="admin-btn primary" onclick="saveSiteSettings()">💾 Сохранить настройки</button>
+</div>
+</div>
+</section>
+</main>
+
+<!-- FOOTER -->
 <footer class="footer">
-    <p>© 2026 BABYGIRL_LNR. Все права защищены.</p>
+<div class="warning">⚠️ Данный сайт содержит материалы 18+. Доступ разрешён только лицам старше 18 лет.</div>
+<div class="info">BABYGIRL_LNR — сервис знакомств и陪伴ства. Все услуги предоставляются по взаимному согласию. Оплата производится напрямую девушке при встрече. Администрация не несёт ответственности за действия пользователей.</div>
 </footer>
+</div>
+
+<!-- CHAT WITH OPERATOR MODAL (Admin) -->
+<div class="modal-overlay" id="adminChatModal">
+<div class="modal" style="max-width:600px;height:80vh;display:flex;flex-direction:column">
+<button class="modal-close" onclick="closeAdminChat()">✕</button>
+<div class="modal-header">
+<h2 id="adminChatTitle">Чат</h2>
+</div>
+<div style="flex:1;overflow-y:auto;padding:0 20px 20px;display:flex;flex-direction:column;gap:10px" id="adminChatMessages"></div>
+<div style="padding:0 20px 20px;display:flex;gap:10px">
+<input type="text" class="chat-input" id="adminChatInput" placeholder="Ответить..." onkeypress="if(event.key==='Enter')sendAdminReply()">
+<button class="chat-send" onclick="sendAdminReply()">➤</button>
+</div>
+<div style="padding:0 20px 15px;display:flex;gap:8px">
+<button class="admin-btn danger" onclick="clearChatHistory()" style="flex:1">🗑️ Очистить историю</button>
+<button class="admin-btn secondary" onclick="closeAdminChat()" style="flex:1">Закрыть</button>
+</div>
+</div>
+</div>
 
 <script>
-    // Видео-фон с автовоспроизведением
-    const video = document.getElementById('bgVideo');
-    if(video) {
-        const playPromise = video.play();
-        if(playPromise !== undefined) {
-            playPromise.catch(() => {
-                const enableVideo = () => {
-                    video.play().catch(()=>{});
-                    document.removeEventListener('touchstart', enableVideo);
-                    document.removeEventListener('click', enableVideo);
-                };
-                document.addEventListener('touchstart', enableVideo, { once: true, passive: true });
-                document.addEventListener('click', enableVideo, { once: true });
-            });
-        }
-    }
+// ===== DATA STORE =====
+const CITIES = ['Луганск','Стаханов','Первомайск'];
+const DEFAULT_GIRLS = [
+{id:1,name:'Алина',city:'Луганск',photo:'',desc:'Нежная и романтичная девушка, люблю долгие прогулки и уютные вечера. Всегда в хорошем настроении и готова подарить вам незабываемые эмоции.',height:'168',weight:'52',breast:'2',age:'21',prefs:'Романтика, путешествия, кинематограф',services:[{name:'Встреча',price:'3000'},{name:'Свидание',price:'5000'},{name:'Ночь',price:'10000'}]},
+{id:2,name:'Виктория',city:'Стаханов',photo:'',desc:'Яркая и страстная брюнетка с идеальной фигурой. Знаю как сделать ваш вечер особенным. Индивидуальный подход к каждому клиенту.',height:'172',weight:'55',breast:'3',age:'23',prefs:'Танцы, музыка, активный отдых',services:[{name:'Встреча',price:'3500'},{name:'Свидание',price:'6000'},{name:'Ночь',price:'12000'}]},
+{id:3,name:'София',city:'Первомайск',photo:'',desc:'Студентка, модельная внешность. Лёгкая в общении, всегда открыта к новым знакомствам. Гарантирую приятное времяпровождение.',height:'165',weight:'48',breast:'2',age:'20',prefs:'Фотография, литература, кафе',services:[{name:'Встреча',price:'2500'},{name:'Свидание',price:'4000'},{name:'Ночь',price:'8000'}]},
+{id:4,name:'Диана',city:'Луганск',photo:'',desc:'Опытная и уверенная в себе. Понимаю мужчин с полуслова. Создам атмосферу полного расслабления и наслаждения.',height:'170',weight:'58',breast:'3',age:'25',prefs:'Фитнес, SPA, рестораны',services:[{name:'Встреча',price:'4000'},{name:'Свидание',price:'7000'},{name:'Ночь',price:'15000'}]},
+{id:5,name:'Мария',city:'Стаханов',photo:'',desc:'Рыжеволосая красавица с веснушками. Нежная и заботливая, создам для вас атмосферу уюта и страсти одновременно.',height:'163',weight:'50',breast:'2',age:'22',prefs:'Кулинария, книги, природа',services:[{name:'Встреча',price:'3000'},{name:'Свидание',price:'5000'},{name:'Ночь',price:'10000'}]},
+{id:6,name:'Анастасия',city:'Первомайск',photo:'',desc:'Спортивная и подтянутая блондинка. Энергичная, весёлая, с отличным чувством юмора. Со мной не соскучишься!',height:'175',weight:'56',breast:'3',age:'24',prefs:'Спорт, путешествия, вечеринки',services:[{name:'Встреча',price:'3500'},{name:'Свидание',price:'6000'},{name:'Ночь',price:'13000'}]}
+];
+
+let state = {
+currentUser: null,
+ageConfirmed: false,
+currentSection: 'girls',
+currentCityFilter: 'all',
+girls: [],
+users: [],
+chats: {},
+settings: {title:'BABYGIRL_LNR', desc:'', phone:''},
+botEnabled: true,
+adminChatWith: null,
+editingGirlId: null,
+uploadedImage: ''
+};
+
+// ===== INIT =====
+function init() {
+loadState();
+if (!state.ageConfirmed) {
+document.getElementById('ageModal').classList.add('show');
+}
+if (state.currentUser) {
+updateUIForLoggedUser();
+}
+renderGirls();
+renderCatalogFilters();
+loadSiteSettings();
+window.addEventListener('scroll', () => {
+document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20);
+});
+}
+
+function loadState() {
+try {
+const s = localStorage.getItem('bglr_state');
+if (s) {
+const parsed = JSON.parse(s);
+state = {...state, ...parsed};
+}
+if (!state.girls || state.girls.length === 0) {
+state.girls = [...DEFAULT_GIRLS];
+}
+if (!state.users || state.users.length === 0) {
+state.users = [{username:'admin',password:'admin123',role:'admin'}];
+}
+} catch(e) {
+state.girls = [...DEFAULT_GIRLS];
+state.users = [{username:'admin',password:'admin123',role:'admin'}];
+}
+}
+
+function saveState() {
+localStorage.setItem('bglr_state', JSON.stringify({
+currentUser: state.currentUser,
+ageConfirmed: state.ageConfirmed,
+girls: state.girls,
+users: state.users,
+chats: state.chats,
+settings: state.settings,
+botEnabled: state.botEnabled
+}));
+}
+
+// ===== AGE VERIFICATION =====
+function confirmAge() {
+state.ageConfirmed = true;
+saveState();
+document.getElementById('ageModal').classList.remove('show');
+}
+
+function denyAge() {
+window.location.href = 'https://www.google.com';
+}
+
+function closeAgeModal() {
+if (!state.ageConfirmed) return;
+document.getElementById('ageModal').classList.remove('show');
+}
+
+// ===== AUTH =====
+function switchAuthTab(tab) {
+document.querySelectorAll('.auth-tab').forEach((t,i) => {
+t.classList.toggle('active', (tab==='login' && i===0) || (tab==='register' && i===1));
+});
+document.getElementById('loginForm').style.display = tab==='login' ? 'block' : 'none';
+document.getElementById('registerForm').style.display = tab==='register' ? 'block' : 'none';
+}
+
+function openAuthModal() {
+document.getElementById('authModal').classList.add('show');
+}
+
+function closeAuthModal() {
+document.getElementById('authModal').classList.remove('show');
+}
+
+function login() {
+const nick = document.getElementById('loginNick').value.trim();
+const pass = document.getElementById('loginPass').value.trim();
+if (!nick || !pass) return showToast('Заполните все поля', 'error');
+const user = state.users.find(u => u.username === nick && u.password === pass);
+if (!user) return showToast('Неверный логин или пароль', 'error');
+state.currentUser = {username: user.username, role: user.role};
+saveState();
+closeAuthModal();
+updateUIForLoggedUser();
+showToast('Добро пожаловать, ' + nick + '!', 'success');
+}
+
+function register() {
+const nick = document.getElementById('regNick').value.trim();
+const pass = document.getElementById('regPass').value.trim();
+if (!nick || !pass) return showToast('Заполните все поля', 'error');
+if (nick.length < 3) return showToast('Никнейм минимум 3 символа', 'error');
+if (pass.length < 4) return showToast('Пароль минимум 4 символа', 'error');
+if (state.users.find(u => u.username === nick)) return showToast('Никнейм занят', 'error');
+state.users.push({username: nick, password: pass, role: 'client'});
+state.currentUser = {username: nick, role: 'client'};
+saveState();
+closeAuthModal();
+updateUIForLoggedUser();
+showToast('Регистрация успешна!', 'success');
+}
+
+function logout() {
+state.currentUser = null;
+saveState();
+closeProfileDropdown();
+document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+document.querySelector('[data-section="girls"]').classList.add('active');
+state.currentSection = 'girls';
+document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+document.getElementById('sec-girls').classList.add('active');
+document.getElementById('pdName').textContent = 'Профиль';
+document.getElementById('adminBtn').style.display = 'none';
+showToast('Вы вышли из аккаунта', 'success');
+}
+
+function updateUIForLoggedUser() {
+document.getElementById('pdName').textContent = '👤 ' + state.currentUser.username;
+if (state.currentUser.role === 'admin') {
+document.getElementById('adminBtn').style.display = 'flex';
+} else {
+document.getElementById('adminBtn').style.display = 'none';
+}
+}
+
+function checkAuth(callback) {
+if (!state.currentUser) {
+openAuthModal();
+return false;
+}
+callback();
+return true;
+}
+
+// ===== PROFILE DROPDOWN =====
+function toggleProfileDropdown() {
+if (!state.currentUser) {
+openAuthModal();
+return;
+}
+document.getElementById('profileDropdown').classList.toggle('show');
+}
+
+document.addEventListener('click', (e) => {
+const pd = document.getElementById('profileDropdown');
+if (pd.classList.contains('show') && !pd.contains(e.target) && !e.target.closest('.profile-btn')) {
+pd.classList.remove('show');
+}
+});
+
+function openSupport() {
+closeProfileDropdown();
+navigateTo('chat');
+if (state.currentUser && !state.chats[state.currentUser.username]) {
+initChat();
+}
+}
+
+function openAdmin() {
+if (state.currentUser.role !== 'admin') return;
+closeProfileDropdown();
+navigateTo('admin');
+renderAdminGirls();
+renderAdminChats();
+document.getElementById('botToggle').classList.toggle('active', state.botEnabled);
+}
+
+// ===== NAVIGATION =====
+function navigateTo(section) {
+if ((section === 'chat' || section === 'admin') && !state.currentUser) {
+openAuthModal();
+return;
+}
+if (section === 'chat' && state.currentUser && !state.chats[state.currentUser.username]) {
+initChat();
+}
+document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+document.getElementById('sec-' + section).classList.add('active');
+document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+const navBtn = document.querySelector(`[data-section="${section}"]`);
+if (navBtn) navBtn.classList.add('active');
+state.currentSection = section;
+window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ===== GIRLS RENDERING =====
+function renderCatalogFilters() {
+const container = document.getElementById('catalogFilters');
+let html = `<button class="filter-btn ${state.currentCityFilter==='all'?'active':''}" onclick="filterCity('all')">Все</button>`;
+CITIES.forEach(city => {
+html += `<button class="filter-btn ${state.currentCityFilter===city?'active':''}" onclick="filterCity('${city}')">${city}</button>`;
+});
+container.innerHTML = html;
+}
+
+function filterCity(city) {
+state.currentCityFilter = city;
+renderCatalogFilters();
+renderGirls();
+}
+
+function getFilteredGirls() {
+if (state.currentCityFilter === 'all') return state.girls;
+return state.girls.filter(g => g.city === state.currentCityFilter);
+}
+
+function renderGirls() {
+const girls = getFilteredGirls();
+const grid = document.getElementById('girlsGrid');
+if (girls.length === 0) {
+grid.innerHTML = '<div class="empty-state"><div class="icon">😔</div><p>Анкет пока нет</p></div>';
+return;
+}
+grid.innerHTML = girls.map(g => createGirlCard(g)).join('');
+}
+
+function createGirlCard(g) {
+const imgHtml = g.photo
+? `<img class="girl-card-img" src="${g.photo}" alt="${g.name}">`
+: `<div class="girl-card-img-placeholder">👩</div>`;
+const servicesPreview = g.services.slice(0, 2).map(s => `${s.name}: ${s.price}₴`).join(', ');
+return `
+<div class="girl-card" onclick="openProfile(${g.id})">
+${imgHtml}
+<div class="girl-card-info">
+<div class="girl-card-top">
+<span class="girl-card-name">${g.name}</span>
+<span class="girl-card-city">${g.city}</span>
+</div>
+<p class="girl-card-desc">${g.desc}</p>
+<div class="girl-card-stats">
+<span class="stat-tag">📏 ${g.height} см</span>
+<span class="stat-tag">⚖️ ${g.weight} кг</span>
+<span class="stat-tag">👙 ${g.breast}</span>
+<span class="stat-tag">🎂 ${g.age} лет</span>
+</div>
+<div class="girl-card-payment">💰 Оплата девушкам в руки</div>
+<div class="girl-card-actions">
+<button class="btn-open" onclick="event.stopPropagation();openProfile(${g.id})">Открыть анкету</button>
+<button class="btn-order" onclick="event.stopPropagation();orderGirl(${g.id})">Заказать</button>
+</div>
+</div>
+</div>`;
+}
+
+function openProfile(id) {
+const g = state.girls.find(x => x.id === id);
+if (!g) return;
+const imgHtml = g.photo
+? `<img class="profile-modal-img" src="${g.photo}" alt="${g.name}">`
+: `<div class="profile-modal-img-placeholder">👩</div>`;
+const servicesHtml = g.services.map(s =>
+`<div class="profile-service"><span class="name">${s.name}</span><span class="price">${s.price}₴</span></div>`
+).join('');
+document.getElementById('profileContent').innerHTML = `
+${imgHtml}
+<div class="profile-detail">
+<h2>${g.name}</h2>
+<div class="city">📍 ${g.city}</div>
+<p class="desc">${g.desc}</p>
+<div class="section-title">Характеристики</div>
+<div class="profile-stats-grid">
+<div class="profile-stat"><div class="label">Рост</div><div class="value">${g.height} см</div></div>
+<div class="profile-stat"><div class="label">Вес</div><div class="value">${g.weight} кг</div></div>
+<div class="profile-stat"><div class="label">Размер груди</div><div class="value">${g.breast}</div></div>
+<div class="profile-stat"><div class="label">Возраст</div><div class="value">${g.age} лет</div></div>
+</div>
+<div class="section-title">Предпочтения</div>
+<p class="desc">${g.prefs}</p>
+<div class="section-title">Услуги</div>
+<div class="profile-services">${servicesHtml}</div>
+<div class="profile-payment">💰 Оплата девушкам в руки</div>
+<button class="profile-order-btn" onclick="orderGirl(${g.id});closeProfileModal()">Заказать</button>
+</div>`;
+document.getElementById('profileModal').classList.add('show');
+}
+
+function closeProfileModal() {
+document.getElementById('profileModal').classList.remove('show');
+}
+
+// ===== ORDER =====
+function orderGirl(id) {
+checkAuth(() => {
+const g = state.girls.find(x => x.id === id);
+if (!g) return;
+navigateTo('chat');
+setTimeout(() => {
+sendBotOrderMessage(g);
+}, 500);
+});
+}
+
+// ===== CITIES =====
+function navigateTo(section) {
+if ((section === 'chat' || section === 'admin') && !state.currentUser) {
+openAuthModal();
+return;
+}
+if (section === 'chat' && state.currentUser && !state.chats[state.currentUser.username]) {
+initChat();
+}
+document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+document.getElementById('sec-' + section).classList.add('active');
+document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+const navBtn = document.querySelector(`[data-section="${section}"]`);
+if (navBtn) navBtn.classList.add('active');
+state.currentSection = section;
+window.scrollTo({top: 0, behavior: 'smooth'});
+if (section === 'cities') renderCitiesSection();
+}
+
+function renderCitiesSection() {
+const grid = document.getElementById('citiesGirlsGrid');
+let html = '';
+CITIES.forEach(city => {
+const count = state.girls.filter(g => g.city === city).length;
+html += `<div class="girl-card" onclick="filterGirlsByCity('${city}')" style="cursor:pointer">
+<div style="height:120px;background:linear-gradient(135deg,rgba(233,30,99,0.3),rgba(156,39,176,0.3));display:flex;align-items:center;justify-content:center;font-size:3rem">🏙️</div>
+<div class="girl-card-info" style="text-align:center">
+<h3 style="font-size:1.2rem;margin-bottom:4px">${city}</h3>
+<p style="color:var(--text-muted);font-size:0.85rem">${count} анкет</p>
+</div>
+</div>`;
+});
+grid.innerHTML = html;
+}
+
+function filterGirlsByCity(city) {
+state.currentCityFilter = city;
+renderCatalogFilters();
+renderGirls();
+navigateTo('girls');
+}
+
+// ===== CITIES MODAL =====
+function openCitiesModal() {
+if (!state.currentUser) { openAuthModal(); return; }
+const list = document.getElementById('citiesList');
+list.innerHTML = CITIES.map(city => {
+const count = state.girls.filter(g => g.city === city).length;
+return `<div class="city-item" onclick="selectCity('${city}')">
+<span class="name">${city}</span>
+<span class="count">${count} анкет</span>
+</div>`;
+}).join('');
+document.getElementById('citiesModal').classList.add('show');
+}
+
+function selectCity(city) {
+closeCitiesModal();
+state.currentCityFilter = city;
+renderCatalogFilters();
+renderGirls();
+}
+
+function closeCitiesModal() {
+document.getElementById('citiesModal').classList.remove('show');
+}
+
+// ===== CHAT =====
+function initChat() {
+if (!state.currentUser) return;
+const userId = state.currentUser.username;
+if (!state.chats[userId]) {
+state.chats[userId] = {messages: [], waitingForOperator: false, botActive: true, botStep: 'greet', selectedGirl: null};
+saveState();
+addBotMessage(userId, `Здравствуйте, ${userId}! 👋 Чем могу помочь?`);
+addBotMessage(userId, 'Напишите ваш город, и я подберу для вас лучшую анкету.');
+}
+renderChat();
+}
+
+function addBotMessage(userId, text, extra) {
+if (!state.chats[userId]) return;
+state.chats[userId].messages.push({type:'bot', text, extra, time: Date.now()});
+saveState();
+renderChat();
+}
+
+function addUserMessage(userId, text) {
+if (!state.chats[userId]) return;
+state.chats[userId].messages.push({type:'user', text, time: Date.now()});
+saveState();
+renderChat();
+}
+
+function addSystemMessage(userId, text) {
+if (!state.chats[userId]) return;
+state.chats[userId].messages.push({type:'system', text, time: Date.now()});
+saveState();
+renderChat();
+}
+
+function sendMessage() {
+const input = document.getElementById('chatInput');
+const text = input.value.trim();
+if (!text) return;
+checkAuth(() => {
+const userId = state.currentUser.username;
+addUserMessage(userId, text);
+input.value = '';
+processBotMessage(userId, text);
+});
+}
+
+function sendBotOrderMessage(girl) {
+const userId = state.currentUser.username;
+if (!state.chats[userId]) initChat();
+state.chats[userId].selectedGirl = girl;
+state.chats[userId].botStep = 'order';
+state.chats[userId].botActive = true;
+saveState();
+addBotMessage(userId, `Здравствуйте, ${userId}! 👋`, {type:'order_greeting'});
+addBotMessage(userId, '', {type:'profile', girl: girl});
+addBotMessage(userId, '💰 Оплата девушке в руки\n\nНажмите на выбранную услугу:', {type:'services', girl: girl});
+}
+
+function processBotMessage(userId, text) {
+if (!state.botEnabled) {
+state.chats[userId].waitingForOperator = true;
+saveState();
+return;
+}
+const chat = state.chats[userId];
+if (!chat) return;
+
+const lower = text.toLowerCase();
+
+if (chat.botStep === 'greet' || chat.botStep === 'asking_city') {
+let foundCity = CITIES.find(c => lower.includes(c.toLowerCase()));
+if (!foundCity) {
+addBotMessage(userId, 'Уточните, пожалуйста, ваш город (Луганск, Стаханов или Первомайск).');
+chat.botStep = 'asking_city';
+saveState();
+return;
+}
+chat.selectedCity = foundCity;
+const cityGirls = state.girls.filter(g => g.city === foundCity);
+if (cityGirls.length === 0) {
+addBotMessage(userId, `К сожалению, в городе ${foundCity} пока нет анкет. Хотите выбрать другой город?`);
+chat.botStep = 'asking_city';
+saveState();
+return;
+}
+chat.botStep = 'picked_city';
+addBotMessage(userId, `Отлично! В городе ${foundCity} есть ${cityGirls.length} анкет. Какая услуга вас интересует?`);
+addBotMessage(userId, 'Выберите анкету:', {type:'girls_list', girls: cityGirls});
+chat.botStep = 'picking_girl';
+saveState();
+return;
+}
+
+if (chat.botStep === 'picking_girl') {
+let foundGirl = state.girls.find(g => lower.includes(g.name.toLowerCase()));
+if (!foundGirl) {
+addBotMessage(userId, 'Напишите имя девушки из списка или опишите, кого ищете.');
+return;
+}
+chat.selectedGirl = foundGirl;
+chat.botStep = 'girl_selected';
+addBotMessage(userId, '', {type:'profile', girl: foundGirl});
+addBotMessage(userId, '💰 Оплата девушке в руки\n\nНажмите на выбранную услугу:', {type:'services', girl: foundGirl});
+saveState();
+return;
+}
+
+if (chat.botStep === 'girl_selected' || chat.botStep === 'order') {
+let foundService = null;
+if (chat.selectedGirl) {
+foundService = chat.selectedGirl.services.find(s => lower.includes(s.name.toLowerCase()));
+}
+if (!foundService && chat.selectedGirl) {
+foundService = chat.selectedGirl.services.find(s => lower.includes(s.price));
+}
+if (foundService) {
+addBotMessage(userId, `Вы выбрали: ${foundService.name} — ${foundService.price}₴`);
+addBotMessage(userId, '🔄 Ваша заявка в обработке. Оператор скоро свяжется с вами.', {type:'processing'});
+chat.waitingForOperator = true;
+chat.botStep = 'waiting';
+saveState();
+return;
+}
+}
+
+if (chat.botStep === 'waiting') {
+addBotMessage(userId, 'Ваша заявка уже в обработке. Пожалуйста, ожидайте ответа оператора.');
+return;
+}
+
+addBotMessage(userId, 'Я пока не понял ваш запрос. Оператор скоро подключится к диалогу.');
+chat.waitingForOperator = true;
+saveState();
+}
+
+function renderChat() {
+if (!state.currentUser) return;
+const userId = state.currentUser.username;
+const chat = state.chats[userId];
+if (!chat) return;
+const container = document.getElementById('chatMessages');
+const indicator = document.getElementById('chatIndicator');
+indicator.classList.toggle('show', chat.waitingForOperator && state.currentUser.role !== 'admin');
+let html = '';
+chat.messages.forEach((msg, idx) => {
+if (msg.type === 'bot') {
+html += `<div class="chat-msg bot">${formatBotMessage(msg)}</div>`;
+} else if (msg.type === 'user') {
+html += `<div class="chat-msg user">${escapeHtml(msg.text)}</div>`;
+} else {
+html += `<div class="chat-msg system">${escapeHtml(msg.text)}</div>`;
+}
+});
+container.innerHTML = html;
+container.scrollTop = container.scrollHeight;
+}
+
+function formatBotMessage(msg) {
+let html = escapeHtml(msg.text).replace(/\n/g, '<br>');
+if (msg.extra) {
+if (msg.extra.type === 'profile' || msg.extra.type === 'order_greeting') {
+if (msg.extra.type === 'order_greeting') html = '';
+const g = msg.extra.girl || msg.extra;
+const imgHtml = g.photo
+? `<img class="msg-profile-img" src="${g.photo}" alt="${g.name}">`
+: `<div class="msg-profile-img-placeholder">👩</div>`;
+html += `<div class="msg-profile">${imgHtml}<div class="msg-profile-info"><h4>${g.name} • ${g.city}</h4><div class="price">${g.services.map(s=>`${s.name}: ${s.price}₴`).join(', ')}</div><div class="pay-note">💰 Оплата девушке в руки</div></div></div>`;
+}
+if (msg.extra.type === 'services') {
+const g = msg.extra.girl;
+html += `<div class="msg-services">${g.services.map((s,i) => `<button class="msg-service-btn" onclick="selectService('${g.name}','${s.name}','${s.price}')">${s.name} — ${s.price}₴</button>`).join('')}</div>`;
+}
+if (msg.extra.type === 'girls_list') {
+html += `<div class="msg-services">${msg.extra.girls.map(g => `<button class="msg-service-btn" onclick="selectGirlByName('${g.name}')">${g.name} — ${g.city}</button>`).join('')}</div>`;
+}
+}
+return html;
+}
+
+function selectService(girlName, serviceName, price) {
+if (!state.currentUser) return;
+const userId = state.currentUser.username;
+addUserMessage(userId, `${girlName} — ${serviceName}: ${price}₴`);
+processBotMessage(userId, serviceName);
+}
+
+function selectGirlByName(name) {
+if (!state.currentUser) return;
+const userId = state.currentUser.username;
+addUserMessage(userId, name);
+processBotMessage(userId, name);
+}
+
+// ===== PRIVACY POLICY =====
+function openPrivacyPolicy() {
+document.getElementById('privacyModal').classList.add('show');
+}
+function closePrivacyPolicy() {
+document.getElementById('privacyModal').classList.remove('show');
+}
+
+// ===== ADMIN =====
+function renderAdminGirls() {
+const list = document.getElementById('adminGirlsList');
+if (state.girls.length === 0) {
+list.innerHTML = '<div class="empty-state"><p>Нет анкет</p></div>';
+return;
+}
+list.innerHTML = state.girls.map(g => `
+<div class="admin-list-item">
+<div class="info">
+<h4>${g.name} — ${g.city}</h4>
+<p>${g.height}см • ${g.weight}кг • Грудь: ${g.breast} • ${g.age} лет</p>
+</div>
+<div class="actions">
+<button class="edit-btn" onclick="editGirl(${g.id})">✏️</button>
+<button class="delete-btn" onclick="deleteGirl(${g.id})">🗑️</button>
+</div>
+</div>`).join('');
+}
+
+function editGirl(id) {
+const g = state.girls.find(x => x.id === id);
+if (!g) return;
+state.editingGirlId = id;
+document.getElementById('admGirlName').value = g.name;
+document.getElementById('admGirlCity').value = g.city;
+document.getElementById('admGirlHeight').value = g.height;
+document.getElementById('admGirlWeight').value = g.weight;
+document.getElementById('admGirlBreast').value = g.breast;
+document.getElementById('admGirlAge').value = g.age;
+document.getElementById('admGirlDesc').value = g.desc;
+document.getElementById('admGirlPrefs').value = g.prefs;
+document.getElementById('admGirlServices').value = g.services.map(s => `${s.name}:${s.price}`).join(', ');
+state.uploadedImage = g.photo || '';
+updateImgPreview();
+}
+
+function deleteGirl(id) {
+if (!confirm('Удалить анкету?')) return;
+state.girls = state.girls.filter(g => g.id !== id);
+saveState();
+renderAdminGirls();
+renderGirls();
+showToast('Анкета удалена', 'success');
+}
+
+function clearAdmForm() {
+state.editingGirlId = null;
+state.uploadedImage = '';
+document.getElementById('admGirlName').value = '';
+document.getElementById('admGirlCity').value = 'Луганск';
+document.getElementById('admGirlHeight').value = '';
+document.getElementById('admGirlWeight').value = '';
+document.getElementById('admGirlBreast').value = '';
+document.getElementById('admGirlAge').value = '';
+document.getElementById('admGirlDesc').value = '';
+document.getElementById('admGirlPrefs').value = '';
+document.getElementById('admGirlServices').value = '';
+updateImgPreview();
+}
+
+function handleImgUpload(input) {
+const file = input.files[0];
+if (!file) return;
+const reader = new FileReader();
+reader.onload = (e) => {
+state.uploadedImage = e.target.result;
+updateImgPreview();
+};
+reader.readAsDataURL(file);
+}
+
+function updateImgPreview() {
+const upload = document.getElementById('admImgUpload');
+if (state.uploadedImage) {
+upload.innerHTML = `<img src="${state.uploadedImage}" style="max-width:100%;max-height:100%;object-fit:cover;border-radius:10px">`;
+} else {
+upload.innerHTML = `<span>📷 Нажмите для загрузки фото</span>`;
+}
+}
+
+function saveGirl() {
+const name = document.getElementById('admGirlName').value.trim();
+const city = document.getElementById('admGirlCity').value;
+const height = document.getElementById('admGirlHeight').value.trim();
+const weight = document.getElementById('admGirlWeight').value.trim();
+const breast = document.getElementById('admGirlBreast').value.trim();
+const age = document.getElementById('admGirlAge').value.trim();
+const desc = document.getElementById('admGirlDesc').value.trim();
+const prefs = document.getElementById('admGirlPrefs').value.trim();
+const servicesStr = document.getElementById('admGirlServices').value.trim();
+
+if (!name) return showToast('Введите имя', 'error');
+
+const services = servicesStr.split(',').map(s => {
+const parts = s.split(':');
+return {name: parts[0].trim(), price: parts[1] ? parts[1].trim() : '0'};
+}).filter(s => s.name);
+
+if (state.editingGirlId) {
+const idx = state.girls.findIndex(g => g.id === state.editingGirlId);
+if (idx !== -1) {
+state.girls[idx] = {...state.girls[idx], name, city, height, weight, breast, age, desc, prefs, services, photo: state.uploadedImage};
+}
+state.editingGirlId = null;
+showToast('Анкета обновлена', 'success');
+} else {
+const newId = state.girls.length > 0 ? Math.max(...state.girls.map(g => g.id)) + 1 : 1;
+state.girls.push({id: newId, name, city, photo: state.uploadedImage, desc, height, weight, breast, age, prefs, services});
+showToast('Анкета добавлена', 'success');
+}
+
+saveState();
+clearAdmForm();
+renderAdminGirls();
+renderGirls();
+}
+
+function toggleBot() {
+state.botEnabled = !state.botEnabled;
+document.getElementById('botToggle').classList.toggle('active', state.botEnabled);
+saveState();
+showToast(state.botEnabled ? 'Бот включён' : 'Бот выключен', 'success');
+}
+
+function renderAdminChats() {
+const list = document.getElementById('adminChatList');
+const userIds = Object.keys(state.chats);
+if (userIds.length === 0) {
+list.innerHTML = '<div class="empty-state"><p>Нет чатов</p></div>';
+return;
+}
+list.innerHTML = userIds.map(uid => {
+const chat = state.chats[uid];
+const lastMsg = chat.messages[chat.messages.length - 1];
+const isWaiting = chat.waitingForOperator;
+return `<div class="chat-list-item ${isWaiting ? 'has-waiting' : ''}" onclick="openAdminChatWith('${uid}')">
+<div class="chat-info">
+<h4>👤 ${uid}</h4>
+<p>${lastMsg ? (lastMsg.text || 'Вложение').substring(0, 40) : 'Нет сообщений'}</p>
+</div>
+<span class="chat-status ${isWaiting ? 'waiting' : 'active'}">${isWaiting ? '⏳ Ожидание' : '✅ Активен'}</span>
+</div>`;
+}).join('');
+}
+
+function openAdminChatWith(userId) {
+state.adminChatWith = userId;
+document.getElementById('adminChatTitle').textContent = 'Чат с ' + userId;
+renderAdminChatMessages();
+document.getElementById('adminChatModal').classList.add('show');
+}
+
+function renderAdminChatMessages() {
+const userId = state.adminChatWith;
+const chat = state.chats[userId];
+if (!chat) return;
+const container = document.getElementById('adminChatMessages');
+let html = '';
+chat.messages.forEach(msg => {
+if (msg.type === 'user') {
+html += `<div class="chat-msg user">${escapeHtml(msg.text)}</div>`;
+} else if (msg.type === 'bot') {
+html += `<div class="chat-msg bot">${formatBotMessage(msg)}</div>`;
+} else {
+html += `<div class="chat-msg system">${escapeHtml(msg.text)}</div>`;
+}
+});
+container.innerHTML = html;
+container.scrollTop = container.scrollHeight;
+}
+
+function sendAdminReply() {
+const input = document.getElementById('adminChatInput');
+const text = input.value.trim();
+if (!text || !state.adminChatWith) return;
+const userId = state.adminChatWith;
+const chat = state.chats[userId];
+if (!chat) return;
+chat.messages.push({type:'bot', text: '[Оператор] ' + text, time: Date.now()});
+chat.waitingForOperator = false;
+chat.botStep = 'handled';
+saveState();
+input.value = '';
+renderAdminChatMessages();
+renderAdminChats();
+renderChat();
+}
+
+function clearChatHistory() {
+const userId = state.adminChatWith;
+if (!userId || !confirm('Очистить историю чата?')) return;
+state.chats[userId].messages = [];
+saveState();
+renderAdminChatMessages();
+renderAdminChats();
+showToast('История очищена', 'success');
+}
+
+function closeAdminChat() {
+document.getElementById('adminChatModal').classList.remove('show');
+state.adminChatWith = null;
+}
+
+function saveSiteSettings() {
+state.settings.title = document.getElementById('admSiteTitle').value;
+state.settings.desc = document.getElementById('admSiteDesc').value;
+state.settings.phone = document.getElementById('admSitePhone').value;
+saveState();
+showToast('Настройки сохранены', 'success');
+}
+
+function loadSiteSettings() {
+if (state.settings.title) document.getElementById('admSiteTitle').value = state.settings.title;
+if (state.settings.desc) document.getElementById('admSiteDesc').value = state.settings.desc;
+if (state.settings.phone) document.getElementById('admSitePhone').value = state.settings.phone;
+}
+
+// ===== UTILS =====
+function escapeHtml(text) {
+if (!text) return '';
+const div = document.createElement('div');
+div.textContent = text;
+return div.innerHTML;
+}
+
+function showToast(msg, type) {
+const toast = document.createElement('div');
+toast.className = 'toast ' + type;
+toast.textContent = msg;
+document.body.appendChild(toast);
+setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+// ===== INIT ON LOAD =====
+init();
 </script>
 </body>
 </html>
+
